@@ -2,8 +2,8 @@ package com.xs.gen.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * 文件帮助类
@@ -13,40 +13,40 @@ import java.util.List;
  *
  */
 public class FileHelper {
-	private String FILE_SEPARATOR = File.separator;
-	private String PROJECT_PATH = PropertiesHelper.getByKey("system.projectname") + FILE_SEPARATOR;
-	private String PACKAGE_NAME = PropertiesHelper.getByKey("system.project.packagename").replace(".", FILE_SEPARATOR) + FILE_SEPARATOR;
-	private String SRC_MAIN_JAVA = PROJECT_PATH + "src" + FILE_SEPARATOR + "main" + FILE_SEPARATOR + "java";
-	private String SRC_MAIN_RESOURCES = PROJECT_PATH + "src" + FILE_SEPARATOR + "main" + FILE_SEPARATOR + "resources";
-	private String SRC_TEST_JAVA = PROJECT_PATH + "src" + FILE_SEPARATOR + "test" + FILE_SEPARATOR + "java";
-	private String SRC_TEST_RESOURCES = PROJECT_PATH + "src" + FILE_SEPARATOR + "test" + FILE_SEPARATOR + "resources";
-	private String DOMAIN_PATH = PROJECT_PATH + PACKAGE_NAME + FILE_SEPARATOR + "domain";
-	private String DAO_PATH = PROJECT_PATH + PACKAGE_NAME + FILE_SEPARATOR + "dao";
-	private String SERVICE_PATH = PROJECT_PATH + PACKAGE_NAME + FILE_SEPARATOR + "service";
-	private String DAO_IMPL_PATH = PROJECT_PATH + PACKAGE_NAME + FILE_SEPARATOR + "dao" + FILE_SEPARATOR + "impl";
-	private String SERVICE_IMPL_PATH = PROJECT_PATH + PACKAGE_NAME + FILE_SEPARATOR + "service" + FILE_SEPARATOR + "impl";
-	private String CONTROLLER_PATH = PROJECT_PATH + PACKAGE_NAME + FILE_SEPARATOR + "controller";
-	private String POM_PATH = PROJECT_PATH;
+	private String fileSeparator = File.separator;
+	private String projectPath = PropertiesHelper.getByKey("system.projectname") + fileSeparator;
+	private String packageName = PropertiesHelper.getByKey("system.project.packagename").replace(".", fileSeparator) + fileSeparator;
+	private String srcMainJava = projectPath + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator;
+	private String srcMainResources = projectPath + "src" + fileSeparator + "main" + fileSeparator + "resources" + fileSeparator;
+	private String srcTestJava = projectPath + "src" + fileSeparator + "test" + fileSeparator + "java" + fileSeparator;
+	private String srcTestResources = projectPath + "src" + fileSeparator + "test" + fileSeparator + "resources" + fileSeparator;
+	private String domainPath = srcMainJava + packageName + "domain" + fileSeparator;
+	private String daoPath = srcMainJava + packageName + "dao" + fileSeparator;
+	private String servicePath = srcMainJava + packageName + "service" + fileSeparator;
+	private String daoImplPath = srcMainJava + packageName + "dao" + fileSeparator + "impl" + fileSeparator;
+	private String serviceImplPath = srcMainJava + packageName + "service" + fileSeparator + "impl" + fileSeparator;
+	private String controllerPath = srcMainJava + packageName + "controller" + fileSeparator;
+	private String pomPath = projectPath;
 
-	private List<String> MAVEN_PROJECT_FRAMEWORK = new ArrayList<String>();
+	private Map<String, String> mavenProFramework = new LinkedHashMap<String, String>();
 
-	public FileHelper() {
-		MAVEN_PROJECT_FRAMEWORK.add(SRC_MAIN_JAVA);
-		MAVEN_PROJECT_FRAMEWORK.add(SRC_MAIN_RESOURCES);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + SRC_TEST_JAVA + PACKAGE_NAME);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + SRC_TEST_RESOURCES + PACKAGE_NAME);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + DOMAIN_PATH + PACKAGE_NAME);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + DAO_PATH + PACKAGE_NAME);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + SERVICE_PATH + PACKAGE_NAME);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + DAO_IMPL_PATH + PACKAGE_NAME);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + SERVICE_IMPL_PATH + PACKAGE_NAME);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + CONTROLLER_PATH + PACKAGE_NAME);
-		MAVEN_PROJECT_FRAMEWORK.add(PROJECT_PATH + POM_PATH + PACKAGE_NAME);
+	private FileHelper() {
+		mavenProFramework.put("srcMainJava",srcMainJava);
+		mavenProFramework.put("srcMainResources",srcMainResources);
+		mavenProFramework.put("srcTestJava",srcTestJava);
+		mavenProFramework.put("srcTestResources",srcTestResources);
+		mavenProFramework.put("domainPath",domainPath);
+		mavenProFramework.put("daoPath",daoPath);
+		mavenProFramework.put("servicePath",servicePath);
+		mavenProFramework.put("daoImplPath",daoImplPath);
+		mavenProFramework.put("serviceImplPath",serviceImplPath);
+		mavenProFramework.put("controllerPath",controllerPath);
+		mavenProFramework.put("pomPath",pomPath);
 	}
 
 	public void createDir() {
-		for (String dir : MAVEN_PROJECT_FRAMEWORK) {
-			File file = new File(dir);
+		for (Map.Entry<String, String> dir : mavenProFramework.entrySet()) {
+			File file = new File(dir.getValue());
 			createDir(file);
 		}
 	}
@@ -57,9 +57,13 @@ public class FileHelper {
 		}
 		dir.mkdir();
 	}
+	
+	public Map<String, String> getMavenProFramework() {
+		return mavenProFramework;
+	}
 
 	public static void main(String[] args) throws IOException {
-		PropertiesHelper.initProperties("D:/git/super-generator/src/main/resources/config.properties");
+		PropertiesHelper.initProperties("D:\\workspace\\super-generator\\src\\main\\resources\\config.properties");
 		System.out.println(PropertiesHelper.getByKey("system.project.packagename"));
 		System.out.println(PropertiesHelper.getByKey("system.projectname"));
 		new FileHelper().createDir();
