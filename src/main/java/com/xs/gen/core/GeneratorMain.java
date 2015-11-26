@@ -33,7 +33,7 @@ public class GeneratorMain {
 		List<PropertyClass> propertyClassList = core.getAllFileInfo(ResManager.getString("system.db.name"));
 		List<TemplateInfoDesc> templateInfoDescList = core.getTemplateInfo(propertyClassList);
 		for (TemplateInfoDesc desc : templateInfoDescList) {
-
+			new Thread(new WriteFile(desc)).start();
 		}
 		LOGGER.info("-------------------结束生成文件-----------------------");
 	}

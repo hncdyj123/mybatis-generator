@@ -3,7 +3,6 @@ package com.xs.gen.core;
 import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -25,18 +24,9 @@ import com.xs.gen.freemarker.FtlProvider;
 public class WriteFile implements Runnable {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WriteFile.class);
 	// 参数Map
-	@SuppressWarnings("rawtypes")
-	// private Map paramMap;
 	private FtlProvider ftlProvider = new FtlProvider();
-	private List<TemplateInfoDesc> list;
-	// 生成文件目录
-	// private String filePath;
-	// 模板文件名
-	// private String ftlName;
-	// 模板路径
-	// private String ftlPath;
-	// 文件前缀
-	// private String filePrefix = "";
+	private TemplateInfoDesc desc;
+
 	// java类型需要导包的类
 	private static Map<String, String> importMapper = new LinkedHashMap<String, String>();
 	static {
@@ -51,25 +41,23 @@ public class WriteFile implements Runnable {
 
 	}
 
-	public WriteFile(List<TemplateInfoDesc> templateInfoDesc) {
-		this.list = templateInfoDesc;
+	public WriteFile(TemplateInfoDesc templateInfoDesc) {
+		this.desc = templateInfoDesc;
 
 	}
 
 	@SuppressWarnings({"rawtypes", "unchecked"})
 	public void run() {
 		try {
-			for (TemplateInfoDesc desc : list) {
-				PropertyClass pro = desc.getPropertyClass();
-				Map currentMap = new HashMap();
-				currentMap.put("importMap", getImportPackage(pro));
-				// 生成文件的文件名
-				String fileName = desc.getOutFilePath() + File.separator + pro.getClassName() + desc.getFilePrefix() + desc.getFileSuffixes();
-				// 当前文件包名
-				currentMap.put("packageName", pro.getPackageName());
-				currentMap.put("pro", pro);
-				ftlProvider.initFreemarker(desc.getTemplateName(), desc.getTemplatePath(), fileName, currentMap);
-			}
+			PropertyClass pro = desc.getPropertyClass();
+			Map currentMap = new HashMap();
+			currentMap.put("importMap", getImportPackage(pro));
+			// 生成文件的文件名
+			String fileName = desc.getOutFilePath() + File.separator + pro.getClassName() + desc.getFilePrefix() + desc.getFileSuffixes();
+			// 当前文件包名
+			currentMap.put("packageName", pro.getPackageName());
+			currentMap.put("pro", pro);
+			ftlProvider.initFreemarker(desc.getTemplateName(), desc.getTemplatePath(), fileName, currentMap);
 		} catch (Exception e) {
 			LOGGER.error("生成文件文件异常", e);
 		}
