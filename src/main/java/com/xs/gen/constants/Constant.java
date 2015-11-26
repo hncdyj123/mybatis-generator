@@ -1,7 +1,5 @@
 package com.xs.gen.constants;
 
-import java.io.File;
-
 /**
  * 
  * @ClassName: Constant
@@ -23,6 +21,8 @@ public class Constant {
 	public final static String SERVICE_FILE_PREFIX = "Service";
 	/** SERVICEIMPL前缀 **/
 	public final static String SERVICEIMPL_FILE_PREFIX = "ServiceImpl";
+	/** CONTROLLER前缀 **/
+	public final static String CONTROLLER_FILE_PREFIX = "Controller";
 	/** ENTITY模板文件名 **/
 	public final static String ENTITY_TEMPLATE_FILENAME = "Entity.ftl";
 	/** Dao模板文件名 **/
@@ -33,16 +33,10 @@ public class Constant {
 	public final static String SERVICEENTITY_TEMPLATE_FILENAME = "ServiceEntity.ftl";
 	/** ServiceImpl模板文件名 **/
 	public final static String SERVICEIMPLENTITY_TEMPLATE_FILENAME = "ServiceImplEntity.ftl";
+	/** Controller模板文件名 **/
+	public final static String CONTROLLERENTITY_TEMPLATE_FILENAME = "ControllerEntity.ftl";
+	/** Service模板文件名 **/
+	public final static String POMENTITY_TEMPLATE_FILENAME = "Pom.ftl";
 	/** XML模板文件名 **/
 	public final static String XML_TEMPLATE_FILENAME = "SqlMapper.ftl";
-	/** Dao文件夹 **/
-	public final static String DAO_FILE_PATH = "dao";
-	/** Dao的实现文件夹 **/
-	public final static String DAO_IMPL_FILE_PATH = DAO_FILE_PATH + File.separator + "impl";
-	/** Service文件夹 **/
-	public final static String SERVICE_FILE_PATH = "service";
-	/** Service的实现文件夹 **/
-	public final static String SERVICE_IMPL_FILE_PATH = SERVICE_FILE_PATH + File.separator + "impl";
-	/** Entity文件夹 **/
-	public final static String ENTITY_FILE_PATH = "entity";
 }

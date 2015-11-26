@@ -1,9 +1,9 @@
 package com.xs.gen.core;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +18,8 @@ import com.xs.gen.db.MysqlDbMapper;
 import com.xs.gen.db.TableEntity;
 import com.xs.gen.domain.Column;
 import com.xs.gen.domain.PropertyClass;
+import com.xs.gen.domain.TemplateInfoDesc;
+import com.xs.gen.util.FileHelper;
 import com.xs.gen.util.FileUtil;
 import com.xs.gen.util.MyBatisUtil;
 import com.xs.gen.util.ResManager;
@@ -50,19 +52,15 @@ public class OverCore {
 	private String outFtlFilePath = ResManager.getString("system.freemarker.filepath");
 
 	/**
+	 * 获取映射数据库表信息
 	 * 
-	 * @Description: 获取映射数据库表信息
 	 * @param dbName
-	 *            数据库名称
+	 * @return
 	 * @throws Exception
-	 * @return void
-	 * @throws
 	 */
 	public List<PropertyClass> getAllFileInfo(String dbName) throws Exception {
 		// 存放所有数据库表映射实体类信息
 		List<PropertyClass> propertyClassList = new ArrayList<PropertyClass>();
-		// 获取模板文件位置
-		templateMap = FileUtil.listFile(StringUtil.isEmptyString(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + File.separator + "ftl") : outFtlFilePath);
 		SqlSession sqlSession = sqlSessionFactory.openSession();
 		MysqlDbMapper dbMapper = sqlSession.getMapper(MysqlDbMapper.class);
 		List<TableEntity> tableEntityList = dbMapper.getAllTable(dbName); // 获取所有的表名称
@@ -70,6 +68,7 @@ public class OverCore {
 			for (TableEntity tableEntity : tableEntityList) {
 				PropertyClass propertyClass = new PropertyClass();
 				propertyClass.setTableName(tableEntity.getTableName()); // 设置表名称
+				propertyClass.setClassName(this.getClassName(tableEntity.getTableName())); // 设置类名称
 				ColumnEntity tempcolumnEntity = new ColumnEntity(tableEntity.getTableName(), dbName);
 				List<ColumnEntity> columnEntityList = dbMapper.getTableColumns(tempcolumnEntity); // 存放表字段
 				if (columnEntityList != null && columnEntityList.size() > 0) {
@@ -88,74 +87,83 @@ public class OverCore {
 	}
 
 	/**
+	 * 获取数据库映射所有模板文件信息
 	 * 
-	 * @Description: 创建生成文件的位置
-	 * @param path
-	 *            文件位置
-	 * @throws IOException
-	 * @return void
-	 * @throws
+	 * @param PropertyClassList
+	 * @return
+	 * @throws Exception
 	 */
-	public void createAllFolder(String path, List<PropertyClass> propertyClassList) throws IOException {
-		if (propertyClassList.size() > 0) {
-			for (PropertyClass pro : propertyClassList) {
-				// 创建文件
-				FileUtil.createFolder(ResManager.getString("system.file.output"), pro.getPackageName());
+	public List<TemplateInfoDesc> getTemplateInfo(List<PropertyClass> propertyClassList) throws Exception {
+		List<TemplateInfoDesc> templateInfoDescList = new ArrayList<TemplateInfoDesc>();
+		// 获取模板文件位置
+		templateMap = FileUtil.listFile(StringUtil.isEmptyString(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + File.separator + "ftl") : outFtlFilePath);
+		for (PropertyClass propertyClass : propertyClassList) { // 循环数据库表信息
+			FileHelper fileHelper = new FileHelper();
+			TemplateInfoDesc templateInfoDesc = null;
+			for (Iterator iter = templateMap.entrySet().iterator(); iter.hasNext();) {
+				Map.Entry entry = (Map.Entry) iter.next();
+				String key = (String) entry.getKey();
+				String value = (String) entry.getValue();
+				if (StringUtil.equalsString(Constant.CONTROLLERENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("controllerPath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+				}
+				if (StringUtil.equalsString(Constant.SERVICEENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("servicePath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+				}
+				if (StringUtil.equalsString(Constant.SERVICEIMPLENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("serviceImplPath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+				}
+				if (StringUtil.equalsString(Constant.DAOENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("daoPath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+				}
+				if (StringUtil.equalsString(Constant.DAOIMPLENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("daoImplPath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+				}
+				if (StringUtil.equalsString(Constant.ENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("domainPath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+				}
+				if (StringUtil.equalsString(Constant.POMENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("pomPath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+				}
+				if (StringUtil.equalsString(Constant.XML_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("mybatisPath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+				}
+				templateInfoDesc.setPropertyClass(propertyClass);
+				templateInfoDescList.add(templateInfoDesc);
 			}
 		}
+		return templateInfoDescList;
 	}
-
 	/**
+	 * 获取类名称
 	 * 
-	 * @Description: 生成文件
-	 * @param ftlNames
-	 *            模板文件名不定参数
-	 * @return void
-	 * @throws
+	 * @param tableName
+	 * @return
 	 */
-	@SuppressWarnings({"rawtypes", "unchecked"})
-	public void startThread(List<PropertyClass> propertyClassList, String... ftlNames) {
-		String filePath = ResManager.getString("system.file.output"); // 文件输出路径
-		// 模板定义文件路径
-		String ftlPath = StringUtil.isEmptyString(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + File.separator + "ftl") : outFtlFilePath;
-		// 模板中所需要map数据
-		Map paramMap = new HashMap();
-		if (propertyClassList.size() > 0) {
-			paramMap.put("proList", propertyClassList);
-			int i = 0;
-			for (String ftlName : ftlNames) {
-				// 文件前缀 例如：UserService.java Service为前缀
-				String filePrefix = "";
-				if (ftlName.equals(Constant.SERVICEENTITY_TEMPLATE_FILENAME)) {
-					filePrefix = Constant.SERVICE_FILE_PREFIX;
-				} else if (ftlName.equals(Constant.SERVICEIMPLENTITY_TEMPLATE_FILENAME)) {
-					filePrefix = Constant.SERVICEIMPL_FILE_PREFIX;
-				} else if (ftlName.equals(Constant.DAOENTITY_TEMPLATE_FILENAME)) {
-					filePrefix = Constant.DAO_FILE_PREFIX;
-				} else if (ftlName.equals(Constant.DAOIMPLENTITY_TEMPLATE_FILENAME)) {
-					filePrefix = Constant.DAOIMPL_FILE_PREFIX;
-				} else {
-					filePrefix = StringUtil.isEmptyString(ResManager.getString("system.entity.suffix")) ? "" : ResManager.getString("system.entity.suffix");
-				}
-				if (i != ftlNames.length - 1) {
-					if (templateMap.get(ftlName) != null) {
-						LOGGER.info("文件名是: " + ftlName + " | 文件后缀是: " + filePrefix);
-						// 启动生成java文件线程 paramMap 解析到的所有实体类信息 map 存放所有文件信息的map
-						new Thread(new WriteClass(filePath, ftlPath, paramMap, filePrefix, ftlName)).start();
-					}
-				}
-
-				if (i == ftlNames.length - 1) {
-					if (templateMap.get(ftlName) != null) {
-						// XML 文件前缀(此处前缀包含了文件后缀)
-						filePrefix = Constant.XML_FILE_SUFFIX;
-						LOGGER.info("文件名是: " + ftlName + " | 文件后缀是: " + filePrefix);
-						// 启动生成XML文件线程
-						new Thread(new WriteXml(filePath, ftlPath, paramMap, filePrefix, ftlName)).start();
-					}
-				}
-				i++;
+	private String getClassName(String tableName) {
+		// 分隔前缀
+		String prefix = StringUtil.isEmptyString(ResManager.getString("system.table.sub")) ? "_" : ResManager.getString("system.table.sub");
+		String[] clazz = tableName.split(prefix);
+		String className = "";
+		for (int i = 0; i < clazz.length; i++) {
+			if (i == 0) {
+				className += clazz[0];
+				continue;
 			}
+			className += StringUtil.captureName(clazz[i]);
 		}
+		if (!StringUtil.isEmptyString(ResManager.getString("system.throw.tableprefix"))) {
+			className = className.replace(ResManager.getString("system.throw.tableprefix"), "");
+		}
+		className = StringUtil.captureName(className);
+		return className;
 	}
 }

@@ -26,22 +26,35 @@ public class FileHelper {
 	private String daoImplPath = srcMainJava + packageName + "dao" + fileSeparator + "impl" + fileSeparator;
 	private String serviceImplPath = srcMainJava + packageName + "service" + fileSeparator + "impl" + fileSeparator;
 	private String controllerPath = srcMainJava + packageName + "controller" + fileSeparator;
+	private String mybatisPath = srcMainResources + fileSeparator + "mybatis" + fileSeparator;
 	private String pomPath = projectPath;
 
 	private Map<String, String> mavenProFramework = new LinkedHashMap<String, String>();
 
-	private FileHelper() {
-		mavenProFramework.put("srcMainJava",srcMainJava);
-		mavenProFramework.put("srcMainResources",srcMainResources);
-		mavenProFramework.put("srcTestJava",srcTestJava);
-		mavenProFramework.put("srcTestResources",srcTestResources);
-		mavenProFramework.put("domainPath",domainPath);
-		mavenProFramework.put("daoPath",daoPath);
-		mavenProFramework.put("servicePath",servicePath);
-		mavenProFramework.put("daoImplPath",daoImplPath);
-		mavenProFramework.put("serviceImplPath",serviceImplPath);
-		mavenProFramework.put("controllerPath",controllerPath);
-		mavenProFramework.put("pomPath",pomPath);
+	private Map<String, String> templatePathMap = new LinkedHashMap<String, String>();
+
+	public FileHelper() {
+		mavenProFramework.put("srcMainJava", srcMainJava);
+		mavenProFramework.put("srcMainResources", srcMainResources);
+		mavenProFramework.put("srcTestJava", srcTestJava);
+		mavenProFramework.put("srcTestResources", srcTestResources);
+		mavenProFramework.put("domainPath", domainPath);
+		mavenProFramework.put("daoPath", daoPath);
+		mavenProFramework.put("servicePath", servicePath);
+		mavenProFramework.put("daoImplPath", daoImplPath);
+		mavenProFramework.put("serviceImplPath", serviceImplPath);
+		mavenProFramework.put("controllerPath", controllerPath);
+		mavenProFramework.put("pomPath", pomPath);
+		mavenProFramework.put("mybatisPath", mybatisPath);
+
+		templatePathMap.put("domainPath", domainPath);
+		templatePathMap.put("daoPath", daoPath);
+		templatePathMap.put("servicePath", servicePath);
+		templatePathMap.put("daoImplPath", daoImplPath);
+		templatePathMap.put("serviceImplPath", serviceImplPath);
+		templatePathMap.put("controllerPath", controllerPath);
+		templatePathMap.put("pomPath", pomPath);
+		templatePathMap.put("mybatisPath", mybatisPath);
 	}
 
 	public void createDir() {
@@ -57,7 +70,7 @@ public class FileHelper {
 		}
 		dir.mkdir();
 	}
-	
+
 	public Map<String, String> getMavenProFramework() {
 		return mavenProFramework;
 	}
@@ -67,6 +80,14 @@ public class FileHelper {
 		System.out.println(PropertiesHelper.getByKey("system.project.packagename"));
 		System.out.println(PropertiesHelper.getByKey("system.projectname"));
 		new FileHelper().createDir();
+	}
+
+	public Map<String, String> getTemplatePathMap() {
+		return templatePathMap;
+	}
+
+	public void setTemplatePathMap(Map<String, String> templatePathMap) {
+		this.templatePathMap = templatePathMap;
 	}
 
 }

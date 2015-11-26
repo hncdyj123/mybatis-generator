@@ -125,7 +125,8 @@ public class StringUtil {
 	/**
 	 * 解码方法, 把一个BASE64编码的字符串解码为编码前的字符串
 	 * 
-	 * @param in 需要解码的BASE64编码的字符串
+	 * @param in
+	 *            需要解码的BASE64编码的字符串
 	 * 
 	 * @return String
 	 */
@@ -165,6 +166,10 @@ public class StringUtil {
 			buf.append(Integer.toHexString(val));
 		}
 		return buf.toString();
+	}
+
+	public static boolean equalsString(String sourceStr, String targetStr) {
+		return sourceStr.equals(targetStr);
 	}
 
 	/**

@@ -185,28 +185,6 @@ public class FileUtil {
 		return f;
 	}
 
-	/**
-	 * 
-	 * @param path
-	 *            要创建的文件路径
-	 * @param fileString
-	 *            文件字符串(例如：org.app.mybatis)
-	 * @throws IOException
-	 */
-	public static void createFolder(String path, String fileString) throws IOException {
-		String[] folderName = fileString.split("\\.");
-		if (folderName.length > 0) {
-			String filePath = path;
-			for (int i = 0; i < folderName.length; i++) {
-				filePath += File.separator + (i == folderName.length - 1 ? folderName[i] : (folderName[i] + File.separator));
-				File dirFile = new File(filePath);
-				if (!(dirFile.exists()) && !(dirFile.isDirectory())) {
-					dirFile.mkdirs();
-				}
-			}
-		}
-	}
-
 	public static void createFolder(String path) throws IOException {
 		File file = new File(path);
 		if (!file.exists()) {
