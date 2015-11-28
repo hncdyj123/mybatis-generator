@@ -11,8 +11,8 @@
         <setting name="defaultExecutorType" value="REUSE" />   
     </settings>   
     <typeAliases>   
-       <typeAlias alias="ColumnEntity" type="org.app.mybatis.db.ColumnEntity"/>   
-       <typeAlias alias="TableEntity" type="org.app.mybatis.db.TableEntity"/>   
+       <typeAlias alias="ColumnEntity" type="com.xs.gen.db.ColumnEntity"/>   
+       <typeAlias alias="TableEntity" type="com.xs.gen.db.TableEntity"/>   
     </typeAliases>   
     <environments default="development">   
        <environment id="development">   

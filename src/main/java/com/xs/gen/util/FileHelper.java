@@ -14,8 +14,8 @@ import java.util.Map;
  */
 public class FileHelper {
 	private String fileSeparator = File.separator;
-	private String projectPath = PropertiesHelper.getByKey("system.projectname") + fileSeparator;
-	private String packageName = PropertiesHelper.getByKey("system.project.packagename").replace(".", fileSeparator) + fileSeparator;
+	private String projectPath = PropertiesHelper.getString("system.projectname") + fileSeparator;
+	private String packageName = PropertiesHelper.getString("system.project.packagename").replace(".", fileSeparator) + fileSeparator;
 	private String srcMainJava = projectPath + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator;
 	private String srcMainResources = projectPath + "src" + fileSeparator + "main" + fileSeparator + "resources" + fileSeparator;
 	private String srcTestJava = projectPath + "src" + fileSeparator + "test" + fileSeparator + "java" + fileSeparator;

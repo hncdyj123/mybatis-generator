@@ -96,7 +96,7 @@ public class OverCore {
 	public List<TemplateInfoDesc> getTemplateInfo(List<PropertyClass> propertyClassList) throws Exception {
 		List<TemplateInfoDesc> templateInfoDescList = new ArrayList<TemplateInfoDesc>();
 		// 获取模板文件位置
-		templateMap = FileUtil.listFile(StringUtil.isEmptyString(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + File.separator + "ftl") : outFtlFilePath);
+		templateMap = FileUtil.listFile((StringUtil.isEmptyString(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + File.separator + "ftl") : outFtlFilePath));
 		for (PropertyClass propertyClass : propertyClassList) { // 循环数据库表信息
 			FileHelper fileHelper = new FileHelper();
 			TemplateInfoDesc templateInfoDesc = null;
@@ -106,23 +106,23 @@ public class OverCore {
 				String value = (String) entry.getValue();
 				if (StringUtil.equalsString(Constant.CONTROLLERENTITY_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("controllerPath");
-					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.CONTROLLER_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
 				if (StringUtil.equalsString(Constant.SERVICEENTITY_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("servicePath");
-					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.SERVICE_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
 				if (StringUtil.equalsString(Constant.SERVICEIMPLENTITY_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("serviceImplPath");
-					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.SERVICEIMPL_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
 				if (StringUtil.equalsString(Constant.DAOENTITY_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("daoPath");
-					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.DAO_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
 				if (StringUtil.equalsString(Constant.DAOIMPLENTITY_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("daoImplPath");
-					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.DAOIMPL_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
 				if (StringUtil.equalsString(Constant.ENTITY_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("domainPath");
@@ -134,7 +134,7 @@ public class OverCore {
 				}
 				if (StringUtil.equalsString(Constant.XML_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("mybatisPath");
-					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.XML_FILE_SUFFIX);
 				}
 				templateInfoDesc.setPropertyClass(propertyClass);
 				templateInfoDescList.add(templateInfoDesc);

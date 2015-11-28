@@ -1,6 +1,5 @@
 package com.xs.gen.core;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -53,7 +52,7 @@ public class WriteFile implements Runnable {
 			Map currentMap = new HashMap();
 			currentMap.put("importMap", getImportPackage(pro));
 			// 生成文件的文件名
-			String fileName = desc.getOutFilePath() + File.separator + pro.getClassName() + desc.getFilePrefix() + desc.getFileSuffixes();
+			String fileName = desc.getOutFilePath() + pro.getClassName() + desc.getFilePrefix() + desc.getFileSuffixes();
 			// 当前文件包名
 			currentMap.put("packageName", pro.getPackageName());
 			currentMap.put("pro", pro);
