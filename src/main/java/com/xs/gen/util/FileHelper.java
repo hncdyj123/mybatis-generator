@@ -16,6 +16,7 @@ public class FileHelper {
 	private String fileSeparator = File.separator;
 	private String projectPath = PropertiesHelper.getString("system.projectname") + fileSeparator;
 	private String packageName = PropertiesHelper.getString("system.project.packagename").replace(".", fileSeparator) + fileSeparator;
+	private String webapp = projectPath + "src" + fileSeparator + "main" + fileSeparator + "webapp" + fileSeparator;
 	private String srcMainJava = projectPath + "src" + fileSeparator + "main" + fileSeparator + "java" + fileSeparator;
 	private String srcMainResources = projectPath + "src" + fileSeparator + "main" + fileSeparator + "resources" + fileSeparator;
 	private String srcTestJava = projectPath + "src" + fileSeparator + "test" + fileSeparator + "java" + fileSeparator;
@@ -46,6 +47,7 @@ public class FileHelper {
 		mavenProFramework.put("controllerPath", controllerPath);
 		mavenProFramework.put("pomPath", pomPath);
 		mavenProFramework.put("mybatisPath", mybatisPath);
+		mavenProFramework.put("webapp", webapp);
 
 		templatePathMap.put("domainPath", domainPath);
 		templatePathMap.put("daoPath", daoPath);
@@ -55,6 +57,14 @@ public class FileHelper {
 		templatePathMap.put("controllerPath", controllerPath);
 		templatePathMap.put("pomPath", pomPath);
 		templatePathMap.put("mybatisPath", mybatisPath);
+	}
+
+	public void createProject() throws IOException {
+		// 复制webapp
+		String webapp = this.getClass().getResource("/").getPath() + "prosource/webapp/";
+		FileUtil.copyFolder(webapp, mavenProFramework.get("webapp"));
+		PropertyPlaceholderReplace proPlaceholderReplace = new PropertyPlaceholderReplace(PropertiesHelper.getString("prosource.fileNames"));
+		proPlaceholderReplace.placeholderReplace();
 	}
 
 	public void createDir() {
@@ -76,10 +86,11 @@ public class FileHelper {
 	}
 
 	public static void main(String[] args) throws IOException {
-		PropertiesHelper.initProperties("D:\\workspace\\super-generator\\src\\main\\resources\\config.properties");
-		System.out.println(PropertiesHelper.getByKey("system.project.packagename"));
-		System.out.println(PropertiesHelper.getByKey("system.projectname"));
-		new FileHelper().createDir();
+		// PropertiesHelper.initProperties("D:\\workspace\\super-generator\\src\\main\\resources\\config.properties");
+		// System.out.println(PropertiesHelper.getByKey("system.project.packagename"));
+		// System.out.println(PropertiesHelper.getByKey("system.projectname"));
+		// new FileHelper().createDir();
+		new FileHelper().createProject();
 	}
 
 	public Map<String, String> getTemplatePathMap() {

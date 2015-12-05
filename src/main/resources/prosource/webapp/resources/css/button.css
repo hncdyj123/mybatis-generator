@@ -1,0 +1,106 @@
+@CHARSET "UTF-8";
+
+.btn-search{
+	background:url("../images/icons/search.png") no-repeat  4px;
+	background-color:#eeeeee;
+	cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    color: #444;
+    line-height: 20px;
+    padding-left:20px;
+    
+}
+
+.btn-reload{
+	
+	background:url("../images/icons/reload.png") no-repeat  4px;
+	background-color:#eeeeee;
+	cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    color: #444;
+    line-height: 20px;
+    padding-left:20px;
+}
+.btn-back{
+	background:url("../images/icons/back.png") no-repeat  4px;
+	background-color:#eeeeee;
+	cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    color: #444;
+    line-height: 20px;
+    padding-left:20px;
+}
+
+.btn-clear{
+	background:url("../images/icons/clear.png") no-repeat  4px;
+	background-color:#eeeeee;
+	cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    color: #444;
+    line-height: 20px;
+    padding-left:20px;
+}
+
+
+.btn-cancel{
+	background:url("../images/icons/cancel.png") no-repeat  4px;
+	background-color:#eeeeee;
+	cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    color: #444;
+    line-height: 20px;
+    padding-left:20px;
+}
+.btn-ok{
+	background:url("../images/icons/ok.png") no-repeat  4px;
+	background-color:#eeeeee;
+	cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    color: #444;
+    line-height: 20px;
+    padding-left:20px;
+}
+
+.btn-edit-add{
+	background:url("../images/icons/edit_add.png") no-repeat  4px;
+	background-color:#eeeeee;
+	cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    color: #444;
+    line-height: 20px;
+    padding-left:20px;
+}
+
+.btn-edit-remove{
+	background:url("../images/icons/edit_remove.png") no-repeat  4px;
+	background-color:#eeeeee;
+	cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    color: #444;
+    line-height: 20px;
+    padding-left:20px;
+}

@@ -25,6 +25,10 @@ public class StringUtil {
 		return (str == null) || (str.trim().length() == 0);
 	}
 
+	public static boolean isEmpty(String str) {
+		return (str == null) || (str.trim().length() == 0);
+	}
+
 	/**
 	 * 将String数组转换成Integer数组
 	 * 
