@@ -176,7 +176,7 @@ public class FileUtil {
 	 * @param filePath
 	 * @throws IOException
 	 */
-	public static File createFile(String filePath) throws IOException {
+	public synchronized static File createFile(String filePath) throws IOException {
 		File f = new File(filePath);
 		if (f.exists()) {
 			f.delete();

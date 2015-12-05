@@ -22,6 +22,7 @@ import com.xs.gen.domain.TemplateInfoDesc;
 import com.xs.gen.util.FileHelper;
 import com.xs.gen.util.FileUtil;
 import com.xs.gen.util.MyBatisUtil;
+import com.xs.gen.util.PropertiesHelper;
 import com.xs.gen.util.ResManager;
 import com.xs.gen.util.StringUtil;
 
@@ -93,6 +94,7 @@ public class OverCore {
 	 * @return
 	 * @throws Exception
 	 */
+	@SuppressWarnings("rawtypes")
 	public List<TemplateInfoDesc> getTemplateInfo(List<PropertyClass> propertyClassList) throws Exception {
 		List<TemplateInfoDesc> templateInfoDescList = new ArrayList<TemplateInfoDesc>();
 		// 获取模板文件位置
@@ -128,14 +130,16 @@ public class OverCore {
 					String outFilePath = fileHelper.getTemplatePathMap().get("domainPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
 				}
-				if (StringUtil.equalsString(Constant.POMENTITY_TEMPLATE_FILENAME, key)) {
-					String outFilePath = fileHelper.getTemplatePathMap().get("pomPath");
-					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
-				}
+				// TODO
+				// if (StringUtil.equalsString(Constant.POMENTITY_TEMPLATE_FILENAME, key)) {
+				// String outFilePath = fileHelper.getTemplatePathMap().get("pomPath");
+				// templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.XML_FILE_SUFFIX);
+				// }
 				if (StringUtil.equalsString(Constant.XML_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("mybatisPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.XML_FILE_SUFFIX);
 				}
+				propertyClass.setPackageName(PropertiesHelper.getString("system.project.packagename"));
 				templateInfoDesc.setPropertyClass(propertyClass);
 				templateInfoDescList.add(templateInfoDesc);
 			}

@@ -1,56 +1,130 @@
-package ${packageName};
+package ${packageName}.controller;
 
-import java.util.List;
-import java.lang.Integer;
- <#if pro?exists>
-import ${packageName}.${pro.className};
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
-/**
- * 模板引擎生成的实体类
- * @email hncdyj123@163.com
- */
-public class ${pro.className}ServiceImpl implements ${pro.className}Service {
-	
-	private ${pro.className}Dao ${pro.className?uncap_first}Dao;
-	
-	@Override
-	public void insert${pro.className}(${pro.className} ${pro.className?uncap_first}) {
-		${pro.className?uncap_first}Dao.insert${pro.className}(${pro.className?uncap_first});
-	}
-	
-	@Override
-	public void update${pro.className}(${pro.className} ${pro.className?uncap_first}) {
-		${pro.className?uncap_first}Dao.update${pro.className}(${pro.className?uncap_first});
-	}
-	
-	@Override
-	public void delete${pro.className}(${pro.className} ${pro.className?uncap_first}) {
-		${pro.className?uncap_first}Dao.delete${pro.className}(${pro.className?uncap_first});
-	}
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<${pro.className}> list${pro.className}(${pro.className} ${pro.className?uncap_first}) {
-		return ${pro.className?uncap_first}Dao.list${pro.className}(${pro.className?uncap_first});
+import ${packageName}.domain.base.*;
+import ${packageName}.domain.${pro.className};
+import ${packageName}.service.${pro.className}Service;
+
+@Controller
+@RequestMapping("/${pro.className?uncap_first}")
+public class ${pro.className}Controller {
+	private static Logger LOGGER = LoggerFactory.getLogger(${pro.className}.class);
+	@Resource
+	private ${pro.className}Service ${pro.className?uncap_first}Service;
+
+	@RequestMapping(value = "init")
+	public ModelAndView init(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView();
+		model.setViewName("/${pro.className?uncap_first}");
+		return model;
 	}
 
-	@Override
-	public Integer list${pro.className}Count(${pro.className} ${pro.className?uncap_first}) {
-		return ${pro.className?uncap_first}Dao.list${pro.className}Count(${pro.className?uncap_first});
+	@RequestMapping(value = "getDataGrid", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Object getDataGrid(${pro.className} ${pro.className?uncap_first}) {
+		DataGrid dataGrid = new DataGrid();
+		try {
+			dataGrid = ${pro.className?uncap_first}Service.query${pro.className}ByPage(${pro.className?uncap_first});
+		} catch (Exception e) {
+			LOGGER.error("getDataGrid method error : " + e);
+			dataGrid.setCode(500);
+			dataGrid.setMessage("getDataGrid error!");
+		}
+		return dataGrid;
 	}
 
-	@Override
-	public ${pro.className} find${pro.className}ByID(${pro.className} ${pro.className?uncap_first}) {
-		return ${pro.className?uncap_first}Dao.find${pro.className}ByID(${pro.className?uncap_first});
+	@RequestMapping(value = "insert", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Object insert(${pro.className} ${pro.className?uncap_first}) {
+		Message message = new Message();
+		try {
+			${pro.className?uncap_first}Service.insert${pro.className}(${pro.className?uncap_first});
+		} catch (Exception e) {
+			LOGGER.error("insert method error :", e);
+			message.setCode(500);
+			message.setMessage("insert error!");
+		}
+		return message;
 	}
 	
-	@Override
-	public ${pro.className} find${pro.className}ByCondition(${pro.className} ${pro.className?uncap_first}) {
-		return ${pro.className?uncap_first}Dao.find${pro.className}ByCondition(${pro.className?uncap_first});
+	@RequestMapping(value = "delete", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Object delete(${pro.className} ${pro.className?uncap_first}) {
+		Message message = new Message();
+		try {
+			${pro.className?uncap_first}Service.delete${pro.className}(${pro.className?uncap_first});
+		} catch (Exception e) {
+			LOGGER.error("delete method error :", e);
+			message.setCode(500);
+			message.setMessage("delete error!");
+		}
+		return message;
+	}
+
+	@RequestMapping(value = "update", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Object update(${pro.className} ${pro.className?uncap_first}) {
+		Message message = new Message();
+		try {
+			${pro.className?uncap_first}Service.update${pro.className}(${pro.className?uncap_first});
+		} catch (Exception e) {
+			LOGGER.error("update method error :", e);
+			message.setCode(500);
+			message.setMessage("update error!");
+		}
+		return message;
+	}
+
+	@RequestMapping(value = "query", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Object query(${pro.className} ${pro.className?uncap_first}) {
+		Message message = new Message();
+		try {
+			message.setResult(${pro.className?uncap_first}Service.list${pro.className}(${pro.className?uncap_first}));
+		} catch (Exception e) {
+			LOGGER.error("query method error :", e);
+			message.setCode(500);
+			message.setMessage("query error!");
+		}
+		return message;
 	}
 	
-	public void set${pro.className?cap_first}Dao(${pro.className}Dao ${pro.className?uncap_first}Dao){
-		this.${pro.className?uncap_first}Dao = ${pro.className?uncap_first}Dao;
+	@RequestMapping(value = "queryById", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Object queryById(${pro.className} ${pro.className?uncap_first}) {
+		Message message = new Message();
+		try {
+			message.setResult(${pro.className?uncap_first}Service.query${pro.className}ById(${pro.className?uncap_first}));
+		} catch (Exception e) {
+			LOGGER.error("queryById method error :", e);
+			message.setCode(500);
+			message.setMessage("queryById error!");
+		}
+		return message;
 	}
+	
+	@RequestMapping(value = "queryByCondition", method = {RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public Object queryByCondition(${pro.className} ${pro.className?uncap_first}) {
+		Message message = new Message();
+		try {
+			message.setResult(${pro.className?uncap_first}Service.query${pro.className}ByCondition(${pro.className?uncap_first}));
+		} catch (Exception e) {
+			LOGGER.error("queryByCondition method error :", e);
+			message.setCode(500);
+			message.setMessage("queryByCondition error!");
+		}
+		return message;
+	}
+
 }
-</#if>

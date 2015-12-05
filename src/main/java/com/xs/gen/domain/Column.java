@@ -19,23 +19,23 @@ public class Column {
 	private static Map<String, String> dbMysqlMapper = new LinkedHashMap<String, String>();
 
 	static {
-		dbMysqlMapper.put("BIGINT", "long");
+		dbMysqlMapper.put("BIGINT", "Long");
 		dbMysqlMapper.put("BIT", "byte[]");
 		dbMysqlMapper.put("BLOB", "byte[]");
 		dbMysqlMapper.put("CHAR", "String");
 		dbMysqlMapper.put("DATE", "Date");
 		dbMysqlMapper.put("DATETIME", "Timestamp");
 		dbMysqlMapper.put("DECIMAL", "BigDecimal");
-		dbMysqlMapper.put("DOUBLE", "double");
-		dbMysqlMapper.put("DOUBLE PRECISION", "double");
+		dbMysqlMapper.put("DOUBLE", "Double");
+		dbMysqlMapper.put("DOUBLE PRECISION", "Double");
 		dbMysqlMapper.put("ENUM", "String");
-		dbMysqlMapper.put("FLOAT", "float");
-		dbMysqlMapper.put("INT", "int");
-		dbMysqlMapper.put("INTEGER", "int");
+		dbMysqlMapper.put("FLOAT", "Float");
+		dbMysqlMapper.put("INT", "Integer");
+		dbMysqlMapper.put("INTEGER", "Integer");
 		dbMysqlMapper.put("LONGBLOB", "byte[]");
 		dbMysqlMapper.put("LONGTEXT", "String");
 		dbMysqlMapper.put("MEDIUMBLOB", "byte[]");
-		dbMysqlMapper.put("MEDIUMINT", "int");
+		dbMysqlMapper.put("MEDIUMINT", "Integer");
 		dbMysqlMapper.put("MEDIUMTEXT", "String");
 		dbMysqlMapper.put("NUMERIC", "_");
 		dbMysqlMapper.put("REAL", "_");
@@ -45,7 +45,7 @@ public class Column {
 		dbMysqlMapper.put("TIME", "Time");
 		dbMysqlMapper.put("TIMESTAMP", "Timestamp");
 		dbMysqlMapper.put("TINYBLOB", "byte[]");
-		dbMysqlMapper.put("TINYINT", "boolean");
+		dbMysqlMapper.put("TINYINT", "Boolean");
 		dbMysqlMapper.put("TINYTEXT", "String");
 		dbMysqlMapper.put("VARCHAR", "String");
 		dbMysqlMapper.put("YEAR", "Date");
@@ -117,6 +117,9 @@ public class Column {
 	}
 
 	public String getJdkType() {
+		if (StringUtil.equalsString("int".toUpperCase(), dataType.toUpperCase())) { // 数据库为int时候 mybatis枚举不支持
+			dataType = "INTEGER";
+		}
 		jdkType = dbMysqlMapper.get(dataType.toUpperCase());
 		if (StringUtil.isEmptyString(jdkType)) {
 			jdkType = "String";

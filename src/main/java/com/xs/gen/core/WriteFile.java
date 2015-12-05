@@ -34,6 +34,11 @@ public class WriteFile implements Runnable {
 		importMapper.put("Timestamp", "java.sql.Timestamp;");
 		importMapper.put("BigDecimal", "java.math.BigDecimal;");
 		importMapper.put("Time", "java.sql.Time;");
+		importMapper.put("Boolean", "java.lang.Boolean;");
+		importMapper.put("Long", "java.lang.Long;");
+		importMapper.put("Integer", "java.lang.Integer;");
+		importMapper.put("Float", "java.lang.Float;");
+		importMapper.put("Double", "java.lang.Double;");
 	}
 
 	public WriteFile() {
