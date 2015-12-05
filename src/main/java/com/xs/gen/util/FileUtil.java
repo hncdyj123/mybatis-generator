@@ -192,38 +192,29 @@ public class FileUtil {
 		}
 	}
 
-	public static void copyFolder(String oldPath, String newPath) {
-
-		try {
-			(new File(newPath)).mkdirs(); // 如果文件夹不存在 则建立新文件夹
-			File a = new File(oldPath);
-			String[] file = a.list();
-			File temp = null;
-			for (int i = 0; i < file.length; i++) {
-				if (oldPath.endsWith(File.separator)) {
-					temp = new File(oldPath + file[i]);
-				} else {
-					temp = new File(oldPath + File.separator + file[i]);
-				}
-
-				if (temp.isFile()) {
-					FileInputStream input = new FileInputStream(temp);
-					FileOutputStream output = new FileOutputStream(newPath + "/" + (temp.getName()).toString());
-					byte[] b = new byte[1024 * 5];
-					int len;
-					while ((len = input.read(b)) != -1) {
-						output.write(b, 0, len);
-					}
-					output.flush();
-					output.close();
-					input.close();
-				}
-				if (temp.isDirectory()) {// 如果是子文件夹
-					copyFolder(oldPath + "/" + file[i], newPath + "/" + file[i]);
-				}
+	public static void copyFolder(File src, File dest) throws IOException {
+		if (src.isDirectory()) {
+			if (!dest.exists()) {
+				dest.mkdirs();
 			}
-		} catch (Exception e) {
-			LOGGER.error("移动文件夹错误:" + e);
+			System.out.println(src.getAbsolutePath());
+			String files[] = src.list();
+			for (String file : files) {
+				File srcFile = new File(src, file);
+				File destFile = new File(dest, file);
+				// 递归复制
+				copyFolder(srcFile, destFile);
+			}
+		} else {
+			InputStream in = new FileInputStream(src);
+			OutputStream out = new FileOutputStream(dest);
+			byte[] buffer = new byte[1024];
+			int length;
+			while ((length = in.read(buffer)) > 0) {
+				out.write(buffer, 0, length);
+			}
+			in.close();
+			out.close();
 		}
 	}
 }

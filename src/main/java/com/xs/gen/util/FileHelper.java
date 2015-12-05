@@ -62,7 +62,7 @@ public class FileHelper {
 	public void createProject() throws IOException {
 		// 复制webapp
 		String webapp = this.getClass().getResource("/").getPath() + "prosource/webapp/";
-		FileUtil.copyFolder(webapp, mavenProFramework.get("webapp"));
+		FileUtil.copyFolder(new File(webapp), new File(mavenProFramework.get("webapp")));
 		PropertyPlaceholderReplace proPlaceholderReplace = new PropertyPlaceholderReplace(PropertiesHelper.getString("prosource.fileNames"));
 		proPlaceholderReplace.placeholderReplace();
 	}
