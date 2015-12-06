@@ -18,7 +18,7 @@ import com.xs.gen.util.ResManager;
  */
 public class GeneratorMain {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(WriteClass.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(GeneratorMain.class);
 
 	/**
 	 * 主程序入口

@@ -23,7 +23,6 @@ public class MyBatisUtil {
 		try {
 			reader = Resources.getResourceAsReader(resource);
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
 
 		}
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);

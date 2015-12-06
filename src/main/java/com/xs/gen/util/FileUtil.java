@@ -198,7 +198,6 @@ public class FileUtil {
 			if (!dest.exists()) {
 				dest.mkdirs();
 			}
-			System.out.println(src.getAbsolutePath());
 			String files[] = src.list();
 			for (String file : files) {
 				File srcFile = new File(src, file);
@@ -236,13 +235,11 @@ public class FileUtil {
 				byte[] buffer = new byte[1444];
 				while ((byteread = inStream.read(buffer)) != -1) {
 					bytesum += byteread;
-					System.out.println(bytesum);
 					fs.write(buffer, 0, byteread);
 				}
 				inStream.close();
 			}
 		} catch (Exception e) {
-			System.out.println("error  ");
 			e.printStackTrace();
 		}
 	}

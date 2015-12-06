@@ -39,7 +39,7 @@ import com.xs.gen.util.StringUtil;
  */
 public class OverCore {
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(WriteClass.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(OverCore.class);
 
 	private static SqlSessionFactory sqlSessionFactory = null;
 
