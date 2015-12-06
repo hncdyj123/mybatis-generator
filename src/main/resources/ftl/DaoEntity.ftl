@@ -3,7 +3,7 @@ package ${packageName}.dao;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
- <#if pro?exists>
+<#if pro?exists>
 import ${packageName}.domain.${pro.className};
 
 /**

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
 <!-- Always ensure to use the correct XML header as above! -->
- <#if pro?exists>
+<#if pro?exists>
 <mapper namespace="${packageName}.dao.${pro.className}Dao">
 	<insert id="insert${pro.className?cap_first}" parameterType="${pro.className?uncap_first}">
 		insert into ${pro.tableName} (

@@ -3,7 +3,7 @@ package ${packageName}.service;
 import java.util.List;
 
 import ${packageName}.domain.base.*;
- <#if pro?exists>
+<#if pro?exists>
 import ${packageName}.domain.${pro.className};
 
 /**

@@ -22,8 +22,8 @@
 	</appender>
 
 	<!-- project default level -->
-	<logger name="${system.project.packagename}" level="DEBUG" />
-	<root level="DEBUG">
+	<logger name="${system.project.packagename}" level="${log.level}" />
+	<root level="${log.level}">
 		<appender-ref ref="console" />
 		<appender-ref ref="rollingFile" />
 	</root>

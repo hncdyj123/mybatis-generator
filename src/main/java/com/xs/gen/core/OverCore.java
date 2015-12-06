@@ -1,6 +1,7 @@
 package com.xs.gen.core;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -51,6 +52,12 @@ public class OverCore {
 	}
 	// 外部文件模板位置
 	private String outFtlFilePath = ResManager.getString("system.freemarker.filepath");
+	
+	public void createProject() throws IOException{
+		FileHelper fileHelper = new FileHelper();
+		fileHelper.createDir();
+		fileHelper.createProject();
+	}
 
 	/**
 	 * 获取映射数据库表信息
@@ -130,11 +137,10 @@ public class OverCore {
 					String outFilePath = fileHelper.getTemplatePathMap().get("domainPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JAVA_FILE_SUFFIX);
 				}
-				// TODO
-				// if (StringUtil.equalsString(Constant.POMENTITY_TEMPLATE_FILENAME, key)) {
-				// String outFilePath = fileHelper.getTemplatePathMap().get("pomPath");
-				// templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.XML_FILE_SUFFIX);
-				// }
+				if (StringUtil.equalsString(Constant.JSPENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = fileHelper.getTemplatePathMap().get("jspPath");
+					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JSP_FILE_SUFFIX);
+				}
 				if (StringUtil.equalsString(Constant.XML_TEMPLATE_FILENAME, key)) {
 					String outFilePath = fileHelper.getTemplatePathMap().get("mybatisPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.XML_FILE_SUFFIX);
@@ -146,6 +152,7 @@ public class OverCore {
 		}
 		return templateInfoDescList;
 	}
+
 	/**
 	 * 获取类名称
 	 * 

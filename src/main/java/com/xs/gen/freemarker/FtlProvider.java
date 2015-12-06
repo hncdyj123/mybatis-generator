@@ -53,8 +53,13 @@ public class FtlProvider {
 
 		Template template = freemarkerCfg.getTemplate(ftlName);
 		template.setEncoding("UTF-8");
+		try{
 		// 创建文件夹
 		FileUtil.createFolder(filePath.substring(0, filePath.lastIndexOf(File.separator)));
+		}catch(Exception e){
+			System.out.println("fssfa"+filePath);
+			e.printStackTrace();
+		}
 		// 创建新文件
 		File createFile = FileUtil.createFile(filePath);
 		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(createFile), "UTF-8"));

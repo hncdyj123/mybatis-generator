@@ -9,7 +9,7 @@ import ${packageName}.domain.base.Page;
  * 模板引擎生成的实体类
  * @email hncdyj123@163.com
  */
- <#if pro?exists>
+<#if pro?exists>
 public class ${pro.className} extends Page {
 	<#list pro.columns as c>
 	/** <#if (c.fieldDesc)??>${c.fieldDesc} </#if>**/

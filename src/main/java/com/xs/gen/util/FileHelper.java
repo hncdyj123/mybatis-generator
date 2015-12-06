@@ -2,7 +2,7 @@ package com.xs.gen.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -13,6 +13,9 @@ import java.util.Map;
  *
  */
 public class FileHelper {
+	private Map<String, String> mavenProFramework = new HashMap<String, String>();
+	private Map<String, String> templatePathMap = new HashMap<String, String>();
+
 	private String fileSeparator = File.separator;
 	private String projectPath = PropertiesHelper.getString("system.projectname") + fileSeparator;
 	private String packageName = PropertiesHelper.getString("system.project.packagename").replace(".", fileSeparator) + fileSeparator;
@@ -29,10 +32,8 @@ public class FileHelper {
 	private String controllerPath = srcMainJava + packageName + "controller" + fileSeparator;
 	private String mybatisPath = srcMainResources + fileSeparator + "mybatis" + fileSeparator;
 	private String pomPath = projectPath;
-
-	private Map<String, String> mavenProFramework = new LinkedHashMap<String, String>();
-
-	private Map<String, String> templatePathMap = new LinkedHashMap<String, String>();
+	private String jspPath = webapp + "WEB-INF" + fileSeparator + "views" + fileSeparator;
+	private String baseEntityPath = domainPath + fileSeparator + "base" + fileSeparator;
 
 	public FileHelper() {
 		mavenProFramework.put("srcMainJava", srcMainJava);
@@ -48,6 +49,8 @@ public class FileHelper {
 		mavenProFramework.put("pomPath", pomPath);
 		mavenProFramework.put("mybatisPath", mybatisPath);
 		mavenProFramework.put("webapp", webapp);
+		mavenProFramework.put("jspPath", jspPath);
+		mavenProFramework.put("baseEntityPath", baseEntityPath);
 
 		templatePathMap.put("domainPath", domainPath);
 		templatePathMap.put("daoPath", daoPath);
@@ -57,12 +60,17 @@ public class FileHelper {
 		templatePathMap.put("controllerPath", controllerPath);
 		templatePathMap.put("pomPath", pomPath);
 		templatePathMap.put("mybatisPath", mybatisPath);
+		templatePathMap.put("jspPath", jspPath);
 	}
 
 	public void createProject() throws IOException {
 		// 复制webapp
 		String webapp = this.getClass().getResource("/").getPath() + "prosource/webapp/";
 		FileUtil.copyFolder(new File(webapp), new File(mavenProFramework.get("webapp")));
+		String baseEntity = this.getClass().getResource("/").getPath() + "prosource/base/";
+		FileUtil.copyFolder(new File(baseEntity), new File(mavenProFramework.get("baseEntityPath")));
+		String mybatisConfig = this.getClass().getResource("/").getPath() + "prosource/mybatis-config.xml";
+		FileUtil.CopyFile(new File(mybatisConfig), mybatisPath + "mybatis-config.xml");
 		PropertyPlaceholderReplace proPlaceholderReplace = new PropertyPlaceholderReplace(PropertiesHelper.getString("prosource.fileNames"));
 		proPlaceholderReplace.placeholderReplace();
 	}

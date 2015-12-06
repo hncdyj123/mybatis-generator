@@ -35,7 +35,7 @@ public class FileUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	@SuppressWarnings({"unused", "resource"})
+	@SuppressWarnings({ "unused", "resource" })
 	public static boolean saveFile(String path, String writeFileName, String readFilePath) throws Exception {
 		// 创建文件夹
 		boolean result = false;
@@ -104,7 +104,8 @@ public class FileUtil {
 	 */
 	public static boolean deleteFolder(String path) throws Exception {
 		File file = new File(path);
-		boolean result = false;;
+		boolean result = false;
+		;
 		try {
 			String childs[] = file.list();
 			if (childs == null || childs.length <= 0) {
@@ -215,6 +216,34 @@ public class FileUtil {
 			}
 			in.close();
 			out.close();
+		}
+	}
+
+	/**
+	 * 拷贝文件
+	 * 
+	 * @param oldfile
+	 * @param newPath
+	 */
+	public static void CopyFile(File oldfile, String newPath) {
+		try {
+			int bytesum = 0;
+			int byteread = 0;
+			// File oldfile = new File(oldPath);
+			if (oldfile.exists()) {
+				InputStream inStream = new FileInputStream(oldfile);
+				FileOutputStream fs = new FileOutputStream(newPath);
+				byte[] buffer = new byte[1444];
+				while ((byteread = inStream.read(buffer)) != -1) {
+					bytesum += byteread;
+					System.out.println(bytesum);
+					fs.write(buffer, 0, byteread);
+				}
+				inStream.close();
+			}
+		} catch (Exception e) {
+			System.out.println("error  ");
+			e.printStackTrace();
 		}
 	}
 }

@@ -5,7 +5,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
- <#if pro?exists> 
+<#if pro?exists> 
 import ${packageName}.domain.base.*;
 import ${packageName}.domain.${pro.className};
 import ${packageName}.dao.${pro.className}Dao;

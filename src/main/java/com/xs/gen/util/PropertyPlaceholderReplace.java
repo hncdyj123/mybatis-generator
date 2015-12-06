@@ -62,6 +62,9 @@ public class PropertyPlaceholderReplace {
 			}
 			// 新文件路径
 			String newFile = new FileHelper().getMavenProFramework().get("srcMainResources") + fileName;
+			if(StringUtil.equalsString("pom.xml", fileName)){
+				newFile = new FileHelper().getMavenProFramework().get("pomPath") + fileName;
+			}
 			wirteFile(newFile, fileStr);
 		}
 	}

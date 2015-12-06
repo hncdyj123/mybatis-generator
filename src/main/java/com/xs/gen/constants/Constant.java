@@ -11,6 +11,8 @@ package com.xs.gen.constants;
 public class Constant {
 	/** xml文件后缀 **/
 	public final static String XML_FILE_SUFFIX = "Mapper.xml";
+	/** jsp文件后缀 **/
+	public final static String JSP_FILE_SUFFIX = ".jsp";
 	/** java文件后缀 **/
 	public final static String JAVA_FILE_SUFFIX = ".java";
 	/** DAO前缀 **/
@@ -36,7 +38,7 @@ public class Constant {
 	/** Controller模板文件名 **/
 	public final static String CONTROLLERENTITY_TEMPLATE_FILENAME = "ControllerEntity.ftl";
 	/** Service模板文件名 **/
-	public final static String POMENTITY_TEMPLATE_FILENAME = "Pom.ftl";
+	public final static String JSPENTITY_TEMPLATE_FILENAME = "JspEntity.ftl";
 	/** XML模板文件名 **/
 	public final static String XML_TEMPLATE_FILENAME = "SqlMapper.ftl";
 }

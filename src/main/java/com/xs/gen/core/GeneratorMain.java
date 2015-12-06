@@ -29,6 +29,7 @@ public class GeneratorMain {
 	public static void main(String[] args) throws Exception {
 		LOGGER.info("-------------------开始生成文件-----------------------");
 		OverCore core = new OverCore();
+		core.createProject();
 		// 获取数据库表所有的描述信息
 		List<PropertyClass> propertyClassList = core.getAllFileInfo(ResManager.getString("system.db.name"));
 		List<TemplateInfoDesc> templateInfoDescList = core.getTemplateInfo(propertyClassList);
