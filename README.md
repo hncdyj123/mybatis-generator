@@ -1,4 +1,7 @@
 #首先想说说写这个项目的目的<br/>
+以前写过2个版本，后面看公司的项目，思想挺好的。所以重写了以前的代码。
+第一版本：https://github.com/hncdyj123/mybatis-generator-v2
+第二版本：https://github.com/hncdyj123/super-generator
 1.项目表太多。<br/>
 2.mybatis自带的生成mybatis-generator生成的代码可能不太友好，而且只有model,mapper,xml。<br/>
 3.继承mybatis-generator本身的生成。<br/>
