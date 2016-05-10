@@ -173,17 +173,20 @@ jdbc.pool.maxActive.config=150
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/search.jpg)
 修改操作<br/>
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/update.jpg)
+
 ##4.生成项目后运行可能遇到的问题
 1.样式错乱。(这个可以微调easyui样式)<br/>
 2.新增和修改抓包报400错，这是spring绑定实体对象报错。(表单不要提交date,datetime,timestamp等类型，一般提交字符串，用VO接收)<br/>
 3.每次重新生成请清理src/main/resources/mybatis/mapper目录，因为mybatis-generator会在原来的文件中追加sql。
 
-##4.项目资源
+##5.项目资源
 1.sql脚本在项目根目录sql下。<br/>
 2.可执行的tar.gz在项目根目录startrun下。<br/>
 3.生成的项目在根目录startrun下。<br/>
 
-##5.个人想法
+##6.个人想法
 本来是准备统一mybatis-generator生成配置文件，后面想想，要修改源代码重新编译打包，后来放弃了，有兴趣的童鞋可以自己想想合并配置。
+
 其余功能不累赘介绍，大家可以下载代码看。<br/>
 有好的建议请联系我，hncdyj123@163.com <br/>
+如果您是土豪，请捐助一顿饭钱，谢谢！支付宝账号:hncdyj123@163.com <br/>
