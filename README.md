@@ -174,7 +174,10 @@ jdbc.pool.maxActive.config=150
 修改操作<br/>
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/update.jpg)
 ##4.生成项目后运行可能遇到的问题
-1.样式错乱。(这个可以微调easyui样式)
-2.新增和修改抓包报400错，这是spring绑定实体对象报错。(表单不要提交date,datetime,timestamp等类型，一般提交字符串，用VO接收)
+1.样式错乱。(这个可以微调easyui样式)<br/>
+2.新增和修改抓包报400错，这是spring绑定实体对象报错。(表单不要提交date,datetime,timestamp等类型，一般提交字符串，用VO接收)<br/>
+
+##个人想法
+本来是准备统一mybatis-generator生成配置文件，后面想想，要修改源代码重新编译打包，后来放弃了，有兴趣的童鞋可以自己想想合并配置。
 其余功能不累赘介绍，大家可以下载代码看。<br/>
 有好的建议请联系我，hncdyj123@163.com <br/>
