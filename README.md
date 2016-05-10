@@ -6,11 +6,11 @@
 5.生成基本可以做所有表的增删改查的前端页面。<br/>
 <br/>
 
-##项目采用assembly打包，打出来的包可以直接解压到linux或者window上面运行<br/>
+##1.项目采用assembly打包，打出来的包可以直接解压到linux或者window上面运行<br/>
 项目结构如图：
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/project.jpg)
 
-##项目运行修改配置：<br/>
+##2.项目运行修改配置：<br/>
 ###修改根目录下mybatis-config.xml<br/>
 ```javascript
 <configuration>
@@ -168,10 +168,13 @@ jdbc.pool.minIdle.config=50
 jdbc.pool.maxActive.config=150
 ```
 
-##生成项目预览
+##3.生成项目预览
 查询操作<br/>
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/search.jpg)
 修改操作<br/>
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/update.jpg)
+##4.生成项目后运行可能遇到的问题
+1.样式错乱。(这个可以微调easyui样式)
+2.新增和修改抓包报400错，这是spring绑定实体对象报错。(表单不要提交date,datetime,timestamp等类型，一般提交字符串，用VO接收)
 其余功能不累赘介绍，大家可以下载代码看。<br/>
 有好的建议请联系我，hncdyj123@163.com <br/>
