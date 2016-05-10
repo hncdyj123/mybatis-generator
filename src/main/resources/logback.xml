@@ -21,8 +21,10 @@
 		</encoder>
 	</appender>
 
+	<logger name="org.mybatis.generator" level="DEBUG" />
+
 	<!-- project default level -->
-	<logger name="org.app.mybatis" level="DEBUG" />
+	<logger name="org.mybatis.supergen" level="DEBUG" />
 	<root level="DEBUG">
 		<appender-ref ref="console" />
 		<appender-ref ref="rollingFile" />

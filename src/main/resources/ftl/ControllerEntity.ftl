@@ -48,7 +48,7 @@ public class ${pro.className}Controller {
 	public Object insert(${pro.className} ${pro.className?uncap_first}) {
 		Message message = new Message();
 		try {
-			${pro.className?uncap_first}Service.insert${pro.className}(${pro.className?uncap_first});
+			${pro.className?uncap_first}Service.insert${pro.className}Selective(${pro.className?uncap_first});
 		} catch (Exception e) {
 			LOGGER.error("insert method error :", e);
 			message.setCode(500);
@@ -62,7 +62,7 @@ public class ${pro.className}Controller {
 	public Object delete(${pro.className} ${pro.className?uncap_first}) {
 		Message message = new Message();
 		try {
-			${pro.className?uncap_first}Service.delete${pro.className}(${pro.className?uncap_first});
+			${pro.className?uncap_first}Service.delete${pro.className}ByPrimaryKey(<#list pro.columns as c><#if (c.columnKey)?? && c.columnKey == "PRI">${pro.className?uncap_first}.get${c.fieldName?cap_first}()</#if></#list>);
 		} catch (Exception e) {
 			LOGGER.error("delete method error :", e);
 			message.setCode(500);
@@ -76,7 +76,7 @@ public class ${pro.className}Controller {
 	public Object update(${pro.className} ${pro.className?uncap_first}) {
 		Message message = new Message();
 		try {
-			${pro.className?uncap_first}Service.update${pro.className}(${pro.className?uncap_first});
+			${pro.className?uncap_first}Service.update${pro.className}ByPrimaryKeySelective(${pro.className?uncap_first});
 		} catch (Exception e) {
 			LOGGER.error("update method error :", e);
 			message.setCode(500);
@@ -90,7 +90,7 @@ public class ${pro.className}Controller {
 	public Object query(${pro.className} ${pro.className?uncap_first}) {
 		Message message = new Message();
 		try {
-			message.setResult(${pro.className?uncap_first}Service.list${pro.className}(${pro.className?uncap_first}));
+			message.setResult(${pro.className?uncap_first}Service.select${pro.className}List(${pro.className?uncap_first}));
 		} catch (Exception e) {
 			LOGGER.error("query method error :", e);
 			message.setCode(500);
@@ -104,7 +104,7 @@ public class ${pro.className}Controller {
 	public Object queryById(${pro.className} ${pro.className?uncap_first}) {
 		Message message = new Message();
 		try {
-			message.setResult(${pro.className?uncap_first}Service.query${pro.className}ById(${pro.className?uncap_first}));
+			message.setResult(${pro.className?uncap_first}Service.select${pro.className}ByPrimaryKey(<#list pro.columns as c><#if (c.columnKey)?? && c.columnKey == "PRI">${pro.className?uncap_first}.get${c.fieldName?cap_first}()</#if></#list>));
 		} catch (Exception e) {
 			LOGGER.error("queryById method error :", e);
 			message.setCode(500);
@@ -118,7 +118,7 @@ public class ${pro.className}Controller {
 	public Object queryByCondition(${pro.className} ${pro.className?uncap_first}) {
 		Message message = new Message();
 		try {
-			message.setResult(${pro.className?uncap_first}Service.query${pro.className}ByCondition(${pro.className?uncap_first}));
+			message.setResult(${pro.className?uncap_first}Service.select${pro.className}List(${pro.className?uncap_first}));
 		} catch (Exception e) {
 			LOGGER.error("queryByCondition method error :", e);
 			message.setCode(500);

@@ -3,6 +3,8 @@ package ${packageName}.service;
 import java.util.List;
 
 import ${packageName}.domain.base.*;
+import java.util.List;
+import java.util.Map;
 <#if pro?exists>
 import ${packageName}.domain.${pro.className};
 
@@ -11,19 +13,34 @@ import ${packageName}.domain.${pro.className};
  * @email hncdyj123@163.com
  */
 public interface ${pro.className}Service {
-	/** 增加 **/
-	public void insert${pro.className}(${pro.className} ${pro.className?uncap_first});
-	/** 删除 **/
-	public void delete${pro.className}(${pro.className} ${pro.className?uncap_first});
-	/** 修改 **/
-	public void update${pro.className}(${pro.className} ${pro.className?uncap_first});
-	/** 查询所有 **/
-	public List<${pro.className}> list${pro.className}(${pro.className} ${pro.className?uncap_first});
-	/** 根据id获取**/
-	public ${pro.className} query${pro.className}ById(${pro.className} ${pro.className?uncap_first});
-	/** 根据条件获取**/
-	public ${pro.className} query${pro.className}ByCondition(${pro.className} ${pro.className?uncap_first});
+	/**新增对象 组装为空字段**/
+	public int insert${pro.className}(${pro.className} ${pro.className?uncap_first});
+
+	/**新增对象 不组装为空字段**/
+	public int insert${pro.className}Selective(${pro.className} ${pro.className?uncap_first});
+
+	/**删除对象 不组装为空字段**/
+	public int delete${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first});
+
+	/**删除对象 根据主键删除**/
+	public int delete${pro.className}ByPrimaryKey(String primaryId);
+
+	/**修改对象 不组装为空字段 参数一:组装条件Object 参数二:修改Object**/
+	public int update${pro.className}ByCriteriaSelective(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2);
+
+	/**修改对象 根据主键修改**/
+	public int update${pro.className}ByPrimaryKeySelective(${pro.className} ${pro.className?uncap_first});
+	
 	/** 翻页查询 **/
 	public DataGrid query${pro.className}ByPage(${pro.className} ${pro.className?uncap_first});
+	
+	/**查询对象 根据主键查询**/
+	public ${pro.className} select${pro.className}ByPrimaryKey(String primaryId);
+
+	/**查询对象 根据对象查询**/
+	public ${pro.className} select${pro.className}(${pro.className} ${pro.className?uncap_first});
+	
+	/**查询对象 根据对象查询**/
+	public List<${pro.className}> select${pro.className}List(${pro.className} ${pro.className?uncap_first});
 }
 </#if>

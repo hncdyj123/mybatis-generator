@@ -1,0 +1,171 @@
+#首先想说说写这个项目的目的<br/>
+1.项目表太多。<br/>
+2.mybatis自带的生成mybatis-generator生成的代码可能不太友好，而且只有model,mapper,xml。<br/>
+3.继承mybatis-generator本身的生成。<br/>
+4.项目里面里面要写很多Service方法。<br/>
+5.生成基本可以做所有表的增删改查的前端页面.<br/>
+<br/>
+
+##项目采用assembly打包，打出来的包可以直接解压到linux或者window上面运行<br/>
+项目结构如图：
+
+##项目运行：<br/>
+###修改根目录下mybatis-config.xml<br/>
+```javascript
+<configuration>
+    <settings> 
+        <!-- changes from the defaults for testing -->
+        <setting name="cacheEnabled" value="false" />
+        <setting name="useGeneratedKeys" value="true" /> 
+        <setting name="defaultExecutorType" value="REUSE" /> 
+    </settings>
+    <typeAliases>
+       <typeAlias alias="ColumnEntity" type="org.app.mybatis.db.ColumnEntity"/>
+       <typeAlias alias="TableEntity" type="org.app.mybatis.db.TableEntity"/>
+    </typeAliases>
+    <environments default="development">
+       <environment id="development">
+           <transactionManager type="jdbc"/> 
+           <dataSource type="POOLED">
+              <property name="driver" value="com.mysql.jdbc.Driver"/>
+              <property name="url" value="jdbc:mysql://127.0.0.1/ams"/>
+              <property name="username" value="root"/>
+              <property name="password" value="root"/>
+           </dataSource>
+       </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mappers/mysqlmappers.xml" />
+    </mappers>
+</configuration>
+```
+替换三项本地配置<br/>
+```
+<property name="url" value="jdbc:mysql://127.0.0.1/ams"/>
+<property name="username" value="root"/>
+<property name="password" value="root"/>
+```
+<br/>
+
+###修改根目录下的mbgConfiguration.xml<br/>
+
+```javascript
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- 配置mysql 驱动jar包路径用了绝对路径 -->
+	<classPathEntry location="D:\Tools\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar" />
+	<context id="ams_mysql_tables" targetRuntime="MyBatis3">
+		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+			<property name="searchString" value="Example$" />
+			<property name="replaceString" value="Criteria" />
+		</plugin>
+		<plugin type="org.mybatis.supergen.plugin.MySQLPaginationPlugin" />
+		<plugin type="org.mybatis.supergen.plugin.RenameExampleMethodPlugin" />
+		<plugin type="org.mybatis.supergen.plugin.ModelFieldCustomizePlugin" />
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<!-- 为了防止生成的代码中有很多注释，比较难看，加入下面的配置控制 -->
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" />
+			<property name="suppressDate" value="true" />
+		</commentGenerator>
+		<!-- 注释控制完毕 -->
+		<!-- 数据库连接 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/ams?characterEncoding=utf8" userId="root" password="root">
+			<property name="remarks" value="true" />
+		</jdbcConnection>
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+		<!-- 数据表对应的model 层 -->
+		<javaModelGenerator targetPackage="com.sym.ams.domain" targetProject="D:\super-easyui\src\main\java">
+			<property name="enableSubPackages" value="false" />
+			<property name="trimStrings" value="true" />
+			<!-- <property name="rootClass" value="com.smy.framework.base.BaseEntity" /> -->
+		</javaModelGenerator>
+		<!-- sql mapper 隐射配置文件 -->
+		<sqlMapGenerator targetPackage="mapper" targetProject="D:\super-easyui\src\main\resources\mybatis">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<!-- 在ibatis2 中是dao层，但在mybatis3中，其实就是mapper接口 -->
+		<!-- <javaClientGenerator type="XMLMAPPER" targetPackage="com.yihaomen.inter" targetProject="src"> -->
+		<!-- <property name="enableSubPackages" value="true" /> -->
+		<!-- </javaClientGenerator> -->
+		<!-- 要对那些数据表进行生成操作 -->
+		<table tableName="ams_operator_channel" />
+		<table tableName="ams_operator_activity" />
+		<table tableName="ams_operator_originality" />
+	</context>
+</generatorConfiguration>
+```
+
+###修改本地配置<br/>
+修改数据库配置信息<br/>
+```
+<!-- 数据库连接 -->
+<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/ams?characterEncoding=utf8" userId="root" password="root">
+<property name="remarks" value="true" />
+</jdbcConnection>
+```
+<br/>
+修改model和mapper<br/>
+1.javaModelGenerator targetProject="D:\super-easyui\src\main\java"  D:\super-easyui需要和config.properties配置项：system.projectname保持一致。<br/>
+targetPackage="com.sym.ams.domain" 需要和config.properties配置项：system.project.packagename保持一致。
+2.sqlMapGenerator targetProject="D:\super-easyui\src\main\resources\mybatis" D:\super-easyui需要和config.properties配置项：system.projectname保持一致。<br/>
+```
+<!-- 数据表对应的model 层 --><br/>
+<javaModelGenerator targetPackage="com.sym.ams.domain" targetProject="D:\super-easyui\src\main\java">
+<property name="enableSubPackages" value="false" />
+<property name="trimStrings" value="true" />
+<!-- <property name="rootClass" value="com.smy.framework.base.BaseEntity" /> -->
+</javaModelGenerator>
+<!-- sql mapper 隐射配置文件 -->
+<sqlMapGenerator targetPackage="mapper" targetProject="D:\super-easyui\src\main\resources\mybatis">
+<property name="enableSubPackages" value="true" />
+</sqlMapGenerator>
+```
+<br/>
+配置需要生成的表,建议所有表，因为innerservice,service,controller,页面会生成所有<br/>
+```
+<!-- 要对那些数据表进行生成操作 -->
+<table tableName="ams_operator_channel" />
+<table tableName="ams_operator_activity" />
+<table tableName="ams_operator_originality" />
+```
+<br/>
+
+###修改根目录下config.properties
+```
+#要生成项目的项目名
+system.projectname=D:\\super-easyui
+#项目DB
+system.db.name=ams
+#项目的包名
+system.project.packagename=com.sym.ams
+#表分隔符号 例如：ams_demo表，生成时候会replace掉_
+system.table.sub=_
+#字段分隔符号 例如：ams_demo表，中的有一个字段为user_name 生成时候会replace掉_
+system.column.sub=_
+#外部模板位置(此项暂时不需要配置)
+system.freemarker.filepath=
+#log config(要生成项目的日志根)
+log.project.name=super-easyui
+#log.level(要生成项目的日志等级)
+log.level=INFO
+# sources file config(要生成项目的配置文件，在src/main/resources/prosource下面)
+prosource.fileNames=app.properties,applicationContext.xml,logback.xml,pom.xml
+#jdbc config(要生成项目的jdbc连接和本次取表的jdbc连接)
+jdbc.driver.config=com.mysql.jdbc.Driver
+jdbc.url.config=jdbc:mysql://127.0.0.1:3306/ams?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
+jdbc.username.config=root
+jdbc.password.config=root
+jdbc.pool.initialSize.config=150
+jdbc.pool.minIdle.config=50
+jdbc.pool.maxActive.config=150
+```
+
+其余功能不累赘介绍，大家可以下载代码看。<br/>
+有好的建议请联系我，hncdyj123@163.com <br/>

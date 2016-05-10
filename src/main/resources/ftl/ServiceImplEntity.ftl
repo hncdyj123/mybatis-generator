@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 <#if pro?exists> 
 import ${packageName}.domain.base.*;
 import ${packageName}.domain.${pro.className};
-import ${packageName}.dao.${pro.className}Dao;
+import ${packageName}.inner.Inner${pro.className}Service;
 import ${packageName}.service.${pro.className}Service;
 
 /**
@@ -19,46 +19,68 @@ import ${packageName}.service.${pro.className}Service;
  @Transactional
 public class ${pro.className}ServiceImpl implements ${pro.className}Service {
 	@Resource
-	private ${pro.className}Dao ${pro.className?uncap_first}Dao;
+	private Inner${pro.className}Service inner${pro.className}Service;
 	
 	@Override
-	public void insert${pro.className}(${pro.className} ${pro.className?uncap_first}) {
-		${pro.className?uncap_first}Dao.insert${pro.className}(${pro.className?uncap_first});
+	/**新增对象 组装为空字段**/
+	public int insert${pro.className}(${pro.className} ${pro.className?uncap_first}) {
+		return inner${pro.className}Service.insert${pro.className}(${pro.className?uncap_first});
 	}
 	
 	@Override
-	public void delete${pro.className}(${pro.className} ${pro.className?uncap_first}) {
-		${pro.className?uncap_first}Dao.delete${pro.className}(${pro.className?uncap_first});
+	/**新增对象 不组装为空字段**/
+	public int insert${pro.className}Selective(${pro.className} ${pro.className?uncap_first}) {
+		return inner${pro.className}Service.insert${pro.className}Selective(${pro.className?uncap_first});
+	}
+
+	@Override
+	/**删除对象 不组装为空字段**/
+	public int delete${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first}) {
+		return inner${pro.className}Service.delete${pro.className}ByCriteria(${pro.className?uncap_first});
 	}
 	
 	@Override
-	public void update${pro.className}(${pro.className} ${pro.className?uncap_first}) {
-		${pro.className?uncap_first}Dao.update${pro.className}(${pro.className?uncap_first});
+	/**删除对象 根据主键删除**/
+	public int delete${pro.className}ByPrimaryKey(String primaryId) {
+		return inner${pro.className}Service.delete${pro.className}ByPrimaryKey(primaryId);
+	}
+
+	@Override
+	/**修改对象 不组装为空字段 参数一:组装条件Object 参数二:修改Object**/
+	public int update${pro.className}ByCriteriaSelective(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2) {
+		return inner${pro.className}Service.update${pro.className}ByCriteriaSelective(${pro.className?uncap_first}1,${pro.className?uncap_first}2);
+	}
+	
+	@Override
+	/**修改对象 根据主键修改**/
+	public int update${pro.className}ByPrimaryKeySelective(${pro.className} ${pro.className?uncap_first}) {
+		return inner${pro.className}Service.update${pro.className}ByPrimaryKeySelective(${pro.className?uncap_first});
 	}
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 	@Override
-	public List<${pro.className}> list${pro.className}(${pro.className} ${pro.className?uncap_first}) {
-		return ${pro.className?uncap_first}Dao.list${pro.className}(${pro.className?uncap_first});
+	public DataGrid query${pro.className}ByPage(${pro.className} ${pro.className?uncap_first}) {
+		int total = inner${pro.className}Service.count${pro.className}ByCriteria(${pro.className?uncap_first});
+		List<${pro.className}> ${pro.className?uncap_first}List = inner${pro.className}Service.select${pro.className}List(${pro.className?uncap_first});
+		return new DataGrid(total,${pro.className?uncap_first}List);
+	}
+	
+	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
+	@Override
+	public ${pro.className} select${pro.className}ByPrimaryKey(String primaryId) {
+		return inner${pro.className}Service.select${pro.className}ByPrimaryKey(primaryId);
 	}
 
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 	@Override
-	public ${pro.className} query${pro.className}ById(${pro.className} ${pro.className?uncap_first}) {
-		return ${pro.className?uncap_first}Dao.query${pro.className}ById(${pro.className?uncap_first});
+	public ${pro.className} select${pro.className}(${pro.className} ${pro.className?uncap_first}){
+		return inner${pro.className}Service.select${pro.className}(${pro.className?uncap_first});
 	}
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 	@Override
-	public ${pro.className} query${pro.className}ByCondition(${pro.className} ${pro.className?uncap_first}) {
-		return ${pro.className?uncap_first}Dao.query${pro.className}ByCondition(${pro.className?uncap_first});
-	}
-	
-	@Override
-	public DataGrid query${pro.className}ByPage(${pro.className} ${pro.className?uncap_first}) {
-		int total =  ${pro.className?uncap_first}Dao.list${pro.className}Count(${pro.className?uncap_first});
-		List<${pro.className}> ${pro.className?uncap_first}List = ${pro.className?uncap_first}Dao.list${pro.className}(${pro.className?uncap_first});
-		return new DataGrid(total,${pro.className?uncap_first}List);
+	public List<${pro.className}> select${pro.className}List(${pro.className} ${pro.className?uncap_first}) {
+		return inner${pro.className}Service.select${pro.className}List(${pro.className?uncap_first});
 	}
 }
 </#if>

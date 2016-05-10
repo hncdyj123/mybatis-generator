@@ -22,11 +22,5 @@
             <fileMode>0644</fileMode>
             <filtered>true</filtered>
         </fileSet>
-        <fileSet>
-            <directory>src/main/resources</directory>
-            <outputDirectory>ftl</outputDirectory>
-            <fileMode>0644</fileMode>
-            <filtered>true</filtered>
-        </fileSet>
     </fileSets>
 </assembly>

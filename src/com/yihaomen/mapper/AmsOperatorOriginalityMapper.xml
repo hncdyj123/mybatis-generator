@@ -1,0 +1,874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yihaomen.inter.AmsOperatorOriginalityDao">
+  <resultMap id="BaseResultMap" type="com.yihaomen.model.AmsOperatorOriginality">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="originality_id" jdbcType="VARCHAR" property="originalityId" />
+    <result column="originality_desc" jdbcType="VARCHAR" property="originalityDesc" />
+    <result column="paint_flag" jdbcType="BIT" property="paintFlag" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="is_down" jdbcType="BIT" property="isDown" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, originality_id, originality_desc, paint_flag, operator, is_down, create_name, 
+    create_datetime, update_name, update_datetime
+  </sql>
+  <select id="selectByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart &gt;= 0">
+      limit ${limitStart},${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ams_operator_originality
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ams_operator_originality
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria">
+    delete from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    insert into ams_operator_originality (id, originality_id, originality_desc, 
+      paint_flag, operator, is_down, 
+      create_name, create_datetime, update_name, 
+      update_datetime)
+    values (#{id,jdbcType=CHAR}, #{originalityId,jdbcType=VARCHAR}, #{originalityDesc,jdbcType=VARCHAR}, 
+      #{paintFlag,jdbcType=BIT}, #{operator,jdbcType=VARCHAR}, #{isDown,jdbcType=BIT}, 
+      #{createName,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, 
+      #{updateDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    insert into ams_operator_originality
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="originalityId != null">
+        originality_id,
+      </if>
+      <if test="originalityDesc != null">
+        originality_desc,
+      </if>
+      <if test="paintFlag != null">
+        paint_flag,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="isDown != null">
+        is_down,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="originalityId != null">
+        #{originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalityDesc != null">
+        #{originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paintFlag != null">
+        #{paintFlag,jdbcType=BIT},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDown != null">
+        #{isDown,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDatetime != null">
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria" resultType="java.lang.Integer">
+    select count(1) from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map">
+    update ams_operator_originality
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.originalityId != null">
+        originality_id = #{record.originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originalityDesc != null">
+        originality_desc = #{record.originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paintFlag != null">
+        paint_flag = #{record.paintFlag,jdbcType=BIT},
+      </if>
+      <if test="record.operator != null">
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDown != null">
+        is_down = #{record.isDown,jdbcType=BIT},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDatetime != null">
+        create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDatetime != null">
+        update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map">
+    update ams_operator_originality
+    set id = #{record.id,jdbcType=CHAR},
+      originality_id = #{record.originalityId,jdbcType=VARCHAR},
+      originality_desc = #{record.originalityDesc,jdbcType=VARCHAR},
+      paint_flag = #{record.paintFlag,jdbcType=BIT},
+      operator = #{record.operator,jdbcType=VARCHAR},
+      is_down = #{record.isDown,jdbcType=BIT},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    update ams_operator_originality
+    <set>
+      <if test="originalityId != null">
+        originality_id = #{originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalityDesc != null">
+        originality_desc = #{originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paintFlag != null">
+        paint_flag = #{paintFlag,jdbcType=BIT},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDown != null">
+        is_down = #{isDown,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    update ams_operator_originality
+    set originality_id = #{originalityId,jdbcType=VARCHAR},
+      originality_desc = #{originalityDesc,jdbcType=VARCHAR},
+      paint_flag = #{paintFlag,jdbcType=BIT},
+      operator = #{operator,jdbcType=VARCHAR},
+      is_down = #{isDown,jdbcType=BIT},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.yihaomen.model.AmsOperatorOriginality">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="originality_id" jdbcType="VARCHAR" property="originalityId" />
+    <result column="originality_desc" jdbcType="VARCHAR" property="originalityDesc" />
+    <result column="paint_flag" jdbcType="BIT" property="paintFlag" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="is_down" jdbcType="BIT" property="isDown" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, originality_id, originality_desc, paint_flag, operator, is_down, create_name, 
+    create_datetime, update_name, update_datetime
+  </sql>
+  <select id="selectByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart &gt;= 0">
+      limit ${limitStart},${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ams_operator_originality
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ams_operator_originality
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria">
+    delete from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    insert into ams_operator_originality (id, originality_id, originality_desc, 
+      paint_flag, operator, is_down, 
+      create_name, create_datetime, update_name, 
+      update_datetime)
+    values (#{id,jdbcType=CHAR}, #{originalityId,jdbcType=VARCHAR}, #{originalityDesc,jdbcType=VARCHAR}, 
+      #{paintFlag,jdbcType=BIT}, #{operator,jdbcType=VARCHAR}, #{isDown,jdbcType=BIT}, 
+      #{createName,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, 
+      #{updateDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    insert into ams_operator_originality
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="originalityId != null">
+        originality_id,
+      </if>
+      <if test="originalityDesc != null">
+        originality_desc,
+      </if>
+      <if test="paintFlag != null">
+        paint_flag,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="isDown != null">
+        is_down,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="originalityId != null">
+        #{originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalityDesc != null">
+        #{originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paintFlag != null">
+        #{paintFlag,jdbcType=BIT},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDown != null">
+        #{isDown,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDatetime != null">
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria" resultType="java.lang.Integer">
+    select count(1) from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map">
+    update ams_operator_originality
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.originalityId != null">
+        originality_id = #{record.originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originalityDesc != null">
+        originality_desc = #{record.originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paintFlag != null">
+        paint_flag = #{record.paintFlag,jdbcType=BIT},
+      </if>
+      <if test="record.operator != null">
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDown != null">
+        is_down = #{record.isDown,jdbcType=BIT},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDatetime != null">
+        create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDatetime != null">
+        update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map">
+    update ams_operator_originality
+    set id = #{record.id,jdbcType=CHAR},
+      originality_id = #{record.originalityId,jdbcType=VARCHAR},
+      originality_desc = #{record.originalityDesc,jdbcType=VARCHAR},
+      paint_flag = #{record.paintFlag,jdbcType=BIT},
+      operator = #{record.operator,jdbcType=VARCHAR},
+      is_down = #{record.isDown,jdbcType=BIT},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    update ams_operator_originality
+    <set>
+      <if test="originalityId != null">
+        originality_id = #{originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalityDesc != null">
+        originality_desc = #{originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paintFlag != null">
+        paint_flag = #{paintFlag,jdbcType=BIT},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDown != null">
+        is_down = #{isDown,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    update ams_operator_originality
+    set originality_id = #{originalityId,jdbcType=VARCHAR},
+      originality_desc = #{originalityDesc,jdbcType=VARCHAR},
+      paint_flag = #{paintFlag,jdbcType=BIT},
+      operator = #{operator,jdbcType=VARCHAR},
+      is_down = #{isDown,jdbcType=BIT},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <resultMap id="BaseResultMap" type="com.yihaomen.model.AmsOperatorOriginality">
+    <id column="id" jdbcType="CHAR" property="id" />
+    <result column="originality_id" jdbcType="VARCHAR" property="originalityId" />
+    <result column="originality_desc" jdbcType="VARCHAR" property="originalityDesc" />
+    <result column="paint_flag" jdbcType="BIT" property="paintFlag" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="is_down" jdbcType="BIT" property="isDown" />
+    <result column="create_name" jdbcType="VARCHAR" property="createName" />
+    <result column="create_datetime" jdbcType="TIMESTAMP" property="createDatetime" />
+    <result column="update_name" jdbcType="VARCHAR" property="updateName" />
+    <result column="update_datetime" jdbcType="TIMESTAMP" property="updateDatetime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, originality_id, originality_desc, paint_flag, operator, is_down, create_name, 
+    create_datetime, update_name, update_datetime
+  </sql>
+  <select id="selectByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart &gt;= 0">
+      limit ${limitStart},${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from ams_operator_originality
+    where id = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from ams_operator_originality
+    where id = #{id,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria">
+    delete from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    insert into ams_operator_originality (id, originality_id, originality_desc, 
+      paint_flag, operator, is_down, 
+      create_name, create_datetime, update_name, 
+      update_datetime)
+    values (#{id,jdbcType=CHAR}, #{originalityId,jdbcType=VARCHAR}, #{originalityDesc,jdbcType=VARCHAR}, 
+      #{paintFlag,jdbcType=BIT}, #{operator,jdbcType=VARCHAR}, #{isDown,jdbcType=BIT}, 
+      #{createName,jdbcType=VARCHAR}, #{createDatetime,jdbcType=TIMESTAMP}, #{updateName,jdbcType=VARCHAR}, 
+      #{updateDatetime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    insert into ams_operator_originality
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="originalityId != null">
+        originality_id,
+      </if>
+      <if test="originalityDesc != null">
+        originality_desc,
+      </if>
+      <if test="paintFlag != null">
+        paint_flag,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="isDown != null">
+        is_down,
+      </if>
+      <if test="createName != null">
+        create_name,
+      </if>
+      <if test="createDatetime != null">
+        create_datetime,
+      </if>
+      <if test="updateName != null">
+        update_name,
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="originalityId != null">
+        #{originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalityDesc != null">
+        #{originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paintFlag != null">
+        #{paintFlag,jdbcType=BIT},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDown != null">
+        #{isDown,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDatetime != null">
+        #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByCriteria" parameterType="com.yihaomen.model.AmsOperatorOriginalityCriteria" resultType="java.lang.Integer">
+    select count(1) from ams_operator_originality
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByCriteriaSelective" parameterType="map">
+    update ams_operator_originality
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=CHAR},
+      </if>
+      <if test="record.originalityId != null">
+        originality_id = #{record.originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originalityDesc != null">
+        originality_desc = #{record.originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paintFlag != null">
+        paint_flag = #{record.paintFlag,jdbcType=BIT},
+      </if>
+      <if test="record.operator != null">
+        operator = #{record.operator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDown != null">
+        is_down = #{record.isDown,jdbcType=BIT},
+      </if>
+      <if test="record.createName != null">
+        create_name = #{record.createName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDatetime != null">
+        create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateName != null">
+        update_name = #{record.updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateDatetime != null">
+        update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByCriteria" parameterType="map">
+    update ams_operator_originality
+    set id = #{record.id,jdbcType=CHAR},
+      originality_id = #{record.originalityId,jdbcType=VARCHAR},
+      originality_desc = #{record.originalityDesc,jdbcType=VARCHAR},
+      paint_flag = #{record.paintFlag,jdbcType=BIT},
+      operator = #{record.operator,jdbcType=VARCHAR},
+      is_down = #{record.isDown,jdbcType=BIT},
+      create_name = #{record.createName,jdbcType=VARCHAR},
+      create_datetime = #{record.createDatetime,jdbcType=TIMESTAMP},
+      update_name = #{record.updateName,jdbcType=VARCHAR},
+      update_datetime = #{record.updateDatetime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    update ams_operator_originality
+    <set>
+      <if test="originalityId != null">
+        originality_id = #{originalityId,jdbcType=VARCHAR},
+      </if>
+      <if test="originalityDesc != null">
+        originality_desc = #{originalityDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="paintFlag != null">
+        paint_flag = #{paintFlag,jdbcType=BIT},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="isDown != null">
+        is_down = #{isDown,jdbcType=BIT},
+      </if>
+      <if test="createName != null">
+        create_name = #{createName,jdbcType=VARCHAR},
+      </if>
+      <if test="createDatetime != null">
+        create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateName != null">
+        update_name = #{updateName,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDatetime != null">
+        update_datetime = #{updateDatetime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yihaomen.model.AmsOperatorOriginality">
+    update ams_operator_originality
+    set originality_id = #{originalityId,jdbcType=VARCHAR},
+      originality_desc = #{originalityDesc,jdbcType=VARCHAR},
+      paint_flag = #{paintFlag,jdbcType=BIT},
+      operator = #{operator,jdbcType=VARCHAR},
+      is_down = #{isDown,jdbcType=BIT},
+      create_name = #{createName,jdbcType=VARCHAR},
+      create_datetime = #{createDatetime,jdbcType=TIMESTAMP},
+      update_name = #{updateName,jdbcType=VARCHAR},
+      update_datetime = #{updateDatetime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=CHAR}
+  </update>
+</mapper>
