@@ -3,13 +3,14 @@
 2.mybatis自带的生成mybatis-generator生成的代码可能不太友好，而且只有model,mapper,xml。<br/>
 3.继承mybatis-generator本身的生成。<br/>
 4.项目里面里面要写很多Service方法。<br/>
-5.生成基本可以做所有表的增删改查的前端页面.<br/>
+5.生成基本可以做所有表的增删改查的前端页面。<br/>
 <br/>
 
 ##项目采用assembly打包，打出来的包可以直接解压到linux或者window上面运行<br/>
 项目结构如图：
+![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/project.jpg)
 
-##项目运行：<br/>
+##项目运行修改配置：<br/>
 ###修改根目录下mybatis-config.xml<br/>
 ```javascript
 <configuration>
@@ -167,5 +168,10 @@ jdbc.pool.minIdle.config=50
 jdbc.pool.maxActive.config=150
 ```
 
+##生成项目预览
+查询操作<br/>
+![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/search.jpg)
+修改操作<br/>
+![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/update.jpg)
 其余功能不累赘介绍，大家可以下载代码看。<br/>
 有好的建议请联系我，hncdyj123@163.com <br/>
