@@ -7,6 +7,7 @@
 3.继承mybatis-generator本身的生成。<br/>
 4.项目里面里面要写很多Service方法。<br/>
 5.生成基本可以做所有表的增删改查的前端页面。<br/>
+6.只专注在service层的业务开发。<br/>
 <br/>
 
 ##1.项目采用assembly打包，打出来的包可以直接解压到linux或者window上面运行<br/>
