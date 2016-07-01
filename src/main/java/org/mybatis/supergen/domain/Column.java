@@ -91,10 +91,10 @@ public class Column {
 		fieldName = "";
 		for (int i = 0; i < fields.length; i++) {
 			if (i == 0) {
-				fieldName += fields[0];
+				fieldName += fields[0].toLowerCase();
 				continue;
 			}
-			fieldName += StringUtil.captureName(fields[i]);
+			fieldName += StringUtil.captureName(fields[i].toLowerCase());
 		}
 		return fieldName;
 	}

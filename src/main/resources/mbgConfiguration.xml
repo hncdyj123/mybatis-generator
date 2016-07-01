@@ -34,7 +34,7 @@
 		</javaTypeResolver>
 
 		<!-- 数据表对应的model 层 -->
-		<javaModelGenerator targetPackage="com.sym.ams.domain" targetProject="D:\super-easyui\src\main\java">
+		<javaModelGenerator targetPackage="com.smy.ams.domain" targetProject="D:\super-easyui\src\main\java">
 			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
 			<!-- <property name="rootClass" value="com.smy.framework.base.BaseEntity" /> -->
@@ -51,7 +51,7 @@
 		<!-- </javaClientGenerator> -->
 
 		<!-- 要对那些数据表进行生成操作 -->
-		<table tableName="ams_operator_channel" />
+		<table tableName="ams_mkt_usr_white_list" />
 		<table tableName="ams_operator_activity" />
 		<table tableName="ams_operator_originality" />
 	</context>

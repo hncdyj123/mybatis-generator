@@ -191,7 +191,7 @@ public class StringUtil {
 			cs[0] -= 32;
 			return String.valueOf(cs);
 		}
-		return "你麻痹";
+		return null;
 	}
 
 }
