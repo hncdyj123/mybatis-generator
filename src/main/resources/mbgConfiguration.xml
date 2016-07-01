@@ -25,7 +25,7 @@
 		<!-- 注释控制完毕 -->
 
 		<!-- 数据库连接 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/ams?characterEncoding=utf8" userId="root" password="root">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/auc?characterEncoding=utf8" userId="root" password="root">
 			<property name="remarks" value="true" />
 		</jdbcConnection>
 
@@ -34,7 +34,7 @@
 		</javaTypeResolver>
 
 		<!-- 数据表对应的model 层 -->
-		<javaModelGenerator targetPackage="com.smy.ams.domain" targetProject="D:\super-easyui\src\main\java">
+		<javaModelGenerator targetPackage="com.jzx.auc.domain" targetProject="D:\super-easyui\src\main\java">
 			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
 			<!-- <property name="rootClass" value="com.smy.framework.base.BaseEntity" /> -->
@@ -51,8 +51,19 @@
 		<!-- </javaClientGenerator> -->
 
 		<!-- 要对那些数据表进行生成操作 -->
-		<table tableName="ams_mkt_usr_white_list" />
-		<table tableName="ams_operator_activity" />
-		<table tableName="ams_operator_originality" />
+		<table tableName="auc_area_info" />
+		<table tableName="auc_department_info" />
+		<table tableName="auc_group_opt_rls" />
+		<table tableName="auc_group_view_rls" />
+		<table tableName="auc_opt_res_info" />
+		<table tableName="auc_organ_info" />
+		<table tableName="auc_position_info" />
+		<table tableName="auc_role_info" />
+		<table tableName="auc_role_opt_rls" />
+		<table tableName="auc_role_view_rls" />
+		<table tableName="auc_user_info" />
+		<table tableName="auc_user_role_rls" />
+		<table tableName="auc_usergroup_info" />
+		<table tableName="auc_view_res_info" />
 	</context>
 </generatorConfiguration>
