@@ -41,7 +41,7 @@ public class ${pro.className}ServiceImpl implements ${pro.className}Service {
 	
 	@Override
 	/**删除对象 根据主键删除**/
-	public int delete${pro.className}ByPrimaryKey(String primaryId) {
+	public int delete${pro.className}ByPrimaryKey(int primaryId) {
 		return inner${pro.className}Service.delete${pro.className}ByPrimaryKey(primaryId);
 	}
 
@@ -67,7 +67,7 @@ public class ${pro.className}ServiceImpl implements ${pro.className}Service {
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 	@Override
-	public ${pro.className} select${pro.className}ByPrimaryKey(String primaryId) {
+	public ${pro.className} select${pro.className}ByPrimaryKey(int primaryId) {
 		return inner${pro.className}Service.select${pro.className}ByPrimaryKey(primaryId);
 	}
 

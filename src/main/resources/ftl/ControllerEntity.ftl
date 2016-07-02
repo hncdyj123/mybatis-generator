@@ -18,7 +18,7 @@ import ${packageName}.service.${pro.className}Service;
 @Controller
 @RequestMapping("/${pro.className?uncap_first}")
 public class ${pro.className}Controller {
-	private static Logger LOGGER = LoggerFactory.getLogger(${pro.className}.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(${pro.className}Controller.class);
 	@Resource
 	private ${pro.className}Service ${pro.className?uncap_first}Service;
 

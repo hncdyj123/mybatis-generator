@@ -44,7 +44,7 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	}
 	
 	@Override
-	public int delete${pro.className}ByPrimaryKey(String primaryId) {
+	public int delete${pro.className}ByPrimaryKey(int primaryId) {
 		return ${pro.className?uncap_first}Dao.deleteByPrimaryKey(primaryId);
 	}
 
@@ -66,7 +66,7 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	}
 
 	@Override
-	public ${pro.className} select${pro.className}ByPrimaryKey(String primaryId) {
+	public ${pro.className} select${pro.className}ByPrimaryKey(int primaryId) {
 		return ${pro.className?uncap_first}Dao.selectByPrimaryKey(primaryId);
 	}
 

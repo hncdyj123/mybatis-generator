@@ -9,6 +9,6 @@ import ${packageName}.domain.${pro.className}Criteria;
  * 模板引擎生成的实体类
  * @email hncdyj123@163.com
  */
-public interface ${pro.className}Dao extends BaseDao<${pro.className}, ${pro.className}Criteria, String> {
+public interface ${pro.className}Dao extends BaseDao<${pro.className}, ${pro.className}Criteria, Integer> {
 }
 </#if>

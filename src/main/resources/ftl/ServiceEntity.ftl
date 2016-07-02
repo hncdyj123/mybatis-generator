@@ -23,7 +23,7 @@ public interface ${pro.className}Service {
 	public int delete${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first});
 
 	/**删除对象 根据主键删除**/
-	public int delete${pro.className}ByPrimaryKey(String primaryId);
+	public int delete${pro.className}ByPrimaryKey(int primaryId);
 
 	/**修改对象 不组装为空字段 参数一:组装条件Object 参数二:修改Object**/
 	public int update${pro.className}ByCriteriaSelective(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2);
@@ -35,7 +35,7 @@ public interface ${pro.className}Service {
 	public DataGrid query${pro.className}ByPage(${pro.className} ${pro.className?uncap_first});
 	
 	/**查询对象 根据主键查询**/
-	public ${pro.className} select${pro.className}ByPrimaryKey(String primaryId);
+	public ${pro.className} select${pro.className}ByPrimaryKey(int primaryId);
 
 	/**查询对象 根据对象查询**/
 	public ${pro.className} select${pro.className}(${pro.className} ${pro.className?uncap_first});
