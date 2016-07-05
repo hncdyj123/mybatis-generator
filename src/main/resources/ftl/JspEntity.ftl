@@ -36,57 +36,70 @@
 		</form>
 	</div>
 	<div style="height: 10px; display: block;"></div>
-	<div id="dataList" title="运营渠道表" class="easyui-panel" style="width: 100%; max-height: 95%; height: auto !important;" align="center"></div>
+	<div id="dataList" title="" class="easyui-panel" style="width: 100%; max-height: 95%; height: auto !important;" align="center"></div>
 
 	<div id="addwindow" class="easyui-dialog" title="添加" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
-		<form id="addForm">
+		<div class="form_div">
+		  <form id="addForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
+		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
 			<#list pro.columns as c>
 			<#if c_index != 0>
-			<div class="div_margin_top">
-				<label for="name">${c.fieldDesc}</label> 
-				<input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" />
-			</div>
+				<tr>
+				 	<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
+                    <td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
+                </tr>
 			</#if>
 			</#list>
-		</form>
-		<div class="toolbar div_margin_top" align="center">
-			<a href="javascript:insertData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
-			<a href="javascript:closeDialog('add');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
-		</div>
+				<tr>
+                    <td colspan="2" align="center" height="40px">
+                        <a href="javascript:insertData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
+						<a href="javascript:closeDialog('add');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+                    </td>
+                </tr>
+            </table>
+		 </form>
+	    </div>
 	</div>
 	<div id="updatewindow" class="easyui-dialog" title="修改" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
-		<form id="updateForm">
-			<#list pro.columns as c>
-			<#if c_index == 0>
-				<input type="hidden" id="${c.fieldName}" name="${c.fieldName}" /> 
+		<div class="form_div">
+		  <form id="updateForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
+		  	<#if c_index == 0>
+			<input type="hidden" id="${c.fieldName}" name="${c.fieldName}" /> 
 			</#if>
+		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
+			<#list pro.columns as c>
 			<#if c_index != 0>
-			<div class="div_margin_top">
-				<label for="name">${c.fieldDesc}</label>
-				<input class="easyui-validatebox" type="text" id="${c.fieldName}" name="${c.fieldName}" data-options="required:true" />
-			</div>
+				<tr>
+				 	<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
+                    <td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
+                </tr>
 			</#if>
 			</#list>
-		</form>
-		<div class="toolbar div_margin_top" align="center">
-			<a href="javascript:updateData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
-			<a href="javascript:closeDialog('update');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
-		</div>
+				<tr>
+                    <td colspan="2" align="center" height="40px">
+                        <a href="javascript:updateData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
+						<a href="javascript:closeDialog('add');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+                    </td>
+                </tr>
+            </table>
+		 </form>
+	    </div>
 	</div>
-	<div id="checkwindow" class="easyui-dialog" title="查看" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
-		<form id="checkForm">
+	<div id="checkwindow" class="easyui-dialog" title="查看详情" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
+		<div class="form_div">
+		  <form id="checkForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
+		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
 			<#list pro.columns as c>
-			<#if c_index == 0>
-				<input type="hidden" id="${c.fieldName}" name="${c.fieldName}" /> 
-			</#if>
 			<#if c_index != 0>
-			<div class="div_margin_top">
-				<label for="name">${c.fieldDesc}</label>
-				<input class="easyui-validatebox" type="text" id="${c.fieldName}" name="${c.fieldName}" data-options="required:true" />
-			</div>
+				<tr>
+				 	<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
+                    <td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
+                </tr>
 			</#if>
 			</#list>
-		</form>
+            </table>
+		 </form>
+	    </div>
 	</div>
 </body>
 </#if>
