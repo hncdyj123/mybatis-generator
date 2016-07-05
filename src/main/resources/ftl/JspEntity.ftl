@@ -63,9 +63,11 @@
 	<div id="updatewindow" class="easyui-dialog" title="修改" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
 		<div class="form_div">
 		  <form id="updateForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
+		  	<#list pro.columns as c>
 		  	<#if c_index == 0>
 			<input type="hidden" id="${c.fieldName}" name="${c.fieldName}" /> 
 			</#if>
+			</#list>
 		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
 			<#list pro.columns as c>
 			<#if c_index != 0>

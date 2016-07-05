@@ -6,6 +6,7 @@ import ${testKey}
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 
@@ -109,9 +110,16 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 		Criteria c = criteria.createCriteria();
 		if (${pro.className?uncap_first} != null) {
 			<#list pro.columns as c>
+			<#if c.jdkType == "String">
+			if (StringUtils.isNotEmpty(${pro.className?uncap_first}.get${c.fieldName?cap_first}())) {
+				c.and${c.fieldName?cap_first}EqualTo(${pro.className?uncap_first}.get${c.fieldName?cap_first}());
+			}
+			</#if>
+			<#if c.jdkType != "String">
 			if (${pro.className?uncap_first}.get${c.fieldName?cap_first}() != null) {
 				c.and${c.fieldName?cap_first}EqualTo(${pro.className?uncap_first}.get${c.fieldName?cap_first}());
-			}	
+			}
+			</#if>	
 			</#list>
 		}
 		return criteria;
