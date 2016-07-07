@@ -80,7 +80,7 @@
 				<tr>
                     <td colspan="2" align="center" height="40px">
                         <a href="javascript:updateData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
-						<a href="javascript:closeDialog('add');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+						<a href="javascript:closeDialog('update');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
                     </td>
                 </tr>
             </table>
