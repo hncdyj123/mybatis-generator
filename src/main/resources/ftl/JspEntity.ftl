@@ -192,7 +192,7 @@ $(function() {
 
 function view(id){
 	var params = {};
-	 $.ajax({
+	$.ajax({
 			url:'<%=path %>/${pro.className?uncap_first}/queryById?id='+ id,
 			type:'POST',
 			dataType:"json",
@@ -210,76 +210,76 @@ function view(id){
 }
 
 function showModifyDialog(row){
-	 var params = row;
-	 $('#updateForm').form('load',params);
-	 $('#updatewindow').window('open');
+	var params = row;
+	$('#updateForm').form('load',params);
+	$('#updatewindow').window('open');
 }
 
 function insertData() {
-	 var params = $("#addForm").toJson();
-	 $.ajax({
-			url:'<%=path %>/${pro.className?uncap_first}/insert',
-			type:'POST',
-			dataType:"json",
-			data:params,
-			success:function(data){
-				if(data.code == 200){
-					$.messager.alert('提示','新增成功!','info');
-					closeDialog('add');
-					freshPage();
-				}else{
-					$.messager.alert('提示',data.message,'error');
-				}
+	var params = $("#addForm").toJson();
+	$.ajax({
+		url:'<%=path %>/${pro.className?uncap_first}/insert',
+		type:'POST',
+		dataType:"json",
+		data:params,
+		success:function(data){
+			if(data.code == 200){
+				$.messager.alert('提示','新增成功!','info');
+				closeDialog('add');
+				freshPage();
+			}else{
+				$.messager.alert('提示',data.message,'error');
 			}
+		}
 	 });
 }
 
 function updateData() {
 	var params = $("#updateForm").toJson();
-	 $.ajax({
-			url:'<%=path %>/${pro.className?uncap_first}/update',
-			type:'POST',
-			dataType:"json",
-			data:params,
-			success:function(data){
-				if(data.code == 200){
-					$.messager.alert('提示','修改成功!','info');
-					closeDialog('update');
-					freshPage();
-				}else{
-					$.messager.alert('提示',data.message,'error');
-				}
+	$.ajax({
+		url:'<%=path %>/${pro.className?uncap_first}/update',
+		type:'POST',
+		dataType:"json",
+		data:params,
+		success:function(data){
+			if(data.code == 200){
+				$.messager.alert('提示','修改成功!','info');
+				closeDialog('update');
+				freshPage();
+			}else{
+				$.messager.alert('提示',data.message,'error');
 			}
+		}
 	 });
 }
 
 function queryData() {
-	 var params = {};
-	 <#list pro.columns as c>
-	 <#if c_index != 0>
-	 var ${c.fieldName} = $("#${c.fieldName}").val();
-	 if(${c.fieldName} !=null && ${c.fieldName} !=''){
+	var params = {};
+	<#list pro.columns as c>
+	<#if c_index != 0>
+	var ${c.fieldName} = $("#${c.fieldName}").val();
+	if(${c.fieldName} !=null && ${c.fieldName} !=''){
 		 params.${c.fieldName} = ${c.fieldName};
-	 }
-	 </#if>
-	 </#list>
-	 //var throwFlag = $("input[name='throwFlag']:checked").val();
-	 //if(throwFlag!=null && throwFlag!=''){
-	 //	 params.throwFlag = throwFlag;
-	 //}
-	 $('#dataList').datagrid('load',params);
+	}
+	</#if>
+	</#list>
+	//var throwFlag = $("input[name='throwFlag']:checked").val();
+	//if(throwFlag!=null && throwFlag!=''){
+	//	 params.throwFlag = throwFlag;
+	//}
+	$('#dataList').datagrid('load',params);
 }
 
 function closeDialog(type){
-	 $("#"+type+"Form").form("clear");
-	 $("#"+type+"window").window("close");
+	$("#"+type+"Form").form("clear");
+	$("#"+type+"window").window("close");
 }
 
 function freshPage(){
 	$('#dataList').datagrid({
-		   url:'<%=path %>/${pro.className?uncap_first}/getDataGrid',
-		   method:'GET',
-	       loadMsg : "正在加载，请稍等..."
+		url:'<%=path %>/${pro.className?uncap_first}/getDataGrid',
+		method:'GET',
+	    loadMsg : "正在加载，请稍等..."
 	});
 }
 </script>

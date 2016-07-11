@@ -53,14 +53,12 @@
 		<!-- 要对那些数据表进行生成操作 -->
 		<table tableName="auc_area_info" />
 		<table tableName="auc_department_info" />
-		<table tableName="auc_group_opt_rls" />
 		<table tableName="auc_group_view_rls" />
-		<table tableName="auc_opt_res_info" />
 		<table tableName="auc_organ_info" />
 		<table tableName="auc_position_info" />
 		<table tableName="auc_role_info" />
-		<table tableName="auc_role_opt_rls" />
 		<table tableName="auc_role_view_rls" />
+		<table tableName="auc_user_group_rls" />
 		<table tableName="auc_user_info" />
 		<table tableName="auc_user_role_rls" />
 		<table tableName="auc_usergroup_info" />
