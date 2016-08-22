@@ -141,7 +141,7 @@
 <br/>
 修改model和mapper<br/>
 1.javaModelGenerator targetProject="D:\super-easyui\src\main\java"  D:\super-easyui需要和config.properties配置项：system.projectname保持一致。<br/>
-targetPackage="com.sym.ams.domain" 需要和config.properties配置项：system.project.packagename保持一致。
+targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置项：system.project.packagename保持一致。
 2.sqlMapGenerator targetProject="D:\super-easyui\src\main\resources\mybatis" D:\super-easyui需要和config.properties配置项：system.projectname保持一致。<br/>
 ```
 <!-- 数据表对应的model 层 --><br/>
@@ -206,7 +206,7 @@ jdbc.pool.maxActive.config=150
 ##4.生成项目后运行可能遇到的问题
 1.样式错乱。(这个可以微调easyui样式)<br/>
 2.新增和修改抓包报400错，这是spring绑定实体对象报错。(表单不要提交date,datetime,timestamp等类型，一般提交字符串，用VO接收)<br/>
-3.每次重新生成请清理src/main/resources/mybatis/mapper目录，因为mybatis-generator会在原来的文件中追加sql。
+3.每次重新生成请清理src/main/resources/mybatis/mapper目录，因为mybatis-generator会在原来的文件中追加sql。<br/>
 4.缺失oracle驱动，请自行下载并且上传到maven库中。
 
 ##5.项目资源
