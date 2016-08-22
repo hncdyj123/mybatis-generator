@@ -11,7 +11,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.supergen.constants.Constant;
 import org.mybatis.supergen.db.ColumnEntity;
+import org.mybatis.supergen.db.DbMapper;
 import org.mybatis.supergen.db.MysqlDbMapper;
+import org.mybatis.supergen.db.OracleDbMapper;
 import org.mybatis.supergen.db.TableEntity;
 import org.mybatis.supergen.domain.Column;
 import org.mybatis.supergen.domain.PropertyClass;
@@ -68,7 +70,13 @@ public class OverCore {
 		// 存放所有数据库表映射实体类信息
 		List<PropertyClass> propertyClassList = new ArrayList<PropertyClass>();
 		SqlSession sqlSession = sqlSessionFactory.openSession();
-		MysqlDbMapper dbMapper = sqlSession.getMapper(MysqlDbMapper.class);
+		DbMapper dbMapper = null;
+		String env = ResManager.getString("system.db.type");
+		if (env == null || !env.contains("oracle")) {
+			dbMapper = sqlSession.getMapper(MysqlDbMapper.class);
+		} else {
+			dbMapper = sqlSession.getMapper(OracleDbMapper.class);
+		}
 		List<TableEntity> tableEntityList = dbMapper.getAllTable(dbName); // 获取所有的表名称
 		if (tableEntityList != null && tableEntityList.size() > 0) {
 			for (TableEntity tableEntity : tableEntityList) {
@@ -83,7 +91,8 @@ public class OverCore {
 						Column column = new Column(columnEntity.getColumnName(), columnEntity.getDataType(), columnEntity.getColumnComment(), columnEntity.getColumnKey());
 						columnList.add(column);
 					}
-					propertyClass.setPackageName(ResManager.getString("system.packagename")); // 设置包名称
+					// 设置包名称
+					// propertyClass.setPackageName(ResManager.getString("system.packagename"));
 					propertyClass.setColumns(columnList); // 存放当前表的列信息
 				}
 				propertyClassList.add(propertyClass);
@@ -160,10 +169,10 @@ public class OverCore {
 		String className = "";
 		for (int i = 0; i < clazz.length; i++) {
 			if (i == 0) {
-				className += clazz[0];
+				className += clazz[0].toLowerCase();
 				continue;
 			}
-			className += StringUtil.captureName(clazz[i]);
+			className += StringUtil.captureName(clazz[i].toLowerCase());
 		}
 		// if
 		// (!StringUtil.isEmptyString(ResManager.getString("system.throw.tableprefix")))

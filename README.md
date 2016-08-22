@@ -15,33 +15,43 @@
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/project.jpg)
 
 ##2.项目运行修改配置：<br/>
-###修改根目录下mybatis-config.xml<br/>
+###修改根目录下mybatis-config.xml,新增oracle数据连接配置<br/>
 ```javascript
 <configuration>
-    <settings> 
-        <!-- changes from the defaults for testing -->
-        <setting name="cacheEnabled" value="false" />
-        <setting name="useGeneratedKeys" value="true" /> 
-        <setting name="defaultExecutorType" value="REUSE" /> 
-    </settings>
-    <typeAliases>
-       <typeAlias alias="ColumnEntity" type="org.app.mybatis.db.ColumnEntity"/>
-       <typeAlias alias="TableEntity" type="org.app.mybatis.db.TableEntity"/>
-    </typeAliases>
-    <environments default="development">
-       <environment id="development">
-           <transactionManager type="jdbc"/> 
-           <dataSource type="POOLED">
-              <property name="driver" value="com.mysql.jdbc.Driver"/>
-              <property name="url" value="jdbc:mysql://127.0.0.1/ams"/>
-              <property name="username" value="root"/>
-              <property name="password" value="root"/>
-           </dataSource>
-       </environment>
-    </environments>
-    <mappers>
-        <mapper resource="mappers/mysqlmappers.xml" />
-    </mappers>
+	<settings>
+		<!-- changes from the defaults for testing -->
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+	<typeAliases>
+		<typeAlias alias="ColumnEntity" type="org.mybatis.supergen.db.ColumnEntity" />
+		<typeAlias alias="TableEntity" type="org.mybatis.supergen.db.TableEntity" />
+	</typeAliases>
+	<environments default="development">
+		<environment id="mysql">
+			<transactionManager type="jdbc" />
+			<dataSource type="POOLED">
+				<property name="driver" value="com.mysql.jdbc.Driver" />
+				<property name="url" value="jdbc:mysql://127.0.0.1/auc" />
+				<property name="username" value="root" />
+				<property name="password" value="root" />
+			</dataSource>
+		</environment>
+		<environment id="oracle">
+			<transactionManager type="jdbc" />
+			<dataSource type="POOLED">
+				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
+				<property name="url" value="jdbc:oracle:thin:@192.168.1.20:1521:vehicle" />
+				<property name="username" value="vehicle" />
+				<property name="password" value="gzcst2013" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+		<mapper resource="mappers/mysqlmappers.xml" />
+		<mapper resource="mappers/oraclemappers.xml" />
+	</mappers>
 </configuration>
 ```
 替换三项本地配置<br/>
@@ -62,7 +72,10 @@
 
 <generatorConfiguration>
 	<!-- 配置mysql 驱动jar包路径用了绝对路径 -->
-	<classPathEntry location="D:\Tools\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar" />
+<!-- 	<classPathEntry location="D:\Tools\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar" /> -->
+	<!-- 配置oracle 驱动jar包路径用了绝对路径 -->
+	<classPathEntry location="D:\Tools\com\oracle\ojdbc6\11.2.0\ojdbc6-11.2.0.jar" />
+
 	<context id="ams_mysql_tables" targetRuntime="MyBatis3">
 		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
 			<property name="searchString" value="Example$" />
@@ -72,37 +85,47 @@
 		<plugin type="org.mybatis.supergen.plugin.RenameExampleMethodPlugin" />
 		<plugin type="org.mybatis.supergen.plugin.ModelFieldCustomizePlugin" />
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+
 		<!-- 为了防止生成的代码中有很多注释，比较难看，加入下面的配置控制 -->
 		<commentGenerator>
 			<property name="suppressAllComments" value="true" />
 			<property name="suppressDate" value="true" />
 		</commentGenerator>
 		<!-- 注释控制完毕 -->
-		<!-- 数据库连接 -->
-		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/ams?characterEncoding=utf8" userId="root" password="root">
+
+		<!-- 数据库连接mysql -->
+<!-- 		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/auc?characterEncoding=utf8" userId="root" password="root"> -->
+<!-- 			<property name="remarks" value="true" /> -->
+<!-- 		</jdbcConnection> -->
+		
+		<!-- 数据库连接oracle -->
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@192.168.1.28:1521:vehicle" userId="vehicle" password="gzcst2013">
 			<property name="remarks" value="true" />
 		</jdbcConnection>
+
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
+
 		<!-- 数据表对应的model 层 -->
-		<javaModelGenerator targetPackage="com.sym.ams.domain" targetProject="D:\super-easyui\src\main\java">
+		<javaModelGenerator targetPackage="com.jzx.auc.domain" targetProject="D:\super-easyui\src\main\java">
 			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
 			<!-- <property name="rootClass" value="com.smy.framework.base.BaseEntity" /> -->
 		</javaModelGenerator>
+
 		<!-- sql mapper 隐射配置文件 -->
 		<sqlMapGenerator targetPackage="mapper" targetProject="D:\super-easyui\src\main\resources\mybatis">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
+
 		<!-- 在ibatis2 中是dao层，但在mybatis3中，其实就是mapper接口 -->
 		<!-- <javaClientGenerator type="XMLMAPPER" targetPackage="com.yihaomen.inter" targetProject="src"> -->
 		<!-- <property name="enableSubPackages" value="true" /> -->
 		<!-- </javaClientGenerator> -->
+
 		<!-- 要对那些数据表进行生成操作 -->
-		<table tableName="ams_operator_channel" />
-		<table tableName="ams_operator_activity" />
-		<table tableName="ams_operator_originality" />
+		<table tableName="ND_DICT_1" />
 	</context>
 </generatorConfiguration>
 ```
@@ -147,7 +170,9 @@ targetPackage="com.sym.ams.domain" 需要和config.properties配置项：system.
 #要生成项目的项目名
 system.projectname=D:\\super-easyui
 #项目DB
-system.db.name=ams
+system.db.name=auc
+#连接数据库类型
+system.db.type=oracle
 #项目的包名
 system.project.packagename=com.sym.ams
 #表分隔符号 例如：ams_demo表，生成时候会replace掉_
@@ -182,6 +207,7 @@ jdbc.pool.maxActive.config=150
 1.样式错乱。(这个可以微调easyui样式)<br/>
 2.新增和修改抓包报400错，这是spring绑定实体对象报错。(表单不要提交date,datetime,timestamp等类型，一般提交字符串，用VO接收)<br/>
 3.每次重新生成请清理src/main/resources/mybatis/mapper目录，因为mybatis-generator会在原来的文件中追加sql。
+4.缺失oracle驱动，请自行下载并且上传到maven库中。
 
 ##5.项目资源
 1.sql脚本在项目根目录sql下。<br/>

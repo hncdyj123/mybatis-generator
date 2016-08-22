@@ -16,7 +16,8 @@ import sun.misc.BASE64Decoder;
 public class StringUtil {
 
 	/**
-	 * 判断一个字符串Str是否为空 return true if it is supplied with an empty, zero length, or whitespace-only string. documented
+	 * 判断一个字符串Str是否为空 return true if it is supplied with an empty, zero length,
+	 * or whitespace-only string. documented
 	 * 
 	 * @param str
 	 * @return boolean
@@ -182,16 +183,25 @@ public class StringUtil {
 	 * @param name
 	 * @return
 	 */
+	// public static String captureName(String name) {
+	// if (!isEmptyString(name)) {
+	// char[] cs = name.toCharArray();
+	// if (Character.isUpperCase(cs[0])) {
+	// return name;
+	// }
+	// cs[0] -= 32;
+	// return String.valueOf(cs);
+	// }
+	// return null;
+	// }
 	public static String captureName(String name) {
-		if (!isEmptyString(name)) {
-			char[] cs = name.toCharArray();
-			if (Character.isUpperCase(cs[0])) {
-				return name;
-			}
-			cs[0] -= 32;
-			return String.valueOf(cs);
-		}
-		return null;
+		name = name.substring(0, 1).toUpperCase() + name.substring(1);
+		return name;
+
+	}
+
+	public static void main(String[] args) {
+		System.out.println(captureName("20160603"));
 	}
 
 }

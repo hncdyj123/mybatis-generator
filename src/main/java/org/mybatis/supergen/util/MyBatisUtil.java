@@ -25,7 +25,12 @@ public class MyBatisUtil {
 		} catch (IOException e) {
 
 		}
-		sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+		String env = ResManager.getString("system.db.type");
+		if (env == null || !env.contains("oracle")) {
+			sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader, "mysql");
+		} else {
+			sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader, "oracle");
+		}
 	}
 
 	public static SqlSessionFactory getSqlSessionFactory() {

@@ -11,7 +11,7 @@ import java.util.List;
  * @date 2015年11月21日 下午12:23:01
  *
  */
-public interface MysqlDbMapper extends DbMapper {
+public interface OracleDbMapper extends DbMapper {
 	/** 获取所有的表信息 **/
 	public List<TableEntity> getAllTable(String dbName) throws SQLException;
 

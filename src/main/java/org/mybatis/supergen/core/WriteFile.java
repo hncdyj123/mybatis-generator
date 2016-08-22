@@ -23,9 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 public class WriteFile {
 	private static final Logger LOGGER = LoggerFactory.getLogger(WriteFile.class);
-	// 参数Map
-	private FtlProvider ftlProvider = new FtlProvider();
-	private TemplateInfoDesc desc;
 
 	// java类型需要导包的类
 	private static Map<String, String> importMapper = new LinkedHashMap<String, String>();
@@ -46,13 +43,8 @@ public class WriteFile {
 
 	}
 
-	public WriteFile(TemplateInfoDesc templateInfoDesc) {
-		this.desc = templateInfoDesc;
-
-	}
-
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public void run() {
+	public void run(TemplateInfoDesc desc) {
 		try {
 			PropertyClass pro = desc.getPropertyClass();
 			Map currentMap = new HashMap();
@@ -70,8 +62,10 @@ public class WriteFile {
 			// 当前文件包名
 			currentMap.put("packageName", pro.getPackageName());
 			currentMap.put("pro", pro);
+			FtlProvider ftlProvider = new FtlProvider();
 			ftlProvider.initFreemarker(desc.getTemplateName(), desc.getTemplatePath(), fileName, currentMap);
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOGGER.error("生成文件文件异常", e);
 		}
 	}

@@ -177,13 +177,15 @@ public class FileUtil {
 	 * @param filePath
 	 * @throws IOException
 	 */
-	public synchronized static File createFile(String filePath) throws IOException {
-		File f = new File(filePath);
-		if (f.exists()) {
-			f.delete();
+	public static File createFile(String filePath) throws IOException {
+		synchronized (FileUtil.class) {
+			File f = new File(filePath);
+			if (f.exists()) {
+				f.delete();
+			}
+			f.createNewFile();
+			return f;
 		}
-		f.createNewFile();
-		return f;
 	}
 
 	public static void createFolder(String path) throws IOException {

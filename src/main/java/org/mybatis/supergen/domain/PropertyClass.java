@@ -18,12 +18,6 @@ public class PropertyClass {
 
 	private List<Column> columns = new ArrayList<Column>();
 
-	/**
-	 * 
-	 * @Description: 使用同步防止模板再用的时候改变值
-	 * @return String
-	 * @throws
-	 */
 	public String getClassName() {
 		return className;
 	}

@@ -136,6 +136,9 @@ public class Column {
 	}
 
 	public String getFieldDesc() {
+		if(fieldDesc == null){
+			fieldDesc = "";
+		}
 		return fieldDesc;
 	}
 

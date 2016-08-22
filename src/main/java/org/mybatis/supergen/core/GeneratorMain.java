@@ -38,7 +38,7 @@ public class GeneratorMain {
 		List<PropertyClass> propertyClassList = core.getAllFileInfo(ResManager.getString("system.db.name"));
 		List<TemplateInfoDesc> templateInfoDescList = core.getTemplateInfo(propertyClassList);
 		for (TemplateInfoDesc desc : templateInfoDescList) {
-			new WriteFile(desc).run();
+			new WriteFile().run(desc);
 		}
 
 		List<String> warnings = new ArrayList<String>();
