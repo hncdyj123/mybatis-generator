@@ -208,6 +208,7 @@ jdbc.pool.maxActive.config=150
 2.新增和修改抓包报400错，这是spring绑定实体对象报错。(表单不要提交date,datetime,timestamp等类型，一般提交字符串，用VO接收)<br/>
 3.每次重新生成请清理src/main/resources/mybatis/mapper目录，因为mybatis-generator会在原来的文件中追加sql。<br/>
 4.缺失oracle驱动，请自行下载并且上传到maven库中。
+5.关于oracle重复生成的问题，请在mbgConfiguration.xml里面的<table tableName="T_ROBOT_CAR_MODEL" schema=""/>加入schema，避免schema下的表字段不一致，重复生成缺失字段问题。
 
 ##5.项目资源
 1.sql脚本在项目根目录sql下。<br/>
