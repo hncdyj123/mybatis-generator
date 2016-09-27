@@ -12,6 +12,7 @@
 	<context id="ams_mysql_tables" targetRuntime="MyBatis3">
 		<plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
 			<property name="searchString" value="Example$" />
+			<property name="replaceString" value="Criteria" />
 		</plugin>
 		<plugin type="org.mybatis.supergen.plugin.MySQLPaginationPlugin" />
 		<plugin type="org.mybatis.supergen.plugin.RenameExampleMethodPlugin" />
@@ -57,6 +58,6 @@
 		<!-- </javaClientGenerator> -->
 
 		<!-- 要对那些数据表进行生成操作 -->
-		<table tableName="T_ROBOT_CAR_MODEL" schema=""/>
+		<table tableName="ND_ALARM_ERROR_LOG" schema="VEHICLE"/>
 	</context>
 </generatorConfiguration>
