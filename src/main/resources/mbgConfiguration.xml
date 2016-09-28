@@ -58,6 +58,37 @@
 		<!-- </javaClientGenerator> -->
 
 		<!-- 要对那些数据表进行生成操作 -->
-		<table tableName="ND_ALARM_ERROR_LOG" schema="VEHICLE"/>
+		<!-- <table tableName="NT_VEHICLE" /> -->
+		<!-- <table tableName="T_DEPT" /> -->
+		<!-- <table tableName="T_ROBOT_CAR_MODEL" /> -->
+		<!-- <table tableName="NT_VEHICLE_STATE" /> -->
+		<!-- <table tableName="NT_STAFF" /> -->
+		<!-- <table tableName="ND_VEHICLE_ALARM_ACC" /> -->
+		<!-- <table tableName="ND_ATTEND_DRIVER" /> -->
+		<!-- <table tableName="VEHICLE_ATTEND_DRIVER_REAL" /> -->
+		<!-- <table tableName="DRIVER_ATTEND_DRIVER_REAL" /> -->
+		<!-- <table tableName="NT_ATTEND_DRIVER_ERROR_INFO" /> -->
+		<!-- <table tableName="ND_DRIVER_CAR_LOG" /> -->
+		<!-- <table tableName="ND_ATTEND_BEHAVIOR_DETAIL" /> -->
+		<!-- <table tableName="ND_SCORE_RULE" /> -->
+		<!-- <table tableName="ND_SCORE_RULE_STATE" /> -->
+		<!-- <table tableName="ND_UNUSUAL_PARAM" /> -->
+		<!-- <table tableName="ND_UNUSUAL_PARAM_SATE" /> -->
+		<!-- <table tableName="ND_PARAM_MAIN_TABLE" /> -->
+		<!-- <table tableName="NT_VEHICLE_FAULT" /> -->
+		<!-- <table tableName="NT_ALARM_TIP_CONFIG" /> -->
+		<!-- <table tableName="NT_ALARM_TIP_SUB_CONFIG" /> -->
+		<!-- <table tableName="T_ALARM_TIP_LOG" /> -->
+		<!-- <table tableName="ND_UNUSUAL_PARAM_ATTEND_LOG" /> -->
+		<!-- <table tableName="NT_ELE_VEHICLE_FAULT_REAL" /> -->
+		<!-- <table tableName="NT_ELECTRICITY_VEHICLE_FAULT" /> -->
+		<!-- <table tableName="ND_SECURITY_ALARM_DETAIL" /> -->
+		<!-- <table tableName="ND_VEHICLE_ALARM_FENCE" /> -->
+		<!-- <table tableName="NT_ELECTRICITY_VEHICLE_CHARGIN" /> -->
+		<!-- <table tableName="nt_vehicle_state" schema="VEHICLE" /> -->
+		<!-- <table tableName="NT_DEVICE" schema="VEHICLE" /> -->
+		<table tableName="ND_ALARM_ERROR_LOG" schema="VEHICLE" />
+		<!-- <table tableName="ND_Attend_behavior" schema="VEHICLE" /> -->
+		<!-- <table tableName="ND_ACC_ATTEND_LOG" schema="VEHICLE" /> -->
 	</context>
 </generatorConfiguration>

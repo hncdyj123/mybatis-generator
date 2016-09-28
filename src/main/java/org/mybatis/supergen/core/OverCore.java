@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,7 @@ import org.mybatis.supergen.util.MyBatisUtil;
 import org.mybatis.supergen.util.PropertiesHelper;
 import org.mybatis.supergen.util.ResManager;
 import org.mybatis.supergen.util.StringUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.mybatis.supergen.util.XmlUtil;
 
 /**
  * 
@@ -38,8 +38,18 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class OverCore {
+	// private static final Logger LOGGER = LoggerFactory.getLogger(OverCore.class);
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(OverCore.class);
+	// mysql oracle可以作为主键的字符数据类型
+	private static Map<String, String> dbPriDataMapper = new LinkedHashMap<String, String>();
+
+	static {
+		dbPriDataMapper.put("CHAR", "CHAR");
+		dbPriDataMapper.put("VARCHAR", "VARCHAR");
+		dbPriDataMapper.put("VARCHAR2", "VARCHAR2");
+		dbPriDataMapper.put("NCHAR", "NCHAR");
+		dbPriDataMapper.put("NVARCHAR2", "NVARCHAR2");
+	}
 
 	private static SqlSessionFactory sqlSessionFactory = null;
 
@@ -54,6 +64,7 @@ public class OverCore {
 	private String outFtlFilePath = ResManager.getString("system.freemarker.filepath");
 
 	public void createProject() throws Exception {
+		FileUtil.deleteFolder(PropertiesHelper.getString("system.projectname"));
 		FileHelper fileHelper = new FileHelper();
 		fileHelper.createDir();
 		fileHelper.createProject();
@@ -78,8 +89,18 @@ public class OverCore {
 			dbMapper = sqlSession.getMapper(OracleDbMapper.class);
 		}
 		List<TableEntity> tableEntityList = dbMapper.getAllTable(dbName); // 获取所有的表名称
-		if (tableEntityList != null && tableEntityList.size() > 0) {
+		List<String> xmlTableNameList = XmlUtil.getXmlTableName(); // 获取xml配置中的表名称
+		List<TableEntity> generateTableList = new ArrayList<TableEntity>();
+		for (String xmlTableName : xmlTableNameList) {
 			for (TableEntity tableEntity : tableEntityList) {
+				if (xmlTableName.equalsIgnoreCase(tableEntity.getTableName())) {
+					generateTableList.add(tableEntity);
+					break;
+				}
+			}
+		}
+		if (generateTableList != null && generateTableList.size() > 0) {
+			for (TableEntity tableEntity : generateTableList) {
 				PropertyClass propertyClass = new PropertyClass();
 				propertyClass.setTableName(tableEntity.getTableName()); // 设置表名称
 				propertyClass.setClassName(this.getClassName(tableEntity.getTableName())); // 设置类名称
@@ -88,11 +109,17 @@ public class OverCore {
 				if (columnEntityList != null && columnEntityList.size() > 0) {
 					List<Column> columnList = new ArrayList<Column>();
 					for (ColumnEntity columnEntity : columnEntityList) {
+						if (columnEntity.getColumnKey() != null) { // 设置主键数据库类型
+							propertyClass.setPriType(columnEntity.getDataType());
+							if (dbPriDataMapper.containsKey(columnEntity.getDataType().toUpperCase())) {
+								propertyClass.setPriJava("String");
+							} else {
+								propertyClass.setPriJava("int");
+							}
+						}
 						Column column = new Column(columnEntity.getColumnName(), columnEntity.getDataType(), columnEntity.getColumnComment(), columnEntity.getColumnKey());
 						columnList.add(column);
 					}
-					// 设置包名称
-					// propertyClass.setPackageName(ResManager.getString("system.packagename"));
 					propertyClass.setColumns(columnList); // 存放当前表的列信息
 				}
 				propertyClassList.add(propertyClass);
@@ -174,13 +201,6 @@ public class OverCore {
 			}
 			className += StringUtil.captureName(clazz[i].toLowerCase());
 		}
-		// if
-		// (!StringUtil.isEmptyString(ResManager.getString("system.throw.tableprefix")))
-		// {
-		// className =
-		// className.replace(ResManager.getString("system.throw.tableprefix"),
-		// "");
-		// }
 		className = StringUtil.captureName(className);
 		return className;
 	}

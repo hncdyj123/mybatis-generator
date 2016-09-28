@@ -12,10 +12,17 @@ import java.util.List;
  *
  */
 public class PropertyClass {
+	// 类名
 	private String className;
+	// 表名
 	private String tableName;
+	// 包名
 	private String packageName;
-
+	// 主键数据库类型
+	private String priType;
+	// 主键java类型
+	private String priJava;
+	// 表列
 	private List<Column> columns = new ArrayList<Column>();
 
 	public String getClassName() {
@@ -40,6 +47,22 @@ public class PropertyClass {
 
 	public void setPackageName(String packageName) {
 		this.packageName = packageName;
+	}
+
+	public String getPriType() {
+		return priType;
+	}
+
+	public void setPriType(String priType) {
+		this.priType = priType;
+	}
+
+	public String getPriJava() {
+		return priJava;
+	}
+
+	public void setPriJava(String priJava) {
+		this.priJava = priJava;
 	}
 
 	public List<Column> getColumns() {

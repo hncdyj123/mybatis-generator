@@ -1,8 +1,5 @@
 package ${packageName}.inner.impl;
 
-<#list importMap?keys as testKey>  
-import ${testKey}
-</#list>
 import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
@@ -45,7 +42,7 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	}
 	
 	@Override
-	public int delete${pro.className}ByPrimaryKey(int primaryId) {
+	public int delete${pro.className}ByPrimaryKey(${pro.priJava} primaryId) {
 		return ${pro.className?uncap_first}Dao.deleteByPrimaryKey(primaryId);
 	}
 
@@ -67,7 +64,7 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	}
 
 	@Override
-	public ${pro.className} select${pro.className}ByPrimaryKey(int primaryId) {
+	public ${pro.className} select${pro.className}ByPrimaryKey(${pro.priJava} primaryId) {
 		return ${pro.className?uncap_first}Dao.selectByPrimaryKey(primaryId);
 	}
 

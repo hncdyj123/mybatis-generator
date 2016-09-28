@@ -38,6 +38,11 @@
 			<artifactId>freemarker</artifactId>
 			<version>2.3.18</version>
 		</dependency>
+		<dependency>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
 		<!-- log-begin -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

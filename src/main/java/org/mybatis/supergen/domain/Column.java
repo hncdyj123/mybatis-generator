@@ -63,6 +63,7 @@ public class Column {
 			}
 		}
 	}
+
 	/** 字段名 **/
 	private String fieldName;
 	/** 数据库字段名 **/
@@ -73,7 +74,7 @@ public class Column {
 	private String jdkType;
 	/** 字段描述 **/
 	private String fieldDesc;
-	/**是否主键(PRI为主键)**/
+	/** 是否主键(PRI为主键) **/
 	private String columnKey;
 
 	public Column(String databaseName, String dataType, String fieldDesc, String columnKey) {
@@ -120,8 +121,8 @@ public class Column {
 	}
 
 	public String getJdkType() {
-		if (StringUtil.equalsString("int".toUpperCase(), dataType.toUpperCase())) { // 数据库为int时候
-																					// mybatis枚举不支持
+		// 数据库为int时候 mybatis枚举不支持
+		if (StringUtil.equalsString("int".toUpperCase(), dataType.toUpperCase())) {
 			dataType = "INTEGER";
 		}
 		jdkType = dbMysqlMapper.get(dataType.toUpperCase());
@@ -136,7 +137,7 @@ public class Column {
 	}
 
 	public String getFieldDesc() {
-		if(fieldDesc == null){
+		if (fieldDesc == null) {
 			fieldDesc = "";
 		}
 		return fieldDesc;
