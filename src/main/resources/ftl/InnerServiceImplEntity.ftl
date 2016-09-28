@@ -42,7 +42,7 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	}
 	
 	@Override
-	public int delete${pro.className}ByPrimaryKey(${pro.priJava} primaryId) {
+	public int delete${pro.className}ByPrimaryKey(<#if pro.priJava?exists>${pro.priJava}<#else>int</#if> primaryId) {
 		return ${pro.className?uncap_first}Dao.deleteByPrimaryKey(primaryId);
 	}
 
@@ -64,7 +64,7 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	}
 
 	@Override
-	public ${pro.className} select${pro.className}ByPrimaryKey(${pro.priJava} primaryId) {
+	public ${pro.className} select${pro.className}ByPrimaryKey(<#if pro.priJava?exists>${pro.priJava}<#else>int</#if> primaryId) {
 		return ${pro.className?uncap_first}Dao.selectByPrimaryKey(primaryId);
 	}
 
