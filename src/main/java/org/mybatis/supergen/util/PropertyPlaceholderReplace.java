@@ -1,12 +1,12 @@
 package org.mybatis.supergen.util;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -156,21 +156,26 @@ public class PropertyPlaceholderReplace {
 	 *            文件名称
 	 */
 	protected void wirteFile(String filePath, String fileString) {
-		FileWriter fw = null;
-		BufferedWriter writer = null;
+		// FileWriter fw = null;
+		// BufferedWriter writer = null;
+		OutputStreamWriter osw = null;
 		try {
-			fw = new FileWriter(filePath);
-			writer = new BufferedWriter(fw);
-			writer.write(fileString);
-			writer.flush();
+			osw = new OutputStreamWriter(new FileOutputStream(filePath, true), "UTF-8");
+			osw.write(fileString);
+			// fw = new FileWriter(filePath);
+			// writer = new BufferedWriter(fw);
+			// writer.write(fileString);
+			// writer.flush();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		} finally {
 			try {
-				writer.close();
-				fw.close();
+				// writer.close();
+				// fw.close();
+				osw.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

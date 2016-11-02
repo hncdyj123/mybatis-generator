@@ -109,13 +109,14 @@ public class OverCore {
 				if (columnEntityList != null && columnEntityList.size() > 0) {
 					List<Column> columnList = new ArrayList<Column>();
 					for (ColumnEntity columnEntity : columnEntityList) {
-						if (columnEntity.getColumnKey() != null) { // 设置主键数据库类型
+						if (!StringUtil.isEmpty(columnEntity.getColumnKey())) { // 设置主键数据库类型
 							propertyClass.setPriType(columnEntity.getDataType());
 							if (dbPriDataMapper.containsKey(columnEntity.getDataType().toUpperCase())) {
 								propertyClass.setPriJava("String");
 							} else {
 								propertyClass.setPriJava("int");
 							}
+							continue;
 						}
 						Column column = new Column(columnEntity.getColumnName(), columnEntity.getDataType(), columnEntity.getColumnComment(), columnEntity.getColumnKey());
 						columnList.add(column);
