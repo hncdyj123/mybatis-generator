@@ -116,6 +116,8 @@ public class OverCore {
 							} else {
 								propertyClass.setPriJava("int");
 							}
+							Column column = new Column(columnEntity.getColumnName(), columnEntity.getDataType(), columnEntity.getColumnComment(), columnEntity.getColumnKey());
+							columnList.add(column);
 							continue;
 						}
 						Column column = new Column(columnEntity.getColumnName(), columnEntity.getDataType(), columnEntity.getColumnComment(), columnEntity.getColumnKey());
