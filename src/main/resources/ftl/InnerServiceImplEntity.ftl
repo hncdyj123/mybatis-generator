@@ -16,7 +16,7 @@ import ${packageName}.dao.${pro.className}Dao;
 import ${packageName}.inner.Inner${pro.className}Service;
 
 /**
- * 模板引擎生成的实体类
+ * 妯℃澘寮曟搸鐢熸垚镄勫疄浣撶被
  * @email hncdyj123@163.com
  */
 @Service

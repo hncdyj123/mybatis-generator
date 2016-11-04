@@ -9,38 +9,38 @@ import java.util.Map;
 import ${packageName}.domain.${pro.className};
 
 /**
- * 模板引擎生成的实体类
+ * 妯℃澘寮曟搸鐢熸垚镄勫疄浣撶被
  * @email hncdyj123@163.com
  */
 public interface ${pro.className}Service {
-	/**新增对象 组装为空字段**/
+	/**鏂板瀵硅薄 缁勮涓虹┖瀛楁**/
 	public int insert${pro.className}(${pro.className} ${pro.className?uncap_first});
 
-	/**新增对象 不组装为空字段**/
+	/**鏂板瀵硅薄 涓岖粍瑁呬负绌哄瓧娈?*/
 	public int insert${pro.className}Selective(${pro.className} ${pro.className?uncap_first});
 
-	/**删除对象 不组装为空字段**/
+	/**鍒犻櫎瀵硅薄 涓岖粍瑁呬负绌哄瓧娈?*/
 	public int delete${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first});
 
-	/**删除对象 根据主键删除**/
+	/**鍒犻櫎瀵硅薄 镙规嵁涓婚敭鍒犻櫎**/
 	public int delete${pro.className}ByPrimaryKey(<#if pro.priJava?exists>${pro.priJava}<#else>int</#if> primaryId);
 
-	/**修改对象 不组装为空字段 参数一:组装条件Object 参数二:修改Object**/
+	/**淇敼瀵硅薄 涓岖粍瑁呬负绌哄瓧娈?鍙傛暟涓€:缁勮鏉′欢Object 鍙傛暟浜?淇敼Object**/
 	public int update${pro.className}ByCriteriaSelective(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2);
 
-	/**修改对象 根据主键修改**/
+	/**淇敼瀵硅薄 镙规嵁涓婚敭淇敼**/
 	public int update${pro.className}ByPrimaryKeySelective(${pro.className} ${pro.className?uncap_first});
 	
-	/** 翻页查询 **/
+	/** 缈婚〉镆ヨ **/
 	public DataGrid query${pro.className}ByPage(${pro.className} ${pro.className?uncap_first});
 	
-	/**查询对象 根据主键查询**/
+	/**镆ヨ瀵硅薄 镙规嵁涓婚敭镆ヨ**/
 	public ${pro.className} select${pro.className}ByPrimaryKey(<#if pro.priJava?exists>${pro.priJava}<#else>int</#if> primaryId);
 
-	/**查询对象 根据对象查询**/
+	/**镆ヨ瀵硅薄 镙规嵁瀵硅薄镆ヨ**/
 	public ${pro.className} select${pro.className}(${pro.className} ${pro.className?uncap_first});
 	
-	/**查询对象 根据对象查询**/
+	/**镆ヨ瀵硅薄 镙规嵁瀵硅薄镆ヨ**/
 	public List<${pro.className}> select${pro.className}List(${pro.className} ${pro.className?uncap_first});
 }
 </#if>

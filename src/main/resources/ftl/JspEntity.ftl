@@ -17,7 +17,7 @@
 </head>
 <#if pro?exists>
 <body class="easyui-layout" style="width:100%;height:100%;" data-options="fit:true,fitColumns:true">
-	<div id="search" class="easyui-panel" title="查询条件">
+	<div id="search" class="easyui-panel" title="镆ヨ鏉′欢">
 		<form id="searchForm">
 			<table>
 				<tr>
@@ -28,9 +28,9 @@
 					</#if>
 					</#list>
 					<td width='20px'>&nbsp;</td>
-					<td><input type="button" class="btn-search" onclick="queryData()" value="查询" /></td>
+					<td><input type="button" class="btn-search" onclick="queryData()" value="镆ヨ" /></td>
 					<td></td>
-					<td><input type="button" class="btn-clear" onclick="clearText()" value="清空" /></td>
+					<td><input type="button" class="btn-clear" onclick="clearText()" value="娓呯┖" /></td>
 				</tr>
 			</table>
 		</form>
@@ -38,7 +38,7 @@
 	<div style="height: 10px; display: block;"></div>
 	<div id="dataList" title="" class="easyui-panel" style="width: 100%; max-height: 95%; height: auto !important;" align="center"></div>
 
-	<div id="addwindow" class="easyui-dialog" title="添加" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
+	<div id="addwindow" class="easyui-dialog" title="娣诲姞" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
 		<div class="form_div">
 		  <form id="addForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
 		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
@@ -52,15 +52,15 @@
 			</#list>
 				<tr>
                     <td colspan="2" align="center" height="40px">
-                        <a href="javascript:insertData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
-						<a href="javascript:closeDialog('add');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+                        <a href="javascript:insertData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">淇濆瓨</a> 
+						<a href="javascript:closeDialog('add');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">鍏抽棴</a>
                     </td>
                 </tr>
             </table>
 		 </form>
 	    </div>
 	</div>
-	<div id="updatewindow" class="easyui-dialog" title="修改" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
+	<div id="updatewindow" class="easyui-dialog" title="淇敼" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
 		<div class="form_div">
 		  <form id="updateForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
 		  	<#list pro.columns as c>
@@ -79,15 +79,15 @@
 			</#list>
 				<tr>
                     <td colspan="2" align="center" height="40px">
-                        <a href="javascript:updateData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
-						<a href="javascript:closeDialog('update');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+                        <a href="javascript:updateData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">淇濆瓨</a> 
+						<a href="javascript:closeDialog('update');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">鍏抽棴</a>
                     </td>
                 </tr>
             </table>
 		 </form>
 	    </div>
 	</div>
-	<div id="checkwindow" class="easyui-dialog" title="查看详情" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
+	<div id="checkwindow" class="easyui-dialog" title="镆ョ湅璇︽儏" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
 		<div class="form_div">
 		  <form id="checkForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
 		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
@@ -122,40 +122,40 @@ $(function() {
 		{field:'${c.fieldName}',title:'${c.fieldDesc}',align:'center',width:100},
 		</#if>
 		</#list>
-		{field:'operate',title:'操作',align:'center',width:100,
+		{field:'operate',title:'鎿崭綔',align:'center',width:100,
 			formatter: function(value,row,index){
-				var edit = '<a href="javascript:view(\''+row.id+'\')">查看详情</a>';
+				var edit = '<a href="javascript:view(\''+row.id+'\')">镆ョ湅璇︽儏</a>';
 				return edit;
 			}
 		}]],
 		toolbar : [ {
 			id : 'btnadd',
-			text : '新增',
+			text : '鏂板',
 			iconCls : 'icon-add',
 			handler : function() {
 				$('#addwindow').window('open');
 			}
 		}, {
 			id : 'btnmodify',
-			text : '修改',
+			text : '淇敼',
 			iconCls : 'icon-edit',
 			handler : function() {
 				var row = $('#dataList').datagrid("getSelected");
 				if(row == null){
-					$.messager.alert('提示','请选择一条记录!','warn');
+					$.messager.alert('鎻愮ず','璇烽€夋嫨涓€鏉¤褰?','warn');
 					return;
 				}
 				showModifyDialog(row);
 			}
 		}, {
 			id : 'btncut',
-			text : '删除',
+			text : '鍒犻櫎',
 			iconCls : 'icon-cut',
 			handler : function() {
 				var rows = $('#dataList').datagrid("getSelections");
 				// var row = $('#dataList').datagrid("getSelected");
 				if(rows.length != 1){
-					$.messager.alert('提示框','请选择一条记录','warning');  
+					$.messager.alert('鎻愮ず妗?,'璇烽€夋嫨涓€鏉¤褰?,'warning');  
 				}else {
 					var params = {"id" : rows[0].id};
 					$.ajax({
@@ -166,9 +166,9 @@ $(function() {
 							async:false,
 							success:function(data){
 								if(data.code == 200){
-									$.messager.alert('提示',"删除成功!",'info');
+									$.messager.alert('鎻愮ず',"鍒犻櫎鎴愬姛!",'info');
 								}else{
-									$.messager.alert('提示',data.message,'error');
+									$.messager.alert('鎻愮ず',data.message,'error');
 								}
 							}
 					});
@@ -177,16 +177,16 @@ $(function() {
 			}
 		} ],
 		nowrap:false,
-		striped:true,//设置为true将交替显示行背景
-        singleSelect:false,//设置为true将只允许选择一行
-        checkOnSelect:true,//如果设置为 true，当用户点击一行的时候checkbox checked(选择)/unchecked(取消选择)。 如果为false，当用户点击刚好在checkbox的时候，checkbox checked(选择)/unchecked(取消选择)
+		striped:true,//璁剧疆涓篓rue灏嗕氦镟挎樉绀鸿鑳屾櫙
+        singleSelect:false,//璁剧疆涓篓rue灏嗗彧鍏佽阃夋嫨涓€琛?
+        checkOnSelect:true,//濡傛灉璁剧疆涓?true锛屽綋鐢ㄦ埛镣瑰向涓€琛岀殑镞跺€檆heckbox checked(阃夋嫨)/unchecked(鍙栨秷阃夋嫨)銆?濡傛灉涓篺alse锛屽綋鐢ㄦ埛镣瑰向鍒氩ソ鍦╟heckbox镄勬椂链欙紝checkbox checked(阃夋嫨)/unchecked(鍙栨秷阃夋嫨)
 	    selectOnCheck:true,
-        rownumbers:true, //设置为true将显示行数
-	    pagination:true, //设置true将在数据表格底部显示分页工具栏
+        rownumbers:true, //璁剧疆涓篓rue灏嗘樉绀鸿鏁?
+	    pagination:true, //璁剧疆true灏嗗湪鏁版嵁琛ㄦ牸搴曢儴鏄剧ず鍒嗛〉宸ュ叿镙?
 	    remoteSort:false,
-	    pageNumber:1,//当设置分页属性时，初始化分页码
-	    pageSize:20,//当设置分页属性时，初始化每页记录数
-	    pageList:[20,30,40] //当设置分页属性时，初始化每页记录数列表
+	    pageNumber:1,//褰撹缃垎椤靛睘镐ф椂锛屽垵濮嫔寲鍒嗛〉镰?
+	    pageSize:20,//褰撹缃垎椤靛睘镐ф椂锛屽垵濮嫔寲姣忛〉璁板綍鏁?
+	    pageList:[20,30,40] //褰撹缃垎椤靛睘镐ф椂锛屽垵濮嫔寲姣忛〉璁板綍鏁板垪琛?
 	});	
 });
 
@@ -201,7 +201,7 @@ function view(id){
 				if(data.code == 200){
 					params = data.result;
 				}else{
-					$.messager.alert('提示',data.message,'error');
+					$.messager.alert('鎻愮ず',data.message,'error');
 				}
 			}
 	 });
@@ -224,11 +224,11 @@ function insertData() {
 		data:params,
 		success:function(data){
 			if(data.code == 200){
-				$.messager.alert('提示','新增成功!','info');
+				$.messager.alert('鎻愮ず','鏂板鎴愬姛!','info');
 				closeDialog('add');
 				freshPage();
 			}else{
-				$.messager.alert('提示',data.message,'error');
+				$.messager.alert('鎻愮ず',data.message,'error');
 			}
 		}
 	 });
@@ -243,11 +243,11 @@ function updateData() {
 		data:params,
 		success:function(data){
 			if(data.code == 200){
-				$.messager.alert('提示','修改成功!','info');
+				$.messager.alert('鎻愮ず','淇敼鎴愬姛!','info');
 				closeDialog('update');
 				freshPage();
 			}else{
-				$.messager.alert('提示',data.message,'error');
+				$.messager.alert('鎻愮ず',data.message,'error');
 			}
 		}
 	 });
@@ -279,7 +279,7 @@ function freshPage(){
 	$('#dataList').datagrid({
 		url:'<%=path %>/${pro.className?uncap_first}/getDataGrid',
 		method:'GET',
-	    loadMsg : "正在加载，请稍等..."
+	    loadMsg : "姝ｅ湪锷犺浇锛岃绋岖瓑..."
 	});
 }
 </script>
