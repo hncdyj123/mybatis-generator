@@ -2,10 +2,12 @@ package org.mybatis.supergen.util;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -112,15 +114,22 @@ public class PropertyPlaceholderReplace {
 	 * @throws IOException
 	 */
 	protected String readFile(String filePath) throws IOException {
-		FileReader reader = new FileReader(filePath);
-		BufferedReader bf = new BufferedReader(reader);
+		// FileReader reader = new FileReader(filePath);
+		// BufferedReader bf = new BufferedReader(reader);
+		// String rtStr = "";
+		// String str = null;
+		// while ((str = bf.readLine()) != null) {
+		// rtStr += str + "\n";
+		// }
+		// bf.close();
+		// reader.close();
+		BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
 		String rtStr = "";
 		String str = null;
 		while ((str = bf.readLine()) != null) {
 			rtStr += str + "\n";
 		}
 		bf.close();
-		reader.close();
 		return rtStr;
 	}
 
@@ -156,29 +165,17 @@ public class PropertyPlaceholderReplace {
 	 *            文件名称
 	 */
 	protected void wirteFile(String filePath, String fileString) {
-		// FileWriter fw = null;
-		// BufferedWriter writer = null;
-		OutputStreamWriter osw = null;
 		try {
-			osw = new OutputStreamWriter(new FileOutputStream(filePath, true), "UTF-8");
-			osw.write(fileString);
-			// fw = new FileWriter(filePath);
-			// writer = new BufferedWriter(fw);
-			// writer.write(fileString);
-			// writer.flush();
+			OutputStreamWriter pw = null;// 定义一个流
+			pw = new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8");
+			// pw.write(new String(fileString.toString().getBytes("UTF-8")));// 将要写入文件的内容，可以多次write
+			pw.write(fileString);
+			pw.close();// 关闭流
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
-		} finally {
-			try {
-				// writer.close();
-				// fw.close();
-				osw.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }

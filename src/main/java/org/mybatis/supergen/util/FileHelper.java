@@ -32,11 +32,11 @@ public class FileHelper {
 	private String servicePath = srcMainJava + packageName + "service" + fileSeparator;
 	private String serviceImplPath = srcMainJava + packageName + "service" + fileSeparator + "impl" + fileSeparator;
 	private String controllerPath = srcMainJava + packageName + "controller" + fileSeparator;
-	private String mybatisPath = srcMainResources + fileSeparator + "mybatis" + fileSeparator;
+	private String mybatisPath = srcMainResources + "mybatis" + fileSeparator;
 	private String pomPath = projectPath;
 	private String jspPath = webapp + "WEB-INF" + fileSeparator + "views" + fileSeparator;
-	private String baseEntityPath = domainPath + fileSeparator + "base" + fileSeparator;
-	private String baseDaoPath = daoPath + fileSeparator + "base" + fileSeparator;
+	private String baseEntityPath = domainPath + "base" + fileSeparator;
+	private String baseDaoPath = daoPath + "base" + fileSeparator;
 
 	public FileHelper() {
 		mavenProFramework.put("srcMainJava", srcMainJava);

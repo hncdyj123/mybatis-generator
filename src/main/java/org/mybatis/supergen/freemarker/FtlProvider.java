@@ -1,11 +1,9 @@
 package org.mybatis.supergen.freemarker;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Locale;
 import java.util.Map;
 
 import org.mybatis.supergen.util.FileUtil;
@@ -48,7 +46,7 @@ public class FtlProvider {
 		LOGGER.info(" 模板文件路径 : " + ftlPath + " 模板文件名 : " + ftlName + " 输出文件位置  : " + filePath);
 		Configuration freemarkerCfg = new Configuration();
 		freemarkerCfg.setDirectoryForTemplateLoading(new File(ftlPath));
-		freemarkerCfg.setEncoding(Locale.getDefault(), "UTF-8");
+		freemarkerCfg.setDefaultEncoding("UTF-8");
 
 		Template template = freemarkerCfg.getTemplate(ftlName);
 		template.setEncoding("UTF-8");
@@ -58,12 +56,13 @@ public class FtlProvider {
 		} catch (Exception e) {
 			LOGGER.error("初始化FreeMarker模板错误:" + e);
 		}
+		OutputStreamWriter pw = new OutputStreamWriter(new FileOutputStream(filePath), "UTF-8");
 		// 创建新文件
-		File createFile = FileUtil.createFile(filePath);
-		BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(createFile), "UTF-8"));
-		template.process(map, out);
-		out.flush();
-		out.close();
+		// BufferedWriter out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(filePath)), "UTF-8"));
+		template.process(map, pw);
+		// out.flush();
+		// out.close();
+		pw.close();
 
 		LOGGER.info(" 模板文件名为 - " + filePath + " 创建成功!");
 	}
