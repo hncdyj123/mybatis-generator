@@ -4,24 +4,17 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.supergen.constants.Constant;
-import org.mybatis.supergen.db.ColumnEntity;
-import org.mybatis.supergen.db.DbMapper;
-import org.mybatis.supergen.db.MysqlDbMapper;
-import org.mybatis.supergen.db.OracleDbMapper;
-import org.mybatis.supergen.db.TableEntity;
+import org.mybatis.supergen.db.DbColumn;
 import org.mybatis.supergen.domain.Column;
 import org.mybatis.supergen.domain.PropertyClass;
 import org.mybatis.supergen.domain.TemplateInfoDesc;
+import org.mybatis.supergen.util.DbUtil;
 import org.mybatis.supergen.util.FileHelper;
 import org.mybatis.supergen.util.FileUtil;
-import org.mybatis.supergen.util.MyBatisUtil;
 import org.mybatis.supergen.util.PropertiesHelper;
 import org.mybatis.supergen.util.ResManager;
 import org.mybatis.supergen.util.StringUtil;
@@ -40,26 +33,10 @@ import org.mybatis.supergen.util.XmlUtil;
 public class OverCore {
 	// private static final Logger LOGGER = LoggerFactory.getLogger(OverCore.class);
 
-	// mysql oracle可以作为主键的字符数据类型
-	private static Map<String, String> dbPriDataMapper = new LinkedHashMap<String, String>();
-
-	static {
-		dbPriDataMapper.put("CHAR", "CHAR");
-		dbPriDataMapper.put("VARCHAR", "VARCHAR");
-		dbPriDataMapper.put("VARCHAR2", "VARCHAR2");
-		dbPriDataMapper.put("NCHAR", "NCHAR");
-		dbPriDataMapper.put("NVARCHAR2", "NVARCHAR2");
-	}
-
-	private static SqlSessionFactory sqlSessionFactory = null;
-
 	// 存放模板文件目录下所有模板定义的文件名 map key - > 文件名 value - > 文件路径 不包含文件名
 	@SuppressWarnings("rawtypes")
 	private static Map templateMap = new HashMap();
 
-	static {
-		sqlSessionFactory = MyBatisUtil.getSqlSessionFactory();
-	}
 	// 外部文件模板位置
 	private String outFtlFilePath = ResManager.getString("system.freemarker.filepath");
 
@@ -71,62 +48,28 @@ public class OverCore {
 	}
 
 	/**
-	 * 获取映射数据库表信息
+	 * 获取所有的表信息
 	 * 
-	 * @param dbName
-	 * @return
 	 * @throws Exception
 	 */
-	public List<PropertyClass> getAllFileInfo(String dbName) throws Exception {
+	public List<PropertyClass> getAllTableInfo() throws Exception {
 		// 存放所有数据库表映射实体类信息
 		List<PropertyClass> propertyClassList = new ArrayList<PropertyClass>();
-		SqlSession sqlSession = sqlSessionFactory.openSession();
-		DbMapper dbMapper = null;
-		String env = ResManager.getString("system.db.type");
-		if (env == null || !env.contains("oracle")) {
-			dbMapper = sqlSession.getMapper(MysqlDbMapper.class);
-		} else {
-			dbMapper = sqlSession.getMapper(OracleDbMapper.class);
-		}
-		List<TableEntity> tableEntityList = dbMapper.getAllTable(dbName); // 获取所有的表名称
 		List<String> xmlTableNameList = XmlUtil.getXmlTableName(); // 获取xml配置中的表名称
-		List<TableEntity> generateTableList = new ArrayList<TableEntity>();
+		DbUtil dbUtil = new DbUtil();
 		for (String xmlTableName : xmlTableNameList) {
-			for (TableEntity tableEntity : tableEntityList) {
-				if (xmlTableName.equalsIgnoreCase(tableEntity.getTableName())) {
-					generateTableList.add(tableEntity);
-					break;
-				}
+			PropertyClass propertyClass = new PropertyClass();
+			List<DbColumn> dbColumnList = dbUtil.getTableColumns(StringUtil.isEmpty(ResManager.getString("system.db.schema")) ? null : ResManager.getString("system.db.schema"), xmlTableName);
+			propertyClass.setTableName(xmlTableName); // 设置表名称
+			propertyClass.setClassName(this.getClassName(xmlTableName)); // 设置类名称
+			List<Column> columnList = new ArrayList<Column>();
+			for (DbColumn dbColumn : dbColumnList) {
+				Column column = new Column(dbColumn.getColumnName(), dbColumn.getDataType(), dbColumn.getRemarks(), dbColumn.getColumnSize(), dbColumn.getDecimalDigits());
+				columnList.add(column);
 			}
-		}
-		if (generateTableList != null && generateTableList.size() > 0) {
-			for (TableEntity tableEntity : generateTableList) {
-				PropertyClass propertyClass = new PropertyClass();
-				propertyClass.setTableName(tableEntity.getTableName()); // 设置表名称
-				propertyClass.setClassName(this.getClassName(tableEntity.getTableName())); // 设置类名称
-				ColumnEntity tempcolumnEntity = new ColumnEntity(tableEntity.getTableName(), dbName);
-				List<ColumnEntity> columnEntityList = dbMapper.getTableColumns(tempcolumnEntity); // 存放表字段
-				if (columnEntityList != null && columnEntityList.size() > 0) {
-					List<Column> columnList = new ArrayList<Column>();
-					for (ColumnEntity columnEntity : columnEntityList) {
-						if (!StringUtil.isEmpty(columnEntity.getColumnKey())) { // 设置主键数据库类型
-							propertyClass.setPriType(columnEntity.getDataType());
-							if (dbPriDataMapper.containsKey(columnEntity.getDataType().toUpperCase())) {
-								propertyClass.setPriJava("String");
-							} else {
-								propertyClass.setPriJava("int");
-							}
-							Column column = new Column(columnEntity.getColumnName(), columnEntity.getDataType(), columnEntity.getColumnComment(), columnEntity.getColumnKey());
-							columnList.add(column);
-							continue;
-						}
-						Column column = new Column(columnEntity.getColumnName(), columnEntity.getDataType(), columnEntity.getColumnComment(), columnEntity.getColumnKey());
-						columnList.add(column);
-					}
-					propertyClass.setColumns(columnList); // 存放当前表的列信息
-				}
-				propertyClassList.add(propertyClass);
-			}
+			propertyClass.setColumns(columnList);
+			propertyClass.setPrimaryKeyList(dbUtil.getAllPrimaryKeys(StringUtil.isEmpty(ResManager.getString("system.db.schema")) ? null : ResManager.getString("system.db.schema"), xmlTableName));
+			propertyClassList.add(propertyClass);
 		}
 		return propertyClassList;
 	}

@@ -18,14 +18,20 @@ public class PropertyClass {
 	private String tableName;
 	// 包名
 	private String packageName;
-	// 主键数据库类型
-	private String priType;
-	// 主键java类型
+	// 主键java字段
 	private String priJava;
+	// 主键java类型
+	private String priJavaType;
 	// 表列
 	private List<Column> columns = new ArrayList<Column>();
+	// 主键List
+	private List<String> primaryKeyList = new ArrayList<String>();
 
 	public String getClassName() {
+		// 处理多主键问题
+		if (this.getPrimaryKeyList().size() > 1) {
+			return className + "Key";
+		}
 		return className;
 	}
 
@@ -49,15 +55,19 @@ public class PropertyClass {
 		this.packageName = packageName;
 	}
 
-	public String getPriType() {
-		return priType;
-	}
-
-	public void setPriType(String priType) {
-		this.priType = priType;
-	}
-
 	public String getPriJava() {
+		// 多主键只拿第一个主键
+		for (String primaryKey : primaryKeyList) {
+			for (Column column : columns) {
+				if (column.getDatabaseName().equalsIgnoreCase(primaryKey)) {
+					column.setColumnKey("PRI");
+					priJava = column.getFieldName();
+					priJavaType = column.getJdkType();
+					break;
+				}
+			}
+			break;
+		}
 		return priJava;
 	}
 
@@ -71,6 +81,22 @@ public class PropertyClass {
 
 	public void setColumns(List<Column> columns) {
 		this.columns = columns;
+	}
+
+	public List<String> getPrimaryKeyList() {
+		return primaryKeyList;
+	}
+
+	public void setPrimaryKeyList(List<String> primaryKeyList) {
+		this.primaryKeyList = primaryKeyList;
+	}
+
+	public String getPriJavaType() {
+		return priJavaType;
+	}
+
+	public void setPriJavaType(String priJavaType) {
+		this.priJavaType = priJavaType;
 	}
 
 }

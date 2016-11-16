@@ -39,11 +39,13 @@ public class ${pro.className}ServiceImpl implements ${pro.className}Service {
 		return inner${pro.className}Service.delete${pro.className}ByCriteria(${pro.className?uncap_first});
 	}
 	
+	<#if pro.priJavaType?exists>
 	@Override
 	/**删除对象 根据主键删除**/
-	public int delete${pro.className}ByPrimaryKey(<#if pro.priJava?exists>${pro.priJava}<#else>int</#if> primaryId) {
+	public int delete${pro.className}ByPrimaryKey(<#if pro.priJavaType?exists>${pro.priJavaType}</#if> primaryId) {
 		return inner${pro.className}Service.delete${pro.className}ByPrimaryKey(primaryId);
 	}
+	</#if>
 
 	@Override
 	/**修改对象 不组装为空字段 参数一:组装条件Object 参数二:修改Object**/
@@ -51,11 +53,13 @@ public class ${pro.className}ServiceImpl implements ${pro.className}Service {
 		return inner${pro.className}Service.update${pro.className}ByCriteriaSelective(${pro.className?uncap_first}1,${pro.className?uncap_first}2);
 	}
 	
+	<#if pro.priJavaType?exists>
 	@Override
 	/**修改对象 根据主键修改**/
 	public int update${pro.className}ByPrimaryKeySelective(${pro.className} ${pro.className?uncap_first}) {
 		return inner${pro.className}Service.update${pro.className}ByPrimaryKeySelective(${pro.className?uncap_first});
 	}
+	</#if>
 	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 	@Override
@@ -65,12 +69,14 @@ public class ${pro.className}ServiceImpl implements ${pro.className}Service {
 		return new DataGrid(total,${pro.className?uncap_first}List);
 	}
 	
+	<#if pro.priJavaType?exists>
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 	@Override
-	public ${pro.className} select${pro.className}ByPrimaryKey(<#if pro.priJava?exists>${pro.priJava}<#else>int</#if> primaryId) {
+	public ${pro.className} select${pro.className}ByPrimaryKey(<#if pro.priJavaType?exists>${pro.priJavaType}</#if> primaryId) {
 		return inner${pro.className}Service.select${pro.className}ByPrimaryKey(primaryId);
 	}
-
+	</#if>
+	
 	@Transactional(propagation = Propagation.NOT_SUPPORTED, readOnly = true)
 	@Override
 	public ${pro.className} select${pro.className}(${pro.className} ${pro.className?uncap_first}){

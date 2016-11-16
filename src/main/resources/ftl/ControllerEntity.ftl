@@ -57,12 +57,13 @@ public class ${pro.className}Controller {
 		return message;
 	}
 	
+	<#if pro.priJavaType?exists>
 	@RequestMapping(value = "delete", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public Object delete(${pro.className} ${pro.className?uncap_first}) {
 		Message message = new Message();
 		try {
-			${pro.className?uncap_first}Service.delete${pro.className}ByPrimaryKey(<#list pro.columns as c><#if (c.columnKey)?? && c.columnKey == "PRI">${pro.className?uncap_first}.get${c.fieldName?cap_first}()</#if></#list>);
+			${pro.className?uncap_first}Service.delete${pro.className}ByPrimaryKey(<#list pro.columns as c><#if (c.columnKey)?? && c.columnKey == "PRI">${pro.className?uncap_first}.get${c.fieldName?cap_first}()<#break></#if></#list>);
 		} catch (Exception e) {
 			LOGGER.error("delete method error :", e);
 			message.setCode(500);
@@ -70,7 +71,9 @@ public class ${pro.className}Controller {
 		}
 		return message;
 	}
+	</#if>
 
+	<#if pro.priJavaType?exists>
 	@RequestMapping(value = "update", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public Object update(${pro.className} ${pro.className?uncap_first}) {
@@ -84,6 +87,7 @@ public class ${pro.className}Controller {
 		}
 		return message;
 	}
+	</#if>
 
 	@RequestMapping(value = "query", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
@@ -99,12 +103,13 @@ public class ${pro.className}Controller {
 		return message;
 	}
 	
+	<#if pro.priJavaType?exists>
 	@RequestMapping(value = "queryById", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody
 	public Object queryById(${pro.className} ${pro.className?uncap_first}) {
 		Message message = new Message();
 		try {
-			message.setResult(${pro.className?uncap_first}Service.select${pro.className}ByPrimaryKey(<#list pro.columns as c><#if (c.columnKey)?? && c.columnKey == "PRI">${pro.className?uncap_first}.get${c.fieldName?cap_first}()</#if></#list>));
+			message.setResult(${pro.className?uncap_first}Service.select${pro.className}ByPrimaryKey(<#list pro.columns as c><#if (c.columnKey)?? && c.columnKey == "PRI">${pro.className?uncap_first}.get${c.fieldName?cap_first}()<#break></#if></#list>));
 		} catch (Exception e) {
 			LOGGER.error("queryById method error :", e);
 			message.setCode(500);
@@ -112,6 +117,7 @@ public class ${pro.className}Controller {
 		}
 		return message;
 	}
+	</#if>
 	
 	@RequestMapping(value = "queryByCondition", method = {RequestMethod.GET, RequestMethod.POST})
 	@ResponseBody

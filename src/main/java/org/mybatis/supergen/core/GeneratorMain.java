@@ -10,7 +10,6 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.supergen.domain.PropertyClass;
 import org.mybatis.supergen.domain.TemplateInfoDesc;
-import org.mybatis.supergen.util.ResManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,7 +34,7 @@ public class GeneratorMain {
 		OverCore core = new OverCore();
 		core.createProject();
 		// 获取数据库表所有的描述信息
-		List<PropertyClass> propertyClassList = core.getAllFileInfo(ResManager.getString("system.db.name"));
+		List<PropertyClass> propertyClassList = core.getAllTableInfo();
 		List<TemplateInfoDesc> templateInfoDescList = core.getTemplateInfo(propertyClassList);
 		for (TemplateInfoDesc desc : templateInfoDescList) {
 			new WriteFile().run(desc);

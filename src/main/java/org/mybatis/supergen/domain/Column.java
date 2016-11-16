@@ -1,5 +1,8 @@
 package org.mybatis.supergen.domain;
 
+import java.math.BigDecimal;
+import java.sql.Types;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -12,56 +15,47 @@ import org.mybatis.supergen.util.StringUtil;
  * @Description: 相关列配置信息
  * @author hncdyj123@163.com
  * @date 2015年11月21日 下午12:24:00
- *
+ * @update 2016年11月16日
  */
 public class Column {
-	/** MYSQL对应java数据类型映射 **/
-	private static Map<String, String> dbMysqlMapper = new LinkedHashMap<String, String>();
+	/** SQL对应java数据类型映射 **/
+	private static Map<Integer, String> typeMap = new LinkedHashMap<Integer, String>();
 
 	static {
-		dbMysqlMapper.put("BIGINT", "Long");
-		dbMysqlMapper.put("BIT", "byte[]");
-		dbMysqlMapper.put("BLOB", "byte[]");
-		dbMysqlMapper.put("CHAR", "String");
-		dbMysqlMapper.put("DATE", "Date");
-		dbMysqlMapper.put("DATETIME", "Timestamp");
-		dbMysqlMapper.put("DECIMAL", "BigDecimal");
-		dbMysqlMapper.put("DOUBLE", "Double");
-		dbMysqlMapper.put("DOUBLE PRECISION", "Double");
-		dbMysqlMapper.put("ENUM", "String");
-		dbMysqlMapper.put("FLOAT", "Float");
-		dbMysqlMapper.put("INT", "Integer");
-		dbMysqlMapper.put("INTEGER", "Integer");
-		dbMysqlMapper.put("LONGBLOB", "byte[]");
-		dbMysqlMapper.put("LONGTEXT", "String");
-		dbMysqlMapper.put("MEDIUMBLOB", "byte[]");
-		dbMysqlMapper.put("MEDIUMINT", "Integer");
-		dbMysqlMapper.put("MEDIUMTEXT", "String");
-		dbMysqlMapper.put("NUMERIC", "_");
-		dbMysqlMapper.put("REAL", "_");
-		dbMysqlMapper.put("SET", "String");
-		dbMysqlMapper.put("SMALLINT", "int");
-		dbMysqlMapper.put("TEXT", "String");
-		dbMysqlMapper.put("TIME", "Time");
-		dbMysqlMapper.put("TIMESTAMP", "Timestamp");
-		dbMysqlMapper.put("TINYBLOB", "byte[]");
-		dbMysqlMapper.put("TINYINT", "Boolean");
-		dbMysqlMapper.put("TINYTEXT", "String");
-		dbMysqlMapper.put("VARCHAR", "String");
-		dbMysqlMapper.put("YEAR", "Date");
-
-		// load配置中的数据映射
-		String dbmapperStr = (StringUtil.isEmptyString(ResManager.getString("system.dbmapper")) ? "" : ResManager.getString("system.dbmapper"));
-		if (!StringUtil.isEmptyString(dbmapperStr)) {
-			String[] dbmappers = dbmapperStr.split("\\,");
-			for (int i = 0; i < dbmappers.length; i++) {
-				String[] dbtype = dbmappers[i].split("\\|");
-				if (dbMysqlMapper.containsKey(dbtype[0])) {
-					dbMysqlMapper.remove(dbtype[0]);
-				}
-				dbMysqlMapper.put(dbtype[0], dbtype[1]);
-			}
-		}
+		typeMap.put(Types.ARRAY, Object.class.getName());
+		typeMap.put(Types.BIGINT, Long.class.getName());
+		typeMap.put(Types.BINARY, "byte[]");
+		typeMap.put(Types.BIT, Boolean.class.getName());
+		typeMap.put(Types.BLOB, "byte[]");
+		typeMap.put(Types.BOOLEAN, Boolean.class.getName());
+		typeMap.put(Types.CHAR, String.class.getName());
+		typeMap.put(Types.CLOB, String.class.getName());
+		typeMap.put(Types.DATALINK, Object.class.getName());
+		typeMap.put(Types.DATE, Date.class.getName());
+		typeMap.put(Types.DECIMAL, BigDecimal.class.getName());
+		typeMap.put(Types.DISTINCT, Object.class.getName());
+		typeMap.put(Types.DOUBLE, Double.class.getName());
+		typeMap.put(Types.FLOAT, Double.class.getName());
+		typeMap.put(Types.INTEGER, Integer.class.getName());
+		typeMap.put(Types.JAVA_OBJECT, Object.class.getName());
+		typeMap.put(Types.LONGNVARCHAR, String.class.getName());
+		typeMap.put(Types.LONGVARBINARY, "byte[]");
+		typeMap.put(Types.LONGVARCHAR, String.class.getName());
+		typeMap.put(Types.NCHAR, String.class.getName());
+		typeMap.put(Types.NCLOB, String.class.getName());
+		typeMap.put(Types.NVARCHAR, String.class.getName());
+		typeMap.put(Types.NULL, Object.class.getName());
+		typeMap.put(Types.NUMERIC, BigDecimal.class.getName());
+		typeMap.put(Types.OTHER, Object.class.getName());
+		typeMap.put(Types.REAL, Float.class.getName());
+		typeMap.put(Types.REF, Object.class.getName());
+		typeMap.put(Types.SMALLINT, Short.class.getName());
+		typeMap.put(Types.STRUCT, Object.class.getName());
+		typeMap.put(Types.TIME, Date.class.getName());
+		typeMap.put(Types.TIMESTAMP, Date.class.getName());
+		typeMap.put(Types.TINYINT, Byte.class.getName());
+		typeMap.put(Types.VARBINARY, "byte[]");
+		typeMap.put(Types.VARCHAR, String.class.getName());
 	}
 
 	/** 字段名 **/
@@ -69,20 +63,29 @@ public class Column {
 	/** 数据库字段名 **/
 	private String databaseName;
 	/** 数据库类型 **/
-	private String dataType;
+	private int dataType;
 	/** java数据类型 **/
 	private String jdkType;
 	/** 字段描述 **/
 	private String fieldDesc;
 	/** 是否主键(PRI为主键) **/
 	private String columnKey;
+	/** 列大小 **/
+	private int columnSize;
+	/** 小数长度 **/
+	private int decimalDigits;
 
-	public Column(String databaseName, String dataType, String fieldDesc, String columnKey) {
+	public Column(String databaseName, int dataType, String fieldDesc, int columnSize, int decimalDigits) {
 		super();
 		this.databaseName = databaseName;
 		this.dataType = dataType;
 		this.fieldDesc = fieldDesc;
-		this.columnKey = columnKey;
+		this.columnSize = columnSize;
+		this.decimalDigits = decimalDigits;
+	}
+
+	@Deprecated
+	public Column(String columnName, String dataType2, String columnComment, String columnKey2) {
 	}
 
 	public String getFieldName() {
@@ -112,23 +115,17 @@ public class Column {
 		this.databaseName = databaseName;
 	}
 
-	public String getDataType() {
+	public int getDataType() {
 		return dataType;
 	}
 
-	public void setDataType(String dataType) {
+	public void setDataType(int dataType) {
 		this.dataType = dataType;
 	}
 
 	public String getJdkType() {
-		// 数据库为int时候 mybatis枚举不支持
-		if (StringUtil.equalsString("int".toUpperCase(), dataType.toUpperCase())) {
-			dataType = "INTEGER";
-		}
-		jdkType = dbMysqlMapper.get(dataType.toUpperCase());
-		if (StringUtil.isEmptyString(jdkType)) {
-			jdkType = "String";
-		}
+		String defaultJdkType = typeMap.get(dataType);
+		jdkType = overrideDefaultType(this, defaultJdkType);
 		return jdkType;
 	}
 
@@ -153,6 +150,70 @@ public class Column {
 
 	public void setColumnKey(String columnKey) {
 		this.columnKey = columnKey;
+	}
+
+	public int getColumnSize() {
+		return columnSize;
+	}
+
+	public void setColumnSize(int columnSize) {
+		this.columnSize = columnSize;
+	}
+
+	public int getDecimalDigits() {
+		return decimalDigits;
+	}
+
+	public void setDecimalDigits(int decimalDigits) {
+		this.decimalDigits = decimalDigits;
+	}
+
+	/**
+	 * 覆盖缺省类型
+	 * 
+	 * @param column
+	 * @param defaultType
+	 * @return
+	 */
+	protected String overrideDefaultType(Column column, String defaultJdkType) {
+		String answer = defaultJdkType;
+		switch (column.getDataType()) {
+		case Types.BIT:
+			answer = calculateBitReplacement(column, defaultJdkType);
+			break;
+		case Types.DECIMAL:
+			answer = calculateBigDecimalReplacement(column, defaultJdkType);
+			break;
+		case Types.NUMERIC:
+			break;
+		}
+
+		return answer;
+	}
+
+	protected String calculateBitReplacement(Column column, String defaultJdkType) {
+		String answer = defaultJdkType;
+		if (column.getColumnSize() > 1) {
+			answer = "byte[]";
+		} else {
+			answer = defaultJdkType;
+		}
+
+		return answer;
+	}
+
+	protected String calculateBigDecimalReplacement(Column column, String defaultJdkType) {
+		String answer;
+		if (column.getDecimalDigits() > 0 || column.getColumnSize() > 18) {
+			answer = defaultJdkType;
+		} else if (column.getColumnSize() > 9) {
+			answer = Long.class.getName();
+		} else if (column.getColumnSize() > 4) {
+			answer = Integer.class.getName();
+		} else {
+			answer = Short.class.getName();
+		}
+		return answer;
 	}
 
 }
