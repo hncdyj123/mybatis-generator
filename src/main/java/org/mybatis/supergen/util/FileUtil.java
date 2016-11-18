@@ -1,11 +1,13 @@
 package org.mybatis.supergen.util;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,6 +95,22 @@ public class FileUtil {
 			result = true;
 		}
 		return result;
+	}
+
+	/**
+	 * 写文件指定编码
+	 * 
+	 * @param path
+	 * @param content
+	 * @param encoding
+	 * @throws IOException
+	 */
+	public static void writeFile(String path, String content, String encoding) throws IOException {
+		File file = new File(path);
+		file.createNewFile();
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), encoding));
+		writer.write(content);
+		writer.close();
 	}
 
 	/**

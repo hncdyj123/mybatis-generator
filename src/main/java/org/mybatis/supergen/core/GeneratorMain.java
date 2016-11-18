@@ -10,6 +10,8 @@ import org.mybatis.generator.config.xml.ConfigurationParser;
 import org.mybatis.generator.internal.DefaultShellCallback;
 import org.mybatis.supergen.domain.PropertyClass;
 import org.mybatis.supergen.domain.TemplateInfoDesc;
+import org.mybatis.supergen.util.FileUtil;
+import org.mybatis.supergen.util.ResManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +37,18 @@ public class GeneratorMain {
 		core.createProject();
 		// 获取数据库表所有的描述信息
 		List<PropertyClass> propertyClassList = core.getAllTableInfo();
+		// 生成表查询头，未外部mapper.xml 提供所有字段-表字段映射，避免写select *
+		for (PropertyClass pro : propertyClassList) {
+			String tableStr = "";
+			for (int i = 0; i < pro.getColumns().size(); i++) {
+				if (i == pro.getColumns().size() - 1) {
+					tableStr += (pro.getColumns().get(i).getDatabaseName() + " AS " + pro.getColumns().get(i).getFieldName());
+					break;
+				}
+				tableStr += (pro.getColumns().get(i).getDatabaseName() + " AS " + pro.getColumns().get(i).getFieldName() + ",\n");
+			}
+			FileUtil.writeFile(ResManager.getString("system.projectname") + File.separator + pro.getTableName() + ".txt", tableStr, "UTF-8");
+		}
 		List<TemplateInfoDesc> templateInfoDescList = core.getTemplateInfo(propertyClassList);
 		for (TemplateInfoDesc desc : templateInfoDescList) {
 			new WriteFile().run(desc);
