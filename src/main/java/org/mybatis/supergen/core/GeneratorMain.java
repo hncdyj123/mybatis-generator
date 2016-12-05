@@ -49,6 +49,7 @@ public class GeneratorMain {
 			}
 			FileUtil.writeFile(ResManager.getString("system.projectname") + File.separator + pro.getTableName() + ".txt", tableStr, "UTF-8");
 		}
+
 		List<TemplateInfoDesc> templateInfoDescList = core.getTemplateInfo(propertyClassList);
 		for (TemplateInfoDesc desc : templateInfoDescList) {
 			new WriteFile().run(desc);

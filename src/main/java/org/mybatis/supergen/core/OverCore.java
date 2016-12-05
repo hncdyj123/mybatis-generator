@@ -68,7 +68,11 @@ public class OverCore {
 				columnList.add(column);
 			}
 			propertyClass.setColumns(columnList);
-			propertyClass.setPrimaryKeyList(dbUtil.getAllPrimaryKeys(StringUtil.isEmpty(ResManager.getString("system.db.schema")) ? null : ResManager.getString("system.db.schema"), xmlTableName));
+			// 获取表的schema
+			String tableschema = XmlUtil.tableMap.get(xmlTableName);
+			propertyClass.setPrimaryKeyList(dbUtil.getAllPrimaryKeys(StringUtil.isEmpty(tableschema) ? ResManager.getString("system.db.schema") : tableschema, xmlTableName));
+			// 设置主键类型
+			propertyClass.getPriJava();
 			propertyClassList.add(propertyClass);
 		}
 		return propertyClassList;

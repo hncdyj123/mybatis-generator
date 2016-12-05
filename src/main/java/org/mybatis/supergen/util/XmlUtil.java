@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,8 @@ import org.dom4j.io.SAXReader;
  * @date 2016年9月28日
  */
 public class XmlUtil {
+	public static Map<String, String> tableMap = new LinkedHashMap<>();
+
 	/**
 	 * 获取mybatis配置文件中的table名
 	 * 
@@ -40,6 +43,8 @@ public class XmlUtil {
 			if (tableElement.getName().equalsIgnoreCase("table")) {
 				Attribute attribute = tableElement.attribute("tableName");
 				tableList.add(attribute.getText());
+				Attribute schema = tableElement.attribute("schema");
+				tableMap.put(attribute.getText(), schema == null ? "" : schema.getText());
 			}
 		}
 		return tableList;
