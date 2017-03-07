@@ -15,55 +15,7 @@
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/project.jpg)
 
 ##2.项目运行修改配置：<br/>
-###修改根目录下mybatis-config.xml,新增oracle数据连接配置<br/>
-```javascript
-<configuration>
-	<settings>
-		<!-- changes from the defaults for testing -->
-		<setting name="cacheEnabled" value="false" />
-		<setting name="useGeneratedKeys" value="true" />
-		<setting name="defaultExecutorType" value="REUSE" />
-	</settings>
-	<typeAliases>
-		<typeAlias alias="ColumnEntity" type="org.mybatis.supergen.db.ColumnEntity" />
-		<typeAlias alias="TableEntity" type="org.mybatis.supergen.db.TableEntity" />
-	</typeAliases>
-	<environments default="development">
-		<environment id="mysql">
-			<transactionManager type="jdbc" />
-			<dataSource type="POOLED">
-				<property name="driver" value="com.mysql.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://127.0.0.1/auc" />
-				<property name="username" value="root" />
-				<property name="password" value="root" />
-			</dataSource>
-		</environment>
-		<environment id="oracle">
-			<transactionManager type="jdbc" />
-			<dataSource type="POOLED">
-				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
-				<property name="url" value="jdbc:oracle:thin:@192.168.1.20:1521:vehicle" />
-				<property name="username" value="vehicle" />
-				<property name="password" value="gzcst2013" />
-			</dataSource>
-		</environment>
-	</environments>
-	<mappers>
-		<mapper resource="mappers/mysqlmappers.xml" />
-		<mapper resource="mappers/oraclemappers.xml" />
-	</mappers>
-</configuration>
-```
-替换三项本地配置<br/>
-```
-<property name="url" value="jdbc:mysql://127.0.0.1/ams"/>
-<property name="username" value="root"/>
-<property name="password" value="root"/>
-```
-<br/>
-
 ###修改根目录下的mbgConfiguration.xml<br/>
-
 ```javascript
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
@@ -141,7 +93,7 @@
 <br/>
 修改model和mapper<br/>
 1.javaModelGenerator targetProject="D:\super-easyui\src\main\java"  D:\super-easyui需要和config.properties配置项：system.projectname保持一致。<br/>
-targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置项：system.project.packagename保持一致。
+targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置项：system.project.packagename保持一致。<br/>
 2.sqlMapGenerator targetProject="D:\super-easyui\src\main\resources\mybatis" D:\super-easyui需要和config.properties配置项：system.projectname保持一致。<br/>
 ```
 <!-- 数据表对应的model 层 --><br/>
@@ -167,29 +119,25 @@ targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置
 
 ###修改根目录下config.properties
 ```
-#要生成项目的项目名
+# 项目根目录
 system.projectname=D:\\super-easyui
-#项目DB
-system.db.name=auc
-#连接数据库类型
-system.db.type=oracle
-#项目的包名
-system.project.packagename=com.sym.ams
-#表分隔符号 例如：ams_demo表，生成时候会replace掉_
+# schema名称(针对oracle一个用户下建立多个表空间)
+system.db.schema=vehicle6
+# 项目包名(数据库查询xml和项目包会用到此配置)
+system.project.packagename=com.klonetech.dataprocess
+# 表字符替换名(与Dao,Service,Controller,Jsp,Js生成文件名相关,默认用"_"替换，可不配置)
 system.table.sub=_
-#字段分隔符号 例如：ams_demo表，中的有一个字段为user_name 生成时候会replace掉_
+# 表字符替换名(与Dao,Service,Controller,Jsp,Js生成文件名相关,默认用"_"替换，可不配置)
 system.column.sub=_
-#外部模板位置(此项暂时不需要配置)
-system.freemarker.filepath=
-#log config(要生成项目的日志根)
+# 生成项目中的log的project名称
 log.project.name=super-easyui
-#log.level(要生成项目的日志等级)
+# 生成项目中log的等级
 log.level=INFO
-# sources file config(要生成项目的配置文件，在src/main/resources/prosource下面)
+# 生成项目中的资源文件
 prosource.fileNames=app.properties,applicationContext.xml,logback.xml,pom.xml
-#jdbc config(要生成项目的jdbc连接和本次取表的jdbc连接)
+# 生成项目中的JDBC连接
 jdbc.driver.config=com.mysql.jdbc.Driver
-jdbc.url.config=jdbc:mysql://127.0.0.1:3306/ams?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
+jdbc.url.config=jdbc:mysql://127.0.0.1:3306/klonetech?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull
 jdbc.username.config=root
 jdbc.password.config=root
 jdbc.pool.initialSize.config=150
