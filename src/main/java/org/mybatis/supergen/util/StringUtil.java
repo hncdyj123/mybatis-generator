@@ -16,8 +16,7 @@ import sun.misc.BASE64Decoder;
 public class StringUtil {
 
 	/**
-	 * 判断一个字符串Str是否为空 return true if it is supplied with an empty, zero length,
-	 * or whitespace-only string. documented
+	 * 判断一个字符串Str是否为空 return true if it is supplied with an empty, zero length, or whitespace-only string. documented
 	 * 
 	 * @param str
 	 * @return boolean
@@ -174,7 +173,7 @@ public class StringUtil {
 	}
 
 	public static boolean equalsString(String sourceStr, String targetStr) {
-		return sourceStr.equals(targetStr);
+		return sourceStr.equalsIgnoreCase(targetStr);
 	}
 
 	/**
