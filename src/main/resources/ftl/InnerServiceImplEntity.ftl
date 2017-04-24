@@ -53,6 +53,12 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 		${pro.className?replace("Key","")}Criteria criteria = this.createCriteria(${pro.className?uncap_first}1);
 		return ${pro.className?uncap_first}Dao.updateByCriteriaSelective(${pro.className?uncap_first}2,criteria);
 	}
+
+	@Override
+	public int update${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2) {
+		${pro.className?replace("Key","")}Criteria criteria = this.createCriteria(${pro.className?uncap_first}1);
+		return ${pro.className?uncap_first}Dao.updateByCriteria(${pro.className?uncap_first}2,criteria);
+	}
 	
 	<#if pro.priJavaType?exists>
 	@Override

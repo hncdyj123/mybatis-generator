@@ -52,6 +52,12 @@ public class ${pro.className}ServiceImpl implements ${pro.className}Service {
 	public int update${pro.className}ByCriteriaSelective(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2) {
 		return inner${pro.className}Service.update${pro.className}ByCriteriaSelective(${pro.className?uncap_first}1,${pro.className?uncap_first}2);
 	}
+
+	@Override
+	/**修改对象 组装为空字段 参数一:组装条件Object 参数二:修改Object**/
+	public int update${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2) {
+		return inner${pro.className}Service.update${pro.className}ByCriteria(${pro.className?uncap_first}1,${pro.className?uncap_first}2);
+	}
 	
 	<#if pro.priJavaType?exists>
 	@Override

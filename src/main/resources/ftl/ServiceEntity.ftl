@@ -30,6 +30,9 @@ public interface ${pro.className}Service {
 	/**修改对象 不组装为空字段 参数一:组装条件Object 参数二:修改Object**/
 	public int update${pro.className}ByCriteriaSelective(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2);
 
+	/**修改对象 组装为空字段 参数一:组装条件Object 参数二:修改Object**/
+	public int update${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first}1, ${pro.className} ${pro.className?uncap_first}2);
+
 	<#if pro.priJavaType?exists>
 	/**修改对象 根据主键修改**/
 	public int update${pro.className}ByPrimaryKeySelective(${pro.className} ${pro.className?uncap_first});

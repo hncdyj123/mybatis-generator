@@ -29,6 +29,9 @@ public abstract interface BaseDao<T, E, K> extends Serializable {
 
 	/**修改对象 不组装为空字段**/
 	public abstract int updateByCriteriaSelective(@Param("record") T paramT, @Param("example") E paramE);
+	
+	/**修改对象 不组装为空字段**/
+	public abstract int updateByCriteria(@Param("record") T paramT, @Param("example") E paramE);
 
 	/**修改对象 根据主键修改**/
 	public abstract int updateByPrimaryKeySelective(T paramT);
