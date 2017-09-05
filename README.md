@@ -92,6 +92,7 @@
 1.javaModelGenerator targetProject="D:\super-easyui\src\main\java"  D:\super-easyui需要和config.properties配置项：system.projectname保持一致。<br/>
 targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置项：system.project.packagename保持一致。<br/>
 2.sqlMapGenerator targetProject="D:\super-easyui\src\main\resources\mybatis" D:\super-easyui需要和config.properties配置项：system.projectname保持一致。<br/>
+
 ```Java
 <!-- 数据表对应的model 层 --><br/>
 <javaModelGenerator targetPackage="com.sym.ams.domain" targetProject="D:\super-easyui\src\main\java">
@@ -104,7 +105,7 @@ targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置
 <property name="enableSubPackages" value="true" />
 </sqlMapGenerator>
 ```
-<br/>
+
 配置需要生成的表,建议所有表，因为innerservice,service,controller,页面会生成所有<br/>
 ```Java
 <!-- 要对那些数据表进行生成操作 -->
@@ -112,7 +113,6 @@ targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置
 <table tableName="ams_operator_activity" />
 <table tableName="ams_operator_originality" />
 ```
-<br/>
 
 ### 修改根目录下config.properties
 ```Java
