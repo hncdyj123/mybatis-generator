@@ -1,7 +1,7 @@
-#首先想说说写这个项目的目的<br/>
-#####以前写过2个版本，后面看公司的项目，思想挺好的。所以重写了以前的代码。<br/>
-#####第一版本：https://github.com/hncdyj123/mybatis-generator-v2<br/>
-#####第二版本：https://github.com/hncdyj123/super-generator<br/>
+# 首先想说说写这个项目的目的<br/>
+##### 以前写过2个版本，后面看公司的项目，思想挺好的。所以重写了以前的代码。<br/>
+##### 第一版本：https://github.com/hncdyj123/mybatis-generator-v2<br/>
+##### 第二版本：https://github.com/hncdyj123/super-generator<br/>
 1.项目表太多。<br/>
 2.mybatis自带的生成mybatis-generator生成的代码可能不太友好，而且只有model,mapper,xml。<br/>
 3.继承mybatis-generator本身的生成。<br/>
@@ -10,13 +10,13 @@
 6.只专注在service层的业务开发。<br/>
 <br/>
 
-##1.项目采用assembly打包，打出来的包可以直接解压到linux或者window上面运行<br/>
+## 1.项目采用assembly打包，打出来的包可以直接解压到linux或者window上面运行<br/>
 项目结构如图：
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/project.jpg)
 
-##2.项目运行修改配置：<br/>
-###修改根目录下的mbgConfiguration.xml<br/>
-```javascript
+## 2.项目运行修改配置：<br/>
+### 修改根目录下的mbgConfiguration.xml<br/>
+```Java
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
   PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
@@ -82,9 +82,9 @@
 </generatorConfiguration>
 ```
 
-###修改本地配置<br/>
+### 修改本地配置<br/>
 修改数据库配置信息<br/>
-```
+```Java
 <!-- 数据库连接 -->
 <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/ams?characterEncoding=utf8" userId="root" password="root">
 <property name="remarks" value="true" />
@@ -109,7 +109,7 @@ targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置
 ```
 <br/>
 配置需要生成的表,建议所有表，因为innerservice,service,controller,页面会生成所有<br/>
-```
+```Java
 <!-- 要对那些数据表进行生成操作 -->
 <table tableName="ams_operator_channel" />
 <table tableName="ams_operator_activity" />
@@ -117,8 +117,8 @@ targetPackage="com.sym.ams.domain" "com.sym.ams"需要和config.properties配置
 ```
 <br/>
 
-###修改根目录下config.properties
-```
+### 修改根目录下config.properties
+```Java
 # 项目根目录
 system.projectname=D:\\super-easyui
 # schema名称(针对oracle一个用户下建立多个表空间)
@@ -145,13 +145,13 @@ jdbc.pool.minIdle.config=50
 jdbc.pool.maxActive.config=150
 ```
 
-##3.生成项目预览
+## 3.生成项目预览
 查询操作<br/>
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/search.jpg)
 修改操作<br/>
 ![image](https://github.com/hncdyj123/super-mybatis-generator/blob/master/image/update.jpg)
 
-##4.生成项目后运行可能遇到的问题
+## 4.生成项目后运行可能遇到的问题
 1.样式错乱。(这个可以微调easyui样式)<br/>
 2.新增和修改抓包报400错，这是spring绑定实体对象报错。(表单不要提交date,datetime,timestamp等类型，一般提交字符串，用VO接收)<br/>
 3.每次重新生成请清理src/main/resources/mybatis/mapper目录，因为mybatis-generator会在原来的文件中追加sql。<br/>
@@ -160,14 +160,13 @@ jdbc.pool.maxActive.config=150
 ```xml<table tableName="T_ROBOT_CAR_MODEL" schema=""/>```
 加入schema，避免schema下的表字段不一致，重复生成缺失字段问题。
 
-##5.项目资源
+## 5.项目资源
 1.sql脚本在项目根目录sql下。<br/>
 2.可执行的tar.gz在项目根目录startrun下。<br/>
 3.生成的项目在根目录startrun下。<br/>
 
-##6.个人想法
+## 6.个人想法
 本来是准备统一mybatis-generator生成配置文件，后面想想，要修改源代码重新编译打包，后来放弃了，有兴趣的童鞋可以自己想想合并配置。
 
 其余功能不累赘介绍，大家可以下载代码看。<br/>
 有好的建议请联系我，hncdyj123@163.com <br/>
-如果您是土豪，请捐助一顿饭钱，谢谢！支付宝账号:hncdyj123@163.com <br/>
