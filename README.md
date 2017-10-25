@@ -156,6 +156,8 @@ jdbc.pool.maxActive.config=150
 5.关于oracle重复生成的问题，请在mbgConfiguration.xml里面的
 ```xml<table tableName="T_ROBOT_CAR_MODEL" schema=""/>```
 加入schema，避免schema下的表字段不一致，重复生成缺失字段问题。
+6.经过验证，生成项目在jetty中跑没有问题，在tomcat中访问init方法会报jpp找不到的问题。<br/>
+这是因为jsp文件大小写敏感问题，linux对大小写敏感，所以调整的controller模板中init初始化方法中的jsp为大写。（本人偷懒不想源码）
 
 ## 5.项目资源
 1.sql脚本在项目根目录sql下。<br/>
@@ -166,4 +168,5 @@ jdbc.pool.maxActive.config=150
 本来是准备统一mybatis-generator生成配置文件，后面想想，要修改源代码重新编译打包，后来放弃了，有兴趣的童鞋可以自己想想合并配置。
 
 其余功能不累赘介绍，大家可以下载代码看。<br/>
+有时间、有精力的小伙伴可以联系我，有想法生成一套基于spring-boot基本的增、删、改、查。<br/>
 有好的建议请联系我，hncdyj123@163.com <br/>
