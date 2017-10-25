@@ -36,7 +36,7 @@ public class PropertiesHelper {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
 		} catch (MissingResourceException e) {
-			LOGGER.error("不存在配置项: [ key =" + key + " ]");
+			LOGGER.warn("不存在配置项: [ key =" + key + " ]");
 			return "";
 		}
 	}
@@ -48,7 +48,7 @@ public class PropertiesHelper {
 			}
 			return EXIT_RESOURCE_BUNDLE.getString(key);
 		} catch (Exception e) {
-			LOGGER.error("不存在配置项: [ key =" + key + " ]");
+			LOGGER.warn("不存在配置项: [ key =" + key + " ]");
 			return "";
 		}
 	}
