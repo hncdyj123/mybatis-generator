@@ -156,7 +156,7 @@ jdbc.pool.maxActive.config=150
 5.关于oracle重复生成的问题，请在mbgConfiguration.xml里面的
 ```xml<table tableName="T_ROBOT_CAR_MODEL" schema=""/>```
 加入schema，避免schema下的表字段不一致，重复生成缺失字段问题。<br/>
-6.经过验证，生成项目在jetty中跑没有问题，在tomcat中访问init方法会报jpp找不到的问题。<br/>
+6.经过验证，生成项目在jetty中跑没有问题，在tomcat中访问init方法会报jsp找不到的问题。<br/>
 这是因为jsp文件大小写敏感问题，linux对大小写敏感，所以调整的controller模板中init初始化方法中的jsp为大写。（本人偷懒不想源码）
 
 ## 5.项目资源
