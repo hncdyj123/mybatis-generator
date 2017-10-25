@@ -25,7 +25,8 @@ public class ${pro.className}Controller {
 	@RequestMapping(value = "init")
 	public ModelAndView init(HttpServletRequest request) {
 		ModelAndView model = new ModelAndView();
-		model.setViewName("/${pro.className?uncap_first}");
+		// model.setViewName("/${pro.className?uncap_first}");
+		model.setViewName("/${pro.className?}");
 		return model;
 	}
 
