@@ -83,6 +83,8 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	@Override
 	public ${pro.className} select${pro.className}(${pro.className} ${pro.className?uncap_first}) {
 		${pro.className?replace("Key","")}Criteria criteria = this.createCriteria(${pro.className?uncap_first});
+		criteria.setLimitStart(0);
+		criteria.setPageSize(1);
 		List<${pro.className}> ${pro.className?uncap_first}List = ${pro.className?uncap_first}Dao.selectByCriteria(criteria);
 		if (CollectionUtils.isNotEmpty(${pro.className?uncap_first}List)) {
 			return ${pro.className?uncap_first}List.get(0);
@@ -93,6 +95,8 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	@Override
 	public ${pro.className} select${pro.className}(Map<String,Object> paramMap) {
 		${pro.className?replace("Key","")}Criteria criteria = this.createCriteria(paramMap);
+		criteria.setLimitStart(0);
+		criteria.setPageSize(1);
 		List<${pro.className}> ${pro.className?uncap_first}List = ${pro.className?uncap_first}Dao.selectByCriteria(criteria);
 		if (CollectionUtils.isNotEmpty(${pro.className?uncap_first}List)) {
 			return ${pro.className?uncap_first}List.get(0);
