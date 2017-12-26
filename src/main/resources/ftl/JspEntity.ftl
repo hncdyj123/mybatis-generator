@@ -16,93 +16,103 @@
 	<script type="text/javascript" src="<%=path %>/resources/js/main.js"></script>
 </head>
 <#if pro?exists>
+
 <body class="easyui-layout" style="width:100%;height:100%;" data-options="fit:true,fitColumns:true">
-	<div id="search" class="easyui-panel" title="查询条件">
-		<form id="searchForm">
-			<table>
+    <div style="width:100%;height:100%;display:block;margin:-2px 0 0 -4px;">
+    <!-- 布局 -->
+    <div class="easyui-layout" fit="true">
+        <!-- 搜索条件 -->
+        <div data-options="region:'north',border:true,iconCls:'icon-search'" style="height:80px;padding:5px 0px 0px 0px;" title="搜索条件">
+			<form id="searchForm">
+				<table>
+					<tr>
+						<#list pro.columns as c>
+						<#if c_index != 0>
+						<td>${c.fieldDesc}</td>
+						<td><input type="text" id="${c.fieldName}" name="${c.fieldName}" /></td>
+						</#if>
+						</#list>
+						<td width='20px'>&nbsp;</td>
+						<td><input type="button" class="btn-search" onclick="queryData()" value="查询" /></td>
+						<td></td>
+						<td><input type="button" class="btn-clear" onclick="clearText()" value="清空" /></td>
+					</tr>
+				</table>
+			</form>
+        </div>
+
+        <!-- 查询结果 -->
+        <div data-options="region:'center',border:false" style="padding-top:4px;">
+                <!------------------ 在这里填写你的datagrid -------------------->
+		<div id="dataList" title="" style="width: 100%; height: 100%;"></div>
+        </div>          
+    </div>
+</div>
+<div id="addwindow" class="easyui-dialog" title="添加" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
+	<div class="form_div">
+		<form id="addForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
+			<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
+			<#list pro.columns as c>
+			<#if c_index != 0>
 				<tr>
-					<#list pro.columns as c>
-					<#if c_index != 0>
-					<td>${c.fieldDesc}</td>
-					<td><input type="text" id="${c.fieldName}" name="${c.fieldName}" /></td>
-					</#if>
-					</#list>
-					<td width='20px'>&nbsp;</td>
-					<td><input type="button" class="btn-search" onclick="queryData()" value="查询" /></td>
-					<td></td>
-					<td><input type="button" class="btn-clear" onclick="clearText()" value="清空" /></td>
+					<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
+	    			<td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
+				</tr>
+			</#if>
+			</#list>
+				<tr>
+	    			<td colspan="2" align="center" height="40px">
+						<a href="javascript:insertData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
+						<a href="javascript:closeDialog('add');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+	    			</td>
 				</tr>
 			</table>
 		</form>
 	</div>
-	<div style="height: 10px; display: block;"></div>
-	<div id="dataList" title="" class="easyui-panel" style="width: 100%; max-height: 95%; height: auto !important;" align="center"></div>
-
-	<div id="addwindow" class="easyui-dialog" title="添加" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
-		<div class="form_div">
-		  <form id="addForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
-		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
+</div>
+<div id="updatewindow" class="easyui-dialog" title="修改" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
+	<div class="form_div">
+		<form id="updateForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
 			<#list pro.columns as c>
-			<#if c_index != 0>
-				<tr>
-				 	<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
-                    <td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
-                </tr>
-			</#if>
-			</#list>
-				<tr>
-                    <td colspan="2" align="center" height="40px">
-                        <a href="javascript:insertData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
-						<a href="javascript:closeDialog('add');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
-                    </td>
-                </tr>
-            </table>
-		 </form>
-	    </div>
-	</div>
-	<div id="updatewindow" class="easyui-dialog" title="修改" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
-		<div class="form_div">
-		  <form id="updateForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
-		  	<#list pro.columns as c>
-		  	<#if c_index == 0>
+			<#if c_index == 0>
 			<input type="hidden" id="${c.fieldName}" name="${c.fieldName}" /> 
 			</#if>
 			</#list>
-		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
+			<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
 			<#list pro.columns as c>
 			<#if c_index != 0>
 				<tr>
-				 	<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
-                    <td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
-                </tr>
+					<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
+	    			<td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
+				</tr>
 			</#if>
 			</#list>
 				<tr>
-                    <td colspan="2" align="center" height="40px">
-                        <a href="javascript:updateData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
+	    			<td colspan="2" align="center" height="40px">
+						<a href="javascript:updateData();" class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存</a> 
 						<a href="javascript:closeDialog('update');" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
-                    </td>
-                </tr>
-            </table>
-		 </form>
-	    </div>
+	    			</td>
+				</tr>
+			</table>
+		</form>
 	</div>
-	<div id="checkwindow" class="easyui-dialog" title="查看详情" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
-		<div class="form_div">
-		  <form id="checkForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
-		  	<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
-			<#list pro.columns as c>
-			<#if c_index != 0>
+</div>
+<div id="checkwindow" class="easyui-dialog" title="查看详情" style="width: 350px;top:10%;height: 300px; display: block;" data-options="resizable:false,modal:true,closed:true">
+	<div class="form_div">
+		<form id="checkForm" name="proform" method="post" style="padding: 20px 10px 20px 10px">
+			<table width="380px" border="0" cellpadding="0" cellspacing="0" class="tab">
+				<#list pro.columns as c>
+				<#if c_index != 0>
 				<tr>
-				 	<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
-                    <td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
-                </tr>
-			</#if>
-			</#list>
-            </table>
-		 </form>
-	    </div>
+					<td class="td_remark"><span style="color: red;">*</span>&nbsp;<label>${c.fieldDesc}:</label></td>
+	    			<td><input class="easyui-validatebox" type="text" id="${c.fieldName}" style="width: 150px;" name="${c.fieldName}" data-options="required:true" /></td>
+				</tr>
+				</#if>
+				</#list>
+   	 		</table>
+		</form>
 	</div>
+</div>
 </body>
 </#if>
 <script type="text/javascript">
