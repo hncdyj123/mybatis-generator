@@ -38,7 +38,7 @@ public class DbUtil {
 	public List<DbColumn> getTableColumns(String schemaName, String tableName) {
 		List<DbColumn> columnList = new ArrayList<DbColumn>();
 		try {
-			ResultSet rs = dbMetaData.getColumns(null, schemaName.toUpperCase(), tableName.toUpperCase(), null);
+			ResultSet rs = dbMetaData.getColumns(null, connection.getSchema(), tableName.toUpperCase(), "%");
 			while (rs.next()) {
 				String tableCat = rs.getString("TABLE_CAT");// 表目录（可能为空）
 				String tableSchemaName = rs.getString("TABLE_SCHEM");// 表的架构（可能为空）
@@ -85,7 +85,7 @@ public class DbUtil {
 	public List<String> getAllPrimaryKeys(String schemaName, String tableName) {
 		List<String> columnNameList = new ArrayList<String>();
 		try {
-			ResultSet rs = dbMetaData.getPrimaryKeys(null, schemaName.toUpperCase(), tableName.toUpperCase());
+			ResultSet rs = dbMetaData.getPrimaryKeys(null, connection.getSchema(), tableName.toUpperCase());
 			while (rs.next()) {
 				String columnName = rs.getString("COLUMN_NAME");// 列名
 				// short keySeq = rs.getShort("KEY_SEQ");// 序列号(主键内值1表示第一列的主键，值2代表主键内的第二列)
@@ -98,3 +98,4 @@ public class DbUtil {
 		return columnNameList;
 	}
 }
+
