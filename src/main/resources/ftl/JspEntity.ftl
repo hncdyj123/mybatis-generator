@@ -264,20 +264,12 @@ function updateData() {
 }
 
 function queryData() {
-	var params = {};
-	<#list pro.columns as c>
-	<#if c_index != 0>
-	var ${c.fieldName} = $("#${c.fieldName}").val();
-	if(${c.fieldName} !=null && ${c.fieldName} !=''){
-		 params.${c.fieldName} = ${c.fieldName};
-	}
-	</#if>
-	</#list>
-	//var throwFlag = $("input[name='throwFlag']:checked").val();
-	//if(throwFlag!=null && throwFlag!=''){
-	//	 params.throwFlag = throwFlag;
-	//}
+	var params = $('#searchForm').serializeObject();
 	$('#dataList').datagrid('load',params);
+}
+
+function clearText(){
+	$('#searchForm')[0].reset(); 
 }
 
 function closeDialog(type){
