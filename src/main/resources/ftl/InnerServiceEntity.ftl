@@ -1,9 +1,6 @@
 package ${packageName}.inner;
 
 import java.util.List;
-
-import ${packageName}.domain.base.*;
-import java.util.List;
 import java.util.Map;
 <#if pro?exists>
 import ${packageName}.domain.${pro.className};
