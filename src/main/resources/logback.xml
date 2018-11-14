@@ -1,32 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-		</encoder>
+	<substitutionProperty name="max.size" value="100MB" />
+	<contextName>${log.project.name}</contextName>
+	<jmxConfigurator />
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%file:%line] %logger{56}.%method\(\):%L - %msg%n</pattern>
+		</layout>
 	</appender>
 
-	<appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/data/logs/generator/generator.log.tmp</file>
+	<appender name="file.all" class="ch.qos.logback.core.rolling.RollingFileAppender"><!-- All Log Info -->
+		<File>/data/logs/${log.project.name}/${log.project.name}.log</File>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/data/logs/generator/generator-%d{yyyy-MM-dd_HH}.%i.log</fileNamePattern>
-			<!-- keep 5 days' worth of history <maxHistory>50</maxHistory> -->
+			<FileNamePattern>/data/logs/${log.project.name}/${log.project.name}_all_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<!-- or whenever the file size reaches 100MB -->
-				<maxFileSize>100MB</maxFileSize>
+				<maxFileSize>${max.size}</maxFileSize>
 			</timeBasedFileNamingAndTriggeringPolicy>
 		</rollingPolicy>
-		<encoder>
-			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
-		</encoder>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%file:%line] %logger{56}.%method\(\): - %msg%n</pattern>
+		</layout>
 	</appender>
 
-	<logger name="org.mybatis.generator" level="DEBUG" />
+	<!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+	<!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+	<!-- 添加附加的appender,最多只能添加一个 -->
+	<appender name="file.async" class="ch.qos.logback.classic.AsyncAppender">
+		<discardingThreshold>0</discardingThreshold>
+		<queueSize>256</queueSize>
+		<includeCallerData>true</includeCallerData>
+		<appender-ref ref="file.all" />
+	</appender>
 
-	<!-- project default level -->
-	<logger name="org.mybatis.supergen" level="DEBUG" />
-	<root level="DEBUG">
-		<appender-ref ref="console" />
-		<appender-ref ref="rollingFile" />
+	<appender name="file.error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/data/logs/${log.project.name}/${log.project.name}_err.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>/data/logs/${log.project.name}/${log.project.name}_err_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${max.size}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%file:%line] %logger{56}.%method\(\): - %msg%n</pattern>
+		</layout>
+
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+	</appender>
+
+	<appender name="file.info" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<File>/data/logs/${log.project.name}/${log.project.name}_info.log</File>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>/data/logs/${log.project.name}/${log.project.name}_info_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>${max.size}</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] [%file:%line] %logger{56}.%method\(\): - %msg%n</pattern>
+		</layout>
+
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>INFO</level>
+		</filter>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="file.async" />
+		<appender-ref ref="file.error" />
+		<appender-ref ref="file.info" />
 	</root>
+
+	<!-- 以下日志打印输出请自行关闭开户，但上线请统一处理 -->
+	<!-- <logger name="org.springframework" additivity="false"> -->
+	<!-- <level value="debug" /> -->
+	<!-- <appender-ref ref="file.async" /> -->
+	<!-- <appender-ref ref="file.error" /> -->
+	<!-- </logger> -->
 </configuration>
