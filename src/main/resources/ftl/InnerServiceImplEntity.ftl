@@ -70,7 +70,7 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 	@Override
 	public int count${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first}) {
 		${pro.className?replace("Key","")}Criteria criteria = this.createCriteria(${pro.className?uncap_first});
-		return ${pro.className?uncap_first}Dao.countByCriteria(criteria);
+		return (int) ${pro.className?uncap_first}Dao.countByCriteria(criteria);
 	}
 
 	<#if pro.priJavaType?exists>
