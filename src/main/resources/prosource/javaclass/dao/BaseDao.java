@@ -37,7 +37,7 @@ public abstract interface BaseDao<T, E, K> extends Serializable {
 	public abstract int updateByPrimaryKeySelective(T paramT);
 
 	/**查询count 根据条件查询count**/
-	public abstract int countByCriteria(E paramE);
+	public abstract long countByCriteria(E paramE);
 
 	/**查询对象 根据主键查询**/
 	public abstract T selectByPrimaryKey(K paramK);
