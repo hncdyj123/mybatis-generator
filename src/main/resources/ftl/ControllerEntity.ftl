@@ -37,7 +37,7 @@ public class ${pro.className}Controller {
 		try {
 			dataGrid = ${pro.className?uncap_first}Service.query${pro.className}ByPage(${pro.className?uncap_first});
 		} catch (Exception e) {
-			LOGGER.error("getDataGrid method error : " + e);
+			LOGGER.error("getDataGrid method error : " , e);
 			dataGrid.setCode(500);
 			dataGrid.setMessage("getDataGrid error!");
 		}
