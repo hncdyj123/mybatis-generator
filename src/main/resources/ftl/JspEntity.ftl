@@ -14,6 +14,7 @@
 	<script type="text/javascript" src="<%=path %>/resources/jquery-easyui-1.4.4/locale/easyui-lang-zh_CN.js"></script>
 	<script type="text/javascript" src="<%=path %>/resources/js/common.js"></script>
 	<script type="text/javascript" src="<%=path %>/resources/js/main.js"></script>
+	<script type="text/javascript" src="<%=path %>/resources/js/jquery.serialize-object.min.js"></script>
 </head>
 <#if pro?exists>
 
@@ -43,7 +44,7 @@
 
         <!-- 查询结果 -->
         <div data-options="region:'center',border:false" style="padding-top:4px;">
-                <!------------------ 在这里填写你的datagrid -------------------->
+        	<!------------------ 在这里填写你的datagrid -------------------->
 		<div id="dataList" title="" style="width: 100%; height: 100%;"></div>
         </div>          
     </div>
