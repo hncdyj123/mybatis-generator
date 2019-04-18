@@ -57,13 +57,10 @@ public final class MySQLPaginationPlugin extends PluginAdapter {
 		// XmlElement isParameterPresenteElemen = (XmlElement)
 		// element.getElements().get(element.getElements().size() - 1);
 
-		/*
-		 * XmlElement isNotNullElement = new XmlElement("isGreaterEqual");
-		 * //$NON-NLS-1$ isNotNullElement.addAttribute(new Attribute("property",
-		 * "limitStart")); //$NON-NLS-1$ //$NON-NLS-2$
-		 * isNotNullElement.addAttribute(new Attribute("compareValue", "0"));
-		 * //$NON-NLS-1$ //$NON-NLS-2$
-		 */
+		// XmlElement isNotNullElement = new XmlElement("isGreaterEqual");
+		// isNotNullElement.addAttribute(new Attribute("property", "limitStart"));
+		// isNotNullElement.addAttribute(new Attribute("compareValue", "0"));
+
 		XmlElement isNotNullElement = new XmlElement("if");
 		isNotNullElement.addAttribute(new Attribute("test", "limitStart >= 0"));
 
@@ -107,12 +104,11 @@ public final class MySQLPaginationPlugin extends PluginAdapter {
 	public boolean validate(List<String> warnings) {
 		return true;
 	}
-	/*
-	 * public static void generate() { String config =
-	 * PaginationPlugin.class.getClassLoader().getResource(
-	 * "generatorConfig.xml").getFile(); String[] arg = { "-configfile", config,
-	 * "-overwrite" }; ShellRunner.main(arg); } public static void main(String[]
-	 * args) { generate(); }
-	 */
+
+	// public static void generate() {
+	// String config = PaginationPlugin.class.getClassLoader().getResource("generatorConfig.xml").getFile();
+	// String[] arg = { "-configfile", config, "-overwrite" };
+	// ShellRunner.main(arg);
+	// }
 
 }

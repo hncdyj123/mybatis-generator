@@ -18,6 +18,7 @@
 		<plugin type="org.mybatis.supergen.plugin.MySQLPaginationPlugin" />
 		<plugin type="org.mybatis.supergen.plugin.RenameExampleMethodPlugin" />
 		<plugin type="org.mybatis.supergen.plugin.ModelFieldCustomizePlugin" />
+		<plugin type="org.mybatis.supergen.plugin.LombokPlugin" />
 		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
 
 		<!-- 为了防止生成的代码中有很多注释，比较难看，加入下面的配置控制 -->
@@ -28,28 +29,27 @@
 		<!-- 注释控制完毕 -->
 
 		<!-- 数据库连接mysql -->
-		<!-- <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/klonetech?characterEncoding=utf8" userId="root" password="root"> -->
-		<!-- <property name="remarks" value="true" /> -->
-		<!-- </jdbcConnection> -->
-
-		<!-- 数据库连接oracle -->
-		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@192.168.1.222:1521:vehicle" userId="vehicle" password="vehicle_2022">
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/mybatis_generator_test?characterEncoding=utf8" userId="root" password="root123">
 			<property name="remarks" value="true" />
 		</jdbcConnection>
+
+		<!-- 数据库连接oracle -->
+		<!-- <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@192.168.1.222:1521:vehicle" userId="vehicle" password="vehicle_2022"> -->
+		<!-- <property name="remarks" value="true" /> -->
+		<!-- </jdbcConnection> -->
 
 		<javaTypeResolver>
 			<property name="forceBigDecimals" value="false" />
 		</javaTypeResolver>
 
 		<!-- 数据表对应的model 层 -->
-		<javaModelGenerator targetPackage="com.klonetech.dataprocess.domain" targetProject="D:\super-easyui\src\main\java">
+		<javaModelGenerator targetPackage="com.jzx.generator.domain" targetProject="D:\mybatis-generator-test\src\main\java">
 			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
-			<!-- <property name="rootClass" value="com.smy.framework.base.BaseEntity" /> -->
 		</javaModelGenerator>
 
 		<!-- sql mapper 隐射配置文件 -->
-		<sqlMapGenerator targetPackage="mapper" targetProject="D:\super-easyui\src\main\resources\mybatis">
+		<sqlMapGenerator targetPackage="mapper" targetProject="D:\mybatis-generator-test\src\main\resources\mybatis">
 			<property name="enableSubPackages" value="true" />
 		</sqlMapGenerator>
 
@@ -59,7 +59,8 @@
 		<!-- </javaClientGenerator> -->
 
 		<!-- 要对那些数据表进行生成操作 -->
-		<table tableName="T_ROLE2EMP" schema="VEHICLE" />
-		<table tableName="T_MENU" schema="VEHICLE" />
+		<table tableName="test_operator_activity" schema="" />
+		<table tableName="test_operator_channel" schema="" />
+		<table tableName="test_operator_originality" schema="" />
 	</context>
 </generatorConfiguration>
