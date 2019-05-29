@@ -1,6 +1,8 @@
 package org.mybatis.supergen.util;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,50 +41,54 @@ public class FileHelper {
 	private String baseDaoPath = daoPath + "base" + fileSeparator;
 
 	public FileHelper() {
-		mavenProFramework.put("srcMainJava", srcMainJava);
-		mavenProFramework.put("srcMainResources", srcMainResources);
-		mavenProFramework.put("srcTestJava", srcTestJava);
-		mavenProFramework.put("srcTestResources", srcTestResources);
-		mavenProFramework.put("domainPath", domainPath);
-		mavenProFramework.put("daoPath", daoPath);
-		mavenProFramework.put("innerServicePath", innerServicePath);
-		mavenProFramework.put("innerServiceImplPath", innerServiceImplPath);
-		mavenProFramework.put("servicePath", servicePath);
-		mavenProFramework.put("serviceImplPath", serviceImplPath);
-		mavenProFramework.put("controllerPath", controllerPath);
-		mavenProFramework.put("pomPath", pomPath);
-		mavenProFramework.put("mybatisPath", mybatisPath);
-		mavenProFramework.put("webapp", webapp);
-		mavenProFramework.put("jspPath", jspPath);
-		mavenProFramework.put("baseEntityPath", baseEntityPath);
-		mavenProFramework.put("baseDaoPath", baseDaoPath);
+		try {
+			mavenProFramework.put("srcMainJava", new String(srcMainJava.getBytes(), "UTF-8"));
+			mavenProFramework.put("srcMainResources", new String(srcMainResources.getBytes(), "UTF-8"));
+			mavenProFramework.put("srcTestJava", new String(srcTestJava.getBytes(), "UTF-8"));
+			mavenProFramework.put("srcTestResources", new String(srcTestResources.getBytes(), "UTF-8"));
+			mavenProFramework.put("domainPath", new String(domainPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("daoPath", new String(daoPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("innerServicePath", new String(innerServicePath.getBytes(), "UTF-8"));
+			mavenProFramework.put("innerServiceImplPath", new String(innerServiceImplPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("servicePath", new String(servicePath.getBytes(), "UTF-8"));
+			mavenProFramework.put("serviceImplPath", new String(serviceImplPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("controllerPath", new String(controllerPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("pomPath", new String(pomPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("mybatisPath", new String(mybatisPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("webapp", new String(webapp.getBytes(), "UTF-8"));
+			mavenProFramework.put("jspPath", new String(jspPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("baseEntityPath", new String(baseEntityPath.getBytes(), "UTF-8"));
+			mavenProFramework.put("baseDaoPath", new String(baseDaoPath.getBytes(), "UTF-8"));
 
-		templatePathMap.put("domainPath", domainPath);
-		templatePathMap.put("daoPath", daoPath);
-		templatePathMap.put("innerServicePath", innerServicePath);
-		templatePathMap.put("innerServiceImplPath", innerServiceImplPath);
-		templatePathMap.put("servicePath", servicePath);
-		templatePathMap.put("serviceImplPath", serviceImplPath);
-		templatePathMap.put("controllerPath", controllerPath);
-		templatePathMap.put("pomPath", pomPath);
-		templatePathMap.put("mybatisPath", mybatisPath);
-		templatePathMap.put("jspPath", jspPath);
+			templatePathMap.put("domainPath", new String(domainPath.getBytes(), "UTF-8"));
+			templatePathMap.put("daoPath", new String(daoPath.getBytes(), "UTF-8"));
+			templatePathMap.put("innerServicePath", new String(innerServicePath.getBytes(), "UTF-8"));
+			templatePathMap.put("innerServiceImplPath", new String(innerServiceImplPath.getBytes(), "UTF-8"));
+			templatePathMap.put("servicePath", new String(servicePath.getBytes(), "UTF-8"));
+			templatePathMap.put("serviceImplPath", new String(serviceImplPath.getBytes(), "UTF-8"));
+			templatePathMap.put("controllerPath", new String(controllerPath.getBytes(), "UTF-8"));
+			templatePathMap.put("pomPath", new String(pomPath.getBytes(), "UTF-8"));
+			templatePathMap.put("mybatisPath", new String(mybatisPath.getBytes(), "UTF-8"));
+			templatePathMap.put("jspPath", new String(jspPath.getBytes(), "UTF-8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void createProject() throws Exception {
 		// 复制webapp
-		String webapp = this.getClass().getResource("/").getPath() + "prosource/webapp/";
+		String webapp = URLDecoder.decode(this.getClass().getResource("/").getPath() + "prosource/webapp/", "UTF-8");
 		FileUtil.copyFolder(new File(webapp), new File(mavenProFramework.get("webapp")));
 		// 复制baseEntity
-		String baseEntity = this.getClass().getResource("/").getPath() + "prosource/javaclass/base/";
+		String baseEntity = URLDecoder.decode(this.getClass().getResource("/").getPath() + "prosource/javaclass/base/", "UTF-8");
 		PropertyPlaceholderReplace baseReplace = new PropertyPlaceholderReplace();
 		baseReplace.placeholderReplace(baseEntity, mavenProFramework.get("baseEntityPath"));
 		// 复制baseDaoEntity
-		String baseDaoEntity = this.getClass().getResource("/").getPath() + "prosource/javaclass/dao/";
+		String baseDaoEntity = URLDecoder.decode(this.getClass().getResource("/").getPath() + "prosource/javaclass/dao/", "UTF-8");
 		PropertyPlaceholderReplace daoReplace = new PropertyPlaceholderReplace();
 		daoReplace.placeholderReplace(baseDaoEntity, mavenProFramework.get("baseDaoPath"));
 		// 复制mybatisConfig
-		String mybatisConfig = this.getClass().getResource("/").getPath() + "prosource/mybatis-config.xml";
+		String mybatisConfig = URLDecoder.decode(this.getClass().getResource("/").getPath() + "prosource/mybatis-config.xml", "UTF-8");
 		FileUtil.CopyFile(new File(mybatisConfig), mybatisPath + "mybatis-config.xml");
 		// 复制sources文件
 		PropertyPlaceholderReplace proPlaceholderReplace = new PropertyPlaceholderReplace(PropertiesHelper.getString("prosource.fileNames"));

@@ -1,6 +1,7 @@
 package org.mybatis.supergen.core;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,7 +59,8 @@ public class GeneratorMain {
 		List<String> warnings = new ArrayList<String>();
 		boolean overwrite = true;
 		String genCfg = "/mbgConfiguration.xml";
-		File configFile = new File(GeneratorMain.class.getResource(genCfg).getFile());
+		String configFileStr = URLDecoder.decode(GeneratorMain.class.getResource(genCfg).getFile(), "UTF-8");
+		File configFile = new File(configFileStr);
 		ConfigurationParser cp = new ConfigurationParser(warnings);
 		Configuration config = cp.parseConfiguration(configFile);
 		DefaultShellCallback callback = new DefaultShellCallback(overwrite);

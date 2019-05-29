@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,12 +29,9 @@ public class FileUtil {
 	/**
 	 * 文件夹创建，指定路径文件的读取
 	 * 
-	 * @param path
-	 *            要创建文件夹位置
-	 * @param writeFileName
-	 *            输出文件路径
-	 * @param readFilePath
-	 *            读入文件路径
+	 * @param path 要创建文件夹位置
+	 * @param writeFileName 输出文件路径
+	 * @param readFilePath 读入文件路径
 	 * @return
 	 * @throws Exception
 	 */
@@ -82,8 +80,7 @@ public class FileUtil {
 	/**
 	 * 删除单个文件
 	 * 
-	 * @param path
-	 *            要删除文件路径
+	 * @param path 要删除文件路径
 	 * @return
 	 * @throws Exception
 	 */
@@ -172,7 +169,7 @@ public class FileUtil {
 	public static Map<String, String> listFile(String path) throws Exception {
 		// 存放文件信息 key->文件名 value ->文件绝对地址(不包含文件名)
 		Map<String, String> map = new HashMap<String, String>();
-		File file = new File(path);
+		File file = new File(URLDecoder.decode(path, "UTF-8"));
 		// 获取文件夹中的文件
 		File[] array = file.listFiles();
 		if (array.length > 0) {

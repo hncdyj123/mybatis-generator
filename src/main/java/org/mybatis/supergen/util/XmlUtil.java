@@ -1,6 +1,7 @@
 package org.mybatis.supergen.util;
 
 import java.io.File;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -30,10 +31,11 @@ public class XmlUtil {
 	 * @throws DocumentException
 	 */
 	@SuppressWarnings("rawtypes")
-	public static List<String> getXmlTableName() throws DocumentException {
+	public static List<String> getXmlTableName() throws Exception {
 		List<String> tableList = new ArrayList<String>();
 		String genCfg = "/mbgConfiguration.xml";
-		File configFile = new File(XmlUtil.class.getResource(genCfg).getFile());
+		String configFileStr = XmlUtil.class.getResource(genCfg).getFile();
+		File configFile = new File(URLDecoder.decode(configFileStr, "UTF-8"));
 		SAXReader reader = new SAXReader();
 		Document document = reader.read(configFile);
 		Element root = document.getRootElement();
@@ -57,10 +59,11 @@ public class XmlUtil {
 	 * @throws DocumentException
 	 */
 	@SuppressWarnings("rawtypes")
-	public static Map<String, String> getJdbcConnection() throws DocumentException {
+	public static Map<String, String> getJdbcConnection() throws Exception {
 		Map<String, String> jdbcConnectionMap = new HashMap<String, String>();
 		String genCfg = "/mbgConfiguration.xml";
-		File configFile = new File(XmlUtil.class.getResource(genCfg).getFile());
+		String configFileStr = XmlUtil.class.getResource(genCfg).getFile();
+		File configFile = new File(URLDecoder.decode(configFileStr, "UTF-8"));
 		SAXReader reader = new SAXReader();
 		Document document = reader.read(configFile);
 		Element root = document.getRootElement();

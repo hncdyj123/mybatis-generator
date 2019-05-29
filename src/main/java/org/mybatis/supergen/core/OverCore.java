@@ -1,6 +1,5 @@
 package org.mybatis.supergen.core;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -98,7 +97,7 @@ public class OverCore {
 	public List<TemplateInfoDesc> getTemplateInfo(List<PropertyClass> propertyClassList) throws Exception {
 		List<TemplateInfoDesc> templateInfoDescList = new ArrayList<TemplateInfoDesc>();
 		// 获取模板文件位置
-		templateMap = FileUtil.listFile((StringUtil.isEmptyString(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + File.separator + "ftl") : outFtlFilePath));
+		templateMap = FileUtil.listFile((StringUtil.isEmptyString(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + "ftl") : outFtlFilePath));
 		for (PropertyClass propertyClass : propertyClassList) { // 循环数据库表信息
 			FileHelper fileHelper = new FileHelper();
 			TemplateInfoDesc templateInfoDesc = null;

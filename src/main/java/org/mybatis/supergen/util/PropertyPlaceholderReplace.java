@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -108,21 +109,12 @@ public class PropertyPlaceholderReplace {
 	/**
 	 * 读取文件字符
 	 * 
-	 * @param filePath
-	 *            文件路径
+	 * @param filePath 文件路径
 	 * @return
 	 * @throws IOException
 	 */
 	protected String readFile(String filePath) throws IOException {
-		// FileReader reader = new FileReader(filePath);
-		// BufferedReader bf = new BufferedReader(reader);
-		// String rtStr = "";
-		// String str = null;
-		// while ((str = bf.readLine()) != null) {
-		// rtStr += str + "\n";
-		// }
-		// bf.close();
-		// reader.close();
+		filePath = URLDecoder.decode(filePath, "UTF-8");
 		BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(filePath), "UTF-8"));
 		String rtStr = "";
 		String str = null;
@@ -136,12 +128,12 @@ public class PropertyPlaceholderReplace {
 	/**
 	 * 读取文件中的占位符
 	 * 
-	 * @param filePath
-	 *            文件路径
+	 * @param filePath 文件路径
 	 * @return
 	 * @throws IOException
 	 */
 	protected List<String> readline(String filePath) throws IOException {
+		filePath = URLDecoder.decode(filePath, "UTF-8");
 		List<String> propertyList = new ArrayList<String>();
 		FileReader reader = new FileReader(filePath);
 		BufferedReader bf = new BufferedReader(reader);
@@ -159,10 +151,8 @@ public class PropertyPlaceholderReplace {
 	/**
 	 * 重写配置文件
 	 * 
-	 * @param filePath
-	 *            文件路径
-	 * @param fileString
-	 *            文件名称
+	 * @param filePath 文件路径
+	 * @param fileString 文件名称
 	 */
 	protected void wirteFile(String filePath, String fileString) {
 		try {
