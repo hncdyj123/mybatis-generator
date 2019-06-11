@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+import org.mybatis.supergen.core.MavenStruts;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +30,7 @@ import org.slf4j.LoggerFactory;
 public class PropertyPlaceholderReplace {
 	/** 日志对象 **/
 	private static Logger LOGGER = LoggerFactory.getLogger(PropertyPlaceholderReplace.class);
-	// this is filepath Examples /data/member/conf/
 	private String filePath = "";
-	// this is fileNames Example ec_mq.properties,redis.properties
 	private String fileNames = "";
 	// 正则表达式截取
 	private String regex = "\\$\\{([\\w\\.]+)\\}";
@@ -51,7 +51,7 @@ public class PropertyPlaceholderReplace {
 	 * @throws IOException
 	 */
 	public void placeholderReplace() throws IOException {
-		if (StringUtil.isEmpty(filePath) || StringUtil.isEmpty(fileNames)) {
+		if (StringUtils.isEmpty(filePath) || StringUtils.isEmpty(fileNames)) {
 			throw new RuntimeException("文件路径或文件名不能为空");
 		}
 		String[] fileNameAarry = fileNames.split(",");
@@ -64,15 +64,15 @@ public class PropertyPlaceholderReplace {
 			for (String properties : propertiesList) {
 				String newProKey = properties.replace("$", "").replace("{", "").replace("}", "");
 				String newChar = PropertiesHelper.getString(newProKey);
-				if (!StringUtil.isEmpty(newChar)) {
+				if (!StringUtils.isEmpty(newChar)) {
 					fileStr = fileStr.replace(properties, newChar);
 				}
 				LOGGER.debug("key = [ " + properties + " ] , newchar = [" + newChar + " ]");
 			}
 			// 新文件路径
-			String newFile = new FileHelper().getMavenProFramework().get("srcMainResources") + fileName;
-			if (StringUtil.equalsString("pom.xml", fileName)) {
-				newFile = new FileHelper().getMavenProFramework().get("pomPath") + fileName;
+			String newFile = new MavenStruts().getMavenProFramework().get("srcMainResources") + fileName;
+			if (StringUtils.equalsIgnoreCase("pom.xml", fileName)) {
+				newFile = new MavenStruts().getMavenProFramework().get("pomPath") + fileName;
 			}
 			wirteFile(newFile, fileStr);
 		}
@@ -84,7 +84,7 @@ public class PropertyPlaceholderReplace {
 	 * @throws IOException
 	 */
 	public void placeholderReplace(String oldfilePath, String newfilePath) throws Exception {
-		if (StringUtil.isEmpty(oldfilePath) || StringUtil.isEmpty(newfilePath)) {
+		if (StringUtils.isEmpty(oldfilePath) || StringUtils.isEmpty(newfilePath)) {
 			throw new RuntimeException("老文件或者新文件path为空");
 		}
 		Map<String, String> fileMap = FileUtil.listFile(oldfilePath);
@@ -97,7 +97,7 @@ public class PropertyPlaceholderReplace {
 			for (String properties : propertiesList) {
 				String newProKey = properties.replace("$", "").replace("{", "").replace("}", "");
 				String newChar = PropertiesHelper.getString(newProKey);
-				if (!StringUtil.isEmpty(newChar)) {
+				if (!StringUtils.isEmpty(newChar)) {
 					fileStr = fileStr.replace(properties, newChar);
 				}
 				LOGGER.debug("key = [ " + properties + " ] , newchar = [" + newChar + " ]");
@@ -145,6 +145,7 @@ public class PropertyPlaceholderReplace {
 				propertyList.add(m.group());
 			}
 		}
+		bf.close();
 		return propertyList;
 	}
 

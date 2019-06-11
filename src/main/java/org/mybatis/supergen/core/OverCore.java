@@ -1,22 +1,22 @@
 package org.mybatis.supergen.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
 import org.mybatis.supergen.constants.Constant;
 import org.mybatis.supergen.db.DbColumn;
 import org.mybatis.supergen.domain.Column;
 import org.mybatis.supergen.domain.PropertyClass;
 import org.mybatis.supergen.domain.TemplateInfoDesc;
 import org.mybatis.supergen.util.DbUtil;
-import org.mybatis.supergen.util.FileHelper;
 import org.mybatis.supergen.util.FileUtil;
 import org.mybatis.supergen.util.PropertiesHelper;
 import org.mybatis.supergen.util.ResManager;
-import org.mybatis.supergen.util.StringUtil;
 import org.mybatis.supergen.util.XmlUtil;
 
 /**
@@ -30,20 +30,29 @@ import org.mybatis.supergen.util.XmlUtil;
  * 
  */
 public class OverCore {
-	// private static final Logger LOGGER = LoggerFactory.getLogger(OverCore.class);
+	// 项目骨架构建实体类
+	private MavenStruts struts = new MavenStruts();
 
-	// 存放模板文件目录下所有模板定义的文件名 map key - > 文件名 value - > 文件路径 不包含文件名
-	@SuppressWarnings("rawtypes")
-	private static Map templateMap = new HashMap();
+	/**
+	 * 存放模板文件目录下所有模板定义的文件名<br/>
+	 * key - > 文件名 <br/>
+	 * value - > 文件路径 不包含文件名 <br/>
+	 */
+	private static Map<String, String> templateMap = new LinkedHashMap<String, String>();
 
 	// 外部文件模板位置
 	private String outFtlFilePath = ResManager.getString("system.freemarker.filepath");
 
+	/**
+	 * 创建MAVEN项目主框架
+	 * 
+	 * @throws Exception
+	 * @see
+	 */
 	public void createProject() throws Exception {
 		FileUtil.deleteFolder(PropertiesHelper.getString("system.projectname"));
-		FileHelper fileHelper = new FileHelper();
-		fileHelper.createDir();
-		fileHelper.createProject();
+		struts.createDir();
+		struts.createProject();
 	}
 
 	/**
@@ -58,7 +67,7 @@ public class OverCore {
 		DbUtil dbUtil = new DbUtil();
 		for (String xmlTableName : xmlTableNameList) {
 			PropertyClass propertyClass = new PropertyClass();
-			List<DbColumn> dbColumnList = dbUtil.getTableColumns(StringUtil.isEmpty(ResManager.getString("system.db.schema")) ? null : ResManager.getString("system.db.schema"), xmlTableName);
+			List<DbColumn> dbColumnList = dbUtil.getTableColumns(StringUtils.isEmpty(ResManager.getString("system.db.schema")) ? null : ResManager.getString("system.db.schema"), xmlTableName);
 			propertyClass.setTableName(xmlTableName); // 设置表名称
 			propertyClass.setClassName(this.getClassName(xmlTableName)); // 设置类名称
 			List<Column> columnList = new ArrayList<Column>();
@@ -69,12 +78,12 @@ public class OverCore {
 			propertyClass.setColumns(columnList);
 			// 获取表的schema
 			String tableschema = XmlUtil.tableMap.get(xmlTableName);
-			List<String> primaryKeyList = dbUtil.getAllPrimaryKeys(StringUtil.isEmpty(tableschema) ? ResManager.getString("system.db.schema") : tableschema, xmlTableName);
+			List<String> primaryKeyList = dbUtil.getAllPrimaryKeys(StringUtils.isEmpty(tableschema) ? ResManager.getString("system.db.schema") : tableschema, xmlTableName);
 			propertyClass.setPrimaryKeyList(primaryKeyList);
 			if (primaryKeyList != null && primaryKeyList.size() > 0) {
 				String primaryKeyName = primaryKeyList.get(0);
 				for (Column column : columnList) {
-					if (StringUtil.equalsString(column.getFieldName(), primaryKeyName)) {
+					if (StringUtils.equalsIgnoreCase(column.getFieldName(), primaryKeyName)) {
 						propertyClass.setPriJavaType(column.getJdkType());
 					}
 				}
@@ -97,40 +106,39 @@ public class OverCore {
 	public List<TemplateInfoDesc> getTemplateInfo(List<PropertyClass> propertyClassList) throws Exception {
 		List<TemplateInfoDesc> templateInfoDescList = new ArrayList<TemplateInfoDesc>();
 		// 获取模板文件位置
-		templateMap = FileUtil.listFile((StringUtil.isEmptyString(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + "ftl") : outFtlFilePath));
+		templateMap = FileUtil.listFile((StringUtils.isEmpty(outFtlFilePath) ? (this.getClass().getResource("/").getPath() + "ftl") : outFtlFilePath));
 		for (PropertyClass propertyClass : propertyClassList) { // 循环数据库表信息
-			FileHelper fileHelper = new FileHelper();
 			TemplateInfoDesc templateInfoDesc = null;
 			for (Iterator iter = templateMap.entrySet().iterator(); iter.hasNext();) {
 				Map.Entry entry = (Map.Entry) iter.next();
 				String key = (String) entry.getKey();
 				String value = (String) entry.getValue();
-				if (StringUtil.equalsString(Constant.CONTROLLERENTITY_TEMPLATE_FILENAME, key)) {
-					String outFilePath = fileHelper.getTemplatePathMap().get("controllerPath");
+				if (StringUtils.equalsIgnoreCase(Constant.CONTROLLERENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = struts.getTemplatePathMap().get("controllerPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.CONTROLLER_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
-				if (StringUtil.equalsString(Constant.SERVICEENTITY_TEMPLATE_FILENAME, key)) {
-					String outFilePath = fileHelper.getTemplatePathMap().get("servicePath");
+				if (StringUtils.equalsIgnoreCase(Constant.SERVICEENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = struts.getTemplatePathMap().get("servicePath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.SERVICE_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
-				if (StringUtil.equalsString(Constant.SERVICEIMPLENTITY_TEMPLATE_FILENAME, key)) {
-					String outFilePath = fileHelper.getTemplatePathMap().get("serviceImplPath");
+				if (StringUtils.equalsIgnoreCase(Constant.SERVICEIMPLENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = struts.getTemplatePathMap().get("serviceImplPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.SERVICEIMPL_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
-				if (StringUtil.equalsString(Constant.INNERSERVICEENTITY_TEMPLATE_FILENAME, key)) {
-					String outFilePath = fileHelper.getTemplatePathMap().get("innerServicePath");
+				if (StringUtils.equalsIgnoreCase(Constant.INNERSERVICEENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = struts.getTemplatePathMap().get("innerServicePath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.INNERSERVICE_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
-				if (StringUtil.equalsString(Constant.INNERSERVICEIMPLENTITY_TEMPLATE_FILENAME, key)) {
-					String outFilePath = fileHelper.getTemplatePathMap().get("innerServiceImplPath");
+				if (StringUtils.equalsIgnoreCase(Constant.INNERSERVICEIMPLENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = struts.getTemplatePathMap().get("innerServiceImplPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.INNERSERVICEIMPL_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
-				if (StringUtil.equalsString(Constant.DAOENTITY_TEMPLATE_FILENAME, key)) {
-					String outFilePath = fileHelper.getTemplatePathMap().get("daoPath");
+				if (StringUtils.equalsIgnoreCase(Constant.DAOENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = struts.getTemplatePathMap().get("daoPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, Constant.DAO_FILE_PREFIX, Constant.JAVA_FILE_SUFFIX);
 				}
-				if (StringUtil.equalsString(Constant.JSPENTITY_TEMPLATE_FILENAME, key)) {
-					String outFilePath = fileHelper.getTemplatePathMap().get("jspPath");
+				if (StringUtils.equalsIgnoreCase(Constant.JSPENTITY_TEMPLATE_FILENAME, key)) {
+					String outFilePath = struts.getTemplatePathMap().get("jspPath");
 					templateInfoDesc = new TemplateInfoDesc(value, key, outFilePath, "", Constant.JSP_FILE_SUFFIX);
 				}
 				propertyClass.setPackageName(PropertiesHelper.getString("system.project.packagename"));
@@ -149,7 +157,7 @@ public class OverCore {
 	 */
 	private String getClassName(String tableName) {
 		// 分隔前缀
-		String prefix = StringUtil.isEmptyString(ResManager.getString("system.table.sub")) ? "_" : ResManager.getString("system.table.sub");
+		String prefix = StringUtils.isEmpty(ResManager.getString("system.table.sub")) ? "_" : ResManager.getString("system.table.sub");
 		String[] clazz = tableName.split(prefix);
 		String className = "";
 		for (int i = 0; i < clazz.length; i++) {
@@ -157,9 +165,9 @@ public class OverCore {
 				className += clazz[0].toLowerCase();
 				continue;
 			}
-			className += StringUtil.captureName(clazz[i].toLowerCase());
+			className += WordUtils.capitalize(clazz[i].toLowerCase());
 		}
-		className = StringUtil.captureName(className);
+		className = WordUtils.capitalize(className);
 		return className;
 	}
 }

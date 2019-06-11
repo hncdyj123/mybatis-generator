@@ -12,6 +12,7 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -86,7 +87,7 @@ public class FileUtil {
 	 */
 	public static boolean delete(String path) throws Exception {
 		boolean result = false;
-		if (!StringUtil.isEmptyString(path)) {
+		if (!StringUtils.isEmpty(path)) {
 			File file = new File(path);
 			file.delete();
 			result = true;
@@ -255,6 +256,7 @@ public class FileUtil {
 					fs.write(buffer, 0, byteread);
 				}
 				inStream.close();
+				fs.close();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

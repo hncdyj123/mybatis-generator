@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.WordUtils;
 import org.mybatis.supergen.util.ResManager;
-import org.mybatis.supergen.util.StringUtil;
 
 /**
  * 
@@ -84,13 +85,9 @@ public class Column {
 		this.decimalDigits = decimalDigits;
 	}
 
-	@Deprecated
-	public Column(String columnName, String dataType2, String columnComment, String columnKey2) {
-	}
-
 	public String getFieldName() {
 		// 字段分隔前缀
-		String prefix = StringUtil.isEmptyString(ResManager.getString("system.column.sub")) ? "_" : ResManager.getString("system.column.sub");
+		String prefix = StringUtils.isEmpty(ResManager.getString("system.column.sub")) ? "_" : ResManager.getString("system.column.sub");
 		String[] fields = databaseName.split(prefix);
 		fieldName = "";
 		for (int i = 0; i < fields.length; i++) {
@@ -98,7 +95,7 @@ public class Column {
 				fieldName += fields[0].toLowerCase();
 				continue;
 			}
-			fieldName += StringUtil.captureName(fields[i].toLowerCase());
+			fieldName += WordUtils.capitalize(fields[i].toLowerCase());
 		}
 		return fieldName;
 	}

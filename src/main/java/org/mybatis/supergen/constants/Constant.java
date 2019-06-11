@@ -1,12 +1,12 @@
 package org.mybatis.supergen.constants;
 
 /**
+ * 系统常量类
  * 
- * @ClassName: Constant
- * @Description: 系统常量类
  * @author hncdyj123@163.com
- * @date 2015年11月21日 上午11:29:13
- *
+ * @version 2019年6月11日
+ * @see Constant
+ * @since
  */
 public class Constant {
 	/** jsp文件后缀 **/
