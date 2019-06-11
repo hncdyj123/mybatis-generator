@@ -83,4 +83,25 @@ public class XmlUtil {
 		}
 		return jdbcConnectionMap;
 	}
+
+	@SuppressWarnings("rawtypes")
+	public static Map<String, String> getDomainUri() throws Exception {
+		Map<String, String> domainMap = new HashMap<String, String>();
+		String genCfg = "/mbgConfiguration.xml";
+		String configFileStr = XmlUtil.class.getResource(genCfg).getFile();
+		File configFile = new File(URLDecoder.decode(configFileStr, "UTF-8"));
+		SAXReader reader = new SAXReader();
+		Document document = reader.read(configFile);
+		Element root = document.getRootElement();
+		Element element = root.element("context");
+		for (Iterator it = element.elementIterator(); it.hasNext();) {
+			Element tableElement = (Element) it.next();
+			if (tableElement.getName().equalsIgnoreCase("javaModelGenerator")) {
+				Attribute targetPackage = tableElement.attribute("targetPackage");
+				domainMap.put("targetPackage", targetPackage.getText());
+				break;
+			}
+		}
+		return domainMap;
+	}
 }

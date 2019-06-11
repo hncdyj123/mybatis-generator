@@ -25,6 +25,8 @@ public class PropertyClass {
 	private String priJava;
 	// 主键java类型
 	private String priJavaType;
+	// 模块名
+	private String modelName;
 	// 表列
 	private List<Column> columns = new ArrayList<Column>();
 	// 主键List

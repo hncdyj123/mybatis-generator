@@ -61,12 +61,18 @@ public class OverCore {
 	 * @throws Exception
 	 */
 	public List<PropertyClass> getAllTableInfo() throws Exception {
+		String modelName = null;
+		String[] packages = XmlUtil.getDomainUri().get("targetPackage").split("\\.");
+		if (packages != null && !StringUtils.equalsIgnoreCase("domain", packages[packages.length - 1])) {
+			modelName = packages[packages.length - 1];
+		}
 		// 存放所有数据库表映射实体类信息
 		List<PropertyClass> propertyClassList = new ArrayList<PropertyClass>();
 		List<String> xmlTableNameList = XmlUtil.getXmlTableName(); // 获取xml配置中的表名称
 		DbUtil dbUtil = new DbUtil();
 		for (String xmlTableName : xmlTableNameList) {
 			PropertyClass propertyClass = new PropertyClass();
+			propertyClass.setModelName(modelName);
 			List<DbColumn> dbColumnList = dbUtil.getTableColumns(StringUtils.isEmpty(ResManager.getString("system.db.schema")) ? null : ResManager.getString("system.db.schema"), xmlTableName);
 			propertyClass.setTableName(xmlTableName); // 设置表名称
 			propertyClass.setClassName(this.getClassName(xmlTableName)); // 设置类名称

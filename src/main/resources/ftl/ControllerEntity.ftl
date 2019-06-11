@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import ${packageName}.domain.base.*;
-import ${packageName}.domain.${pro.className};
+import ${packageName}.domain.<#if pro.modelName?exists>${pro.modelName}.</#if>${pro.className};
 import ${packageName}.service.${pro.className}Service;
 
 @Controller

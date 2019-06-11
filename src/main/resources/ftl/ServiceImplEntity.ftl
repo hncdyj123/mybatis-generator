@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 <#if pro?exists> 
 import ${packageName}.domain.base.*;
-import ${packageName}.domain.${pro.className};
+import ${packageName}.domain.<#if pro.modelName?exists>${pro.modelName}.</#if>${pro.className};
 import ${packageName}.inner.Inner${pro.className}Service;
 import ${packageName}.service.${pro.className}Service;
 

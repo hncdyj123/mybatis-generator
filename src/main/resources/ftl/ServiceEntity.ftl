@@ -4,7 +4,7 @@ import java.util.List;
 
 import ${packageName}.domain.base.*;
 <#if pro?exists>
-import ${packageName}.domain.${pro.className};
+import ${packageName}.domain.<#if pro.modelName?exists>${pro.modelName}.</#if>${pro.className};
 
 /**
  * 模板引擎生成的实体类

@@ -11,7 +11,7 @@ import ${packageName}.domain.${pro.className?replace("Key","")}Criteria;
 import ${packageName}.domain.${pro.className?replace("Key","")}Criteria.Criteria;
 
 <#if pro?exists>
-import ${packageName}.domain.${pro.className};
+import ${packageName}.domain.<#if pro.modelName?exists>${pro.modelName}.</#if>${pro.className};
 import ${packageName}.dao.${pro.className}Dao;
 import ${packageName}.inner.Inner${pro.className}Service;
 

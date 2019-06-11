@@ -2,7 +2,7 @@ package ${packageName}.dao;
 
 <#if pro?exists>
 import ${packageName}.dao.base.BaseDao;
-import ${packageName}.domain.${pro.className};
+import ${packageName}.domain.<#if pro.modelName?exists>${pro.modelName}.</#if>${pro.className};
 import ${packageName}.domain.${pro.className?replace("Key","")}Criteria;
  
 /**
