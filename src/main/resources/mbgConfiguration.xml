@@ -5,9 +5,9 @@
 
 <generatorConfiguration>
 	<!-- 配置mysql 驱动jar包路径用了绝对路径 -->
-	<!-- <classPathEntry location="D:\Tools\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar" /> -->
+	<classPathEntry location="D:\Tools\mysql\mysql-connector-java\5.1.34\mysql-connector-java-5.1.34.jar" />
 	<!-- 配置oracle 驱动jar包路径用了绝对路径 -->
-	<classPathEntry location="D:\Tools\com\oracle\ojdbc6\11.2.0\ojdbc6-11.2.0.jar" />
+	<!-- <classPathEntry location="D:\Tools\com\oracle\ojdbc6\11.2.0\ojdbc6-11.2.0.jar" /> -->
 
 	<context id="ams_mysql_tables" targetRuntime="MyBatis3">
 		<property name="javaFileEncoding" value="UTF-8" />
