@@ -37,6 +37,9 @@ public interface Inner${pro.className}Service {
 
 	/**查询count 根据条件查询count**/
 	public int count${pro.className}ByCriteria(${pro.className} ${pro.className?uncap_first});
+	
+	/**查询count 根据条件查询count**/
+	public int count${pro.className}PageByCriteria(${pro.className} ${pro.className?uncap_first});
 
 	<#if pro.priJavaType?exists>
 	/**查询对象 根据主键查询**/
@@ -54,5 +57,8 @@ public interface Inner${pro.className}Service {
 	
 	/**查询对象 根据对象查询**/
 	public List<${pro.className}> select${pro.className}List(Map<String,Object> paramMap);
+	
+	/**查询对象 根据对象查询**/
+	public List<${pro.className}> select${pro.className}ListPage(${pro.className} ${pro.className?uncap_first});
 }
 </#if>

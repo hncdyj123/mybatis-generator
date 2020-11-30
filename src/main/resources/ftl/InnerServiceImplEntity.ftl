@@ -71,6 +71,12 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 		${pro.className?replace("Key","")}Criteria criteria = this.createCriteria(${pro.className?uncap_first});
 		return (int) ${pro.className?uncap_first}Dao.countByCriteria(criteria);
 	}
+	
+	@Override
+	public int count${pro.className}PageByCriteria(${pro.className} ${pro.className?uncap_first}) {
+		${pro.className?replace("Key","")}Criteria criteria = this.createGridCriteria(${pro.className?uncap_first});
+		return (int) ${pro.className?uncap_first}Dao.countByCriteria(criteria);
+	}
 
 	<#if pro.priJavaType?exists>
 	@Override
@@ -117,6 +123,13 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 		return ${pro.className?uncap_first}List;
 	}
 	
+	@Override
+	public List<${pro.className}> select${pro.className}ListPage(${pro.className} ${pro.className?uncap_first}) {
+		${pro.className?replace("Key","")}Criteria criteria = this.createGridCriteria(${pro.className?uncap_first});
+		List<${pro.className}> ${pro.className?uncap_first}List = ${pro.className?uncap_first}Dao.selectByCriteria(criteria);
+		return ${pro.className?uncap_first}List;
+	}
+	
 	private ${pro.className?replace("Key","")}Criteria createCriteria(${pro.className} ${pro.className?uncap_first}) {
 		${pro.className?replace("Key","")}Criteria criteria = new ${pro.className?replace("Key","")}Criteria();
 		Criteria c = criteria.createCriteria();
@@ -145,6 +158,26 @@ public class Inner${pro.className}ServiceImpl implements Inner${pro.className}Se
 			if (paramMap.get("${c.fieldName}") != null) {
 				c.and${c.fieldName?cap_first}EqualTo((${c.jdkType}) paramMap.get("${c.fieldName}"));
 			}
+			</#list>
+		}
+		return criteria;
+	}
+	
+	private ${pro.className?replace("Key","")}Criteria createCriteria(${pro.className} ${pro.className?uncap_first}) {
+		${pro.className?replace("Key","")}Criteria criteria = new ${pro.className?replace("Key","")}Criteria();
+		Criteria c = criteria.createCriteria();
+		if (${pro.className?uncap_first} != null) {
+			<#list pro.columns as c>
+			<#if c.jdkType == "java.lang.String">
+			if (StringUtils.isNotEmpty(${pro.className?uncap_first}.get${c.fieldName?cap_first}())) {
+				c.and${c.fieldName?cap_first}EqualTo(${pro.className?uncap_first}.get${c.fieldName?cap_first}());
+			}
+			</#if>
+			<#if c.jdkType != "java.lang.String">
+			if (${pro.className?uncap_first}.get${c.fieldName?cap_first}() != null) {
+				c.and${c.fieldName?cap_first}EqualTo(${pro.className?uncap_first}.get${c.fieldName?cap_first}());
+			}
+			</#if>	
 			</#list>
 		}
 		return criteria;
